@@ -39,6 +39,7 @@ final class RectorRecipeGenerator
     {
         // generate and compare
         $templateFileInfos = $this->templateFinder->find($rectorRecipe);
+
         $templateVariables = $this->templateVariablesFactory->createFromRectorRecipe($rectorRecipe);
 
         $this->fileGenerator->generateFiles(

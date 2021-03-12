@@ -76,7 +76,11 @@ final class RectorRecipeInteractiveProviderTest extends AbstractKernelTestCase
         // compare it
         $this->assertDirectoryEquals(__DIR__ . '/Fixture/expected_interactive', self::DESTINATION_DIRECTORY);
 
+    }
+
+    protected function tearDown(): void
+    {
         // clear it
-        $this->smartFileSystem->remove(self::DESTINATION_DIRECTORY);
+        // $this->smartFileSystem->remove(self::DESTINATION_DIRECTORY);
     }
 }
