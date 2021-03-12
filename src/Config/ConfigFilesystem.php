@@ -81,6 +81,6 @@ final class ConfigFilesystem
         dump('add with regular expression, keep it simple :)');
 
         // 3. print the content back to file
-        $this->smartFileSystem->dumpFile($setFileInfo->getRealPath(), $changedSetConfigContent);
+        $this->smartFileSystem->dumpFile($setFilePath, $setFileContents);
     }
 }

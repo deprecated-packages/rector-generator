@@ -16,3 +16,9 @@ parameters:
     ignoreErrors:
          - '#Parameter \#1 \$files of method Symplify\\SmartFileSystem\\Finder\\FinderSanitizer\:\:sanitize\(\) expects \(iterable<SplFileInfo\|string\>&Nette\\Utils\\Finder\)\|Symfony\\Component\\Finder\\Finder, array<string\> given#'
 
+         # known values
+         -
+             message: '#Parameter \#1 \$objectOrClass of class ReflectionClass constructor expects class\-string<T of object\>\|T of object, string given#'
+             paths:
+                 - src/Provider/NodeTypesProvider.php
+

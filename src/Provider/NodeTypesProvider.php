@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\Provider;
 
+use PhpParser\Node\Stmt;
+use Rector\RectorGenerator\Exception\ShouldNotHappenException;
 use ReflectionClass;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -51,8 +53,12 @@ final class NodeTypesProvider
 
     private function resolvePhpParserNodesDirectory(): string
     {
-        $stmtReflectionClass = new ReflectionClass(\PhpParser\Node\Stmt::class);
-        $phpParserNodesDirectory = dirname($stmtReflectionClass->getFileName());
-        return $phpParserNodesDirectory;
+        $stmtReflectionClass = new ReflectionClass(Stmt::class);
+        $stmtFileName = $stmtReflectionClass->getFileName();
+        if ($stmtFileName === false) {
+            throw new ShouldNotHappenException();
+        }
+
+        return dirname($stmtFileName);
     }
 }
