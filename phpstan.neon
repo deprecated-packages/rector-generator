@@ -1,5 +1,5 @@
 includes:
-    - utils/phpstan-extensions/config/phpstan-extensions.neon
+    - vendor/symplify/phpstan-extensions/config/config.neon
 
 parameters:
     paths:
@@ -7,3 +7,8 @@ parameters:
         - tests
 
     level: max
+
+
+    excludePaths:
+        - tests/RectorGenerator/Fixture
+        - tests/ValueObjectFactory/Fixture/expected_interactive

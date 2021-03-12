@@ -6,6 +6,7 @@ namespace Rector\RectorGenerator\Tests\RectorGenerator;
 
 use Rector\Core\HttpKernel\RectorKernel;
 use Rector\RectorGenerator\Generator\RectorRecipeGenerator;
+use Rector\RectorGenerator\Tests\HttpKernel\DummyKernel;
 use Rector\RectorGenerator\Tests\RectorGenerator\Source\StaticRectorRecipeFactory;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
 use Symplify\EasyTesting\PHPUnit\Behavior\DirectoryAssertableTrait;
@@ -33,7 +34,7 @@ final class RectorGeneratorTest extends AbstractKernelTestCase
 
     protected function setUp(): void
     {
-        $this->bootKernel(RectorKernel::class);
+        $this->bootKernel(DummyKernel::class);
 
         $this->smartFileSystem = $this->getService(SmartFileSystem::class);
         $this->rectorRecipeGenerator = $this->getService(RectorRecipeGenerator::class);

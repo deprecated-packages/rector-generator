@@ -8,7 +8,6 @@ use Rector\RectorGenerator\Provider\NodeTypesProvider;
 use Rector\RectorGenerator\Provider\PackageNamesProvider;
 use Rector\RectorGenerator\Provider\SetsListProvider;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
-use Rector\Set\ValueObject\SetList;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
