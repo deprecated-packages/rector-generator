@@ -8,15 +8,6 @@ on:
 
 jobs:
     php_linter:
-        strategy:
-            fail-fast: false
-            matrix:
-                actions:
-                    -
-                        php_version: 7.3
-                    -
-                        php_version: 8.0
-
         runs-on: ubuntu-latest
 
         steps:
@@ -26,7 +17,7 @@ jobs:
             -
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: ${{ matrix.actions.php_version }}
+                    php-version: '7.3'
                     coverage: none
 
             -   uses: "ramsey/composer-install@v1"
