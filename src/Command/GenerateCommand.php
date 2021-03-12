@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\Command;
 
 use Nette\Utils\Strings;
-use Rector\Core\Exception\ShouldNotHappenException;
 use Rector\RectorGenerator\Composer\ComposerPackageAutoloadUpdater;
 use Rector\RectorGenerator\Config\ConfigFilesystem;
+use Rector\RectorGenerator\Exception\ShouldNotHappenException;
 use Rector\RectorGenerator\Finder\TemplateFinder;
 use Rector\RectorGenerator\Generator\FileGenerator;
 use Rector\RectorGenerator\Guard\OverrideGuard;
@@ -15,7 +15,6 @@ use Rector\RectorGenerator\Provider\RectorRecipeProvider;
 use Rector\RectorGenerator\TemplateVariablesFactory;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
 use Rector\RectorGenerator\ValueObjectFactory\RectorRecipeInteractiveFactory;
-use Rector\Testing\PHPUnit\StaticPHPUnitEnvironment;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -208,9 +207,11 @@ final class GenerateCommand extends Command
         if (Strings::endsWith($generatedFilePath, 'Test.php')) {
             return true;
         }
+
         if (! Strings::endsWith($generatedFilePath, 'Test.php.inc')) {
             return false;
         }
+
         return StaticPHPUnitEnvironment::isPHPUnitRun();
     }
 }
