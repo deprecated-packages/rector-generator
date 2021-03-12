@@ -20,7 +20,6 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\ParamTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\IdentifierTypeNode;
 use PHPStan\Type\ArrayType;
 use PHPStan\Type\MixedType;
-use Symplify\PackageBuilder\Parameter\ParameterProvider;
 
 final class ConfigurationNodeFactory
 {
@@ -34,19 +33,12 @@ final class ConfigurationNodeFactory
      */
     private $phpDocInfoFactory;
 
-    /**
-     * @var ParameterProvider
-     */
-    private $parameterProvider;
-
     public function __construct(
         NodeFactory $nodeFactory,
-        ParameterProvider $parameterProvider,
         PhpDocInfoFactory $phpDocInfoFactory
     ) {
         $this->nodeFactory = $nodeFactory;
         $this->phpDocInfoFactory = $phpDocInfoFactory;
-        $this->parameterProvider = $parameterProvider;
     }
 
     /**
@@ -55,8 +47,6 @@ final class ConfigurationNodeFactory
      */
     public function createProperties(array $ruleConfiguration): array
     {
-        $this->lowerPhpVersion();
-
         $properties = [];
         foreach (array_keys($ruleConfiguration) as $constantName) {
             $propertyName = StaticRectorStrings::uppercaseUnderscoreToCamelCase($constantName);
@@ -93,8 +83,6 @@ final class ConfigurationNodeFactory
      */
     public function createConfigureClassMethod(array $ruleConfiguration): ClassMethod
     {
-        $this->lowerPhpVersion();
-
         $classMethod = $this->nodeFactory->createPublicMethod('configure');
         $classMethod->returnType = new Identifier('void');
 
@@ -121,17 +109,6 @@ final class ConfigurationNodeFactory
         $phpDocInfo->addTagValueNode($paramTagValueNode);
 
         return $classMethod;
-    }
-
-    /**
-     * So types are PHP 7.2 compatible
-     */
-    private function lowerPhpVersion(): void
-    {
-        $this->parameterProvider->changeParameter(
-            Option::PHP_VERSION_FEATURES,
-            PhpVersionFeature::TYPED_PROPERTIES - 1
-        );
     }
 
     private function createConstantInConfigurationCoalesce(
