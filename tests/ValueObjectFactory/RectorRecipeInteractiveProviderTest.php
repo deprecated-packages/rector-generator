@@ -56,7 +56,7 @@ final class RectorRecipeInteractiveProviderTest extends AbstractKernelTestCase
     protected function tearDown(): void
     {
         // clear it
-        // $this->smartFileSystem->remove(self::DESTINATION_DIRECTORY);
+        $this->smartFileSystem->remove(self::DESTINATION_DIRECTORY);
     }
 
     public function test(): void
