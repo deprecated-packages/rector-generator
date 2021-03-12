@@ -8,6 +8,7 @@ use Rector\Core\HttpKernel\RectorKernel;
 use Rector\RectorGenerator\Exception\ConfigurationException;
 use Rector\RectorGenerator\Generator\RectorRecipeGenerator;
 use Rector\RectorGenerator\Testing\ManualInteractiveInputProvider;
+use Rector\RectorGenerator\Tests\HttpKernel\DummyKernel;
 use Rector\RectorGenerator\ValueObjectFactory\RectorRecipeInteractiveFactory;
 use Symplify\EasyTesting\PHPUnit\Behavior\DirectoryAssertableTrait;
 use Symplify\PackageBuilder\Testing\AbstractKernelTestCase;
@@ -44,7 +45,8 @@ final class RectorRecipeInteractiveProviderTest extends AbstractKernelTestCase
 
     protected function setUp(): void
     {
-        $this->bootKernel(RectorKernel::class);
+        $this->bootKernel(DummyKernel::class);
+
         $this->rectorRecipeInteractiveFactory = $this->getService(RectorRecipeInteractiveFactory::class);
         $this->rectorRecipeGenerator = $this->getService(RectorRecipeGenerator::class);
 

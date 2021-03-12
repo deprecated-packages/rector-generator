@@ -1,3 +1,6 @@
+includes:
+    - utils/phpstan-extensions/config/phpstan-extensions.neon
+
 parameters:
     paths:
         - src
