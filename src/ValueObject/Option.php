@@ -15,4 +15,9 @@ final class Option
      * @var string
      */
     public const SET_LIST_CLASSES = 'set_list_classes';
+
+    /**
+     * @var string
+     */
+    public const INTERACTIVE_MODE = 'interactive';
 }

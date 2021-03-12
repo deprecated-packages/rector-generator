@@ -13,6 +13,7 @@ use Rector\RectorGenerator\Generator\FileGenerator;
 use Rector\RectorGenerator\Guard\OverrideGuard;
 use Rector\RectorGenerator\Provider\RectorRecipeProvider;
 use Rector\RectorGenerator\TemplateVariablesFactory;
+use Rector\RectorGenerator\ValueObject\Option;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
 use Rector\RectorGenerator\ValueObjectFactory\RectorRecipeInteractiveFactory;
 use Symfony\Component\Console\Command\Command;
@@ -28,11 +29,6 @@ use Symplify\SmartFileSystem\SmartFileInfo;
  */
 final class GenerateCommand extends Command
 {
-    /**
-     * @var string
-     */
-    public const INTERACTIVE_MODE_NAME = 'interactive';
-
     /**
      * @var SymfonyStyle
      */
@@ -107,7 +103,7 @@ final class GenerateCommand extends Command
         $this->setAliases(['c', 'create', 'g']);
         $this->setDescription('[DEV] Create a new Rector, in a proper location, with new tests');
         $this->addOption(
-            self::INTERACTIVE_MODE_NAME,
+            Option::INTERACTIVE_MODE,
             'i',
             InputOption::VALUE_NONE,
             'Turns on Interactive Mode - Rector will be generated based on responses to questions instead of using rector-recipe.php',
@@ -156,7 +152,7 @@ final class GenerateCommand extends Command
 
     private function getRectorRecipe(InputInterface $input): RectorRecipe
     {
-        $isInteractive = $input->getOption(self::INTERACTIVE_MODE_NAME);
+        $isInteractive = $input->getOption(Option::INTERACTIVE_MODE);
         if (! $isInteractive) {
             return $this->rectorRecipeProvider->provide();
         }
