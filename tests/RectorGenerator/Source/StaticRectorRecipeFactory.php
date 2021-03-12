@@ -6,11 +6,10 @@ namespace Rector\RectorGenerator\Tests\RectorGenerator\Source;
 
 use PhpParser\Node\Expr\MethodCall;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
-use Rector\Set\ValueObject\SetList;
 
 final class StaticRectorRecipeFactory
 {
-    public static function createRectorRecipe(bool $isRectorRepository): RectorRecipe
+    public static function createRectorRecipe(string $set, bool $isRectorRepository): RectorRecipe
     {
         $rectorRecipe = new RectorRecipe(
             'Utils',
@@ -57,7 +56,7 @@ CODE_SAMPLE
             $rectorRecipe->setPackage('ModeratePackage');
         }
 
-        $rectorRecipe->setSet(SetList::DEAD_CODE);
+        $rectorRecipe->setSet($set);
 
         return $rectorRecipe;
     }

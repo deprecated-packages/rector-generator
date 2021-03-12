@@ -8,8 +8,8 @@ use Nette\Utils\Strings;
 use PhpParser\Node;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
-use Rector\Core\PhpParser\Parser\Parser;
-use Rector\Core\PhpParser\Printer\BetterStandardPrinter;
+use PhpParser\Parser;
+use PhpParser\PrettyPrinter\Standard;
 use Rector\RectorGenerator\Rector\Closure\AddNewServiceToSymfonyPhpConfigRector;
 use Rector\RectorGenerator\TemplateFactory;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
@@ -29,7 +29,7 @@ final class ConfigFilesystem
     private $templateFactory;
 
     /**
-     * @var Parser
+     * @var \PhpParser\ParserAbstract
      */
     private $parser;
 
@@ -44,13 +44,13 @@ final class ConfigFilesystem
     private $smartFileSystem;
 
     /**
-     * @var BetterStandardPrinter
+     * @var Standard
      */
-    private $betterStandardPrinter;
+    private $standard;
 
     public function __construct(
         AddNewServiceToSymfonyPhpConfigRector $addNewServiceToSymfonyPhpConfigRector,
-        BetterStandardPrinter $betterStandardPrinter,
+        Standard $standard,
         Parser $parser,
         SmartFileSystem $smartFileSystem,
         TemplateFactory $templateFactory
@@ -58,7 +58,7 @@ final class ConfigFilesystem
         $this->templateFactory = $templateFactory;
         $this->parser = $parser;
         $this->addNewServiceToSymfonyPhpConfigRector = $addNewServiceToSymfonyPhpConfigRector;
-        $this->betterStandardPrinter = $betterStandardPrinter;
+        $this->standard = $standard;
         $this->smartFileSystem = $smartFileSystem;
     }
 
@@ -82,7 +82,8 @@ final class ConfigFilesystem
         }
 
         // 1. parse the file
-        $setConfigNodes = $this->parser->parseFileInfo($setFileInfo);
+        $setFileContent = $this->smartFileSystem->readFile($setFileContents);
+        $setConfigNodes = $this->parser->parse($setFileContent);
 
         // 2. add the set() call
         $this->decorateNamesToFullyQualified($setConfigNodes);
@@ -94,7 +95,7 @@ final class ConfigFilesystem
         $setConfigNodes = $nodeTraverser->traverse($setConfigNodes);
 
         // 3. print the content back to file
-        $changedSetConfigContent = $this->betterStandardPrinter->prettyPrintFile($setConfigNodes);
+        $changedSetConfigContent = $this->standard->prettyPrintFile($setConfigNodes);
         $this->smartFileSystem->dumpFile($setFileInfo->getRealPath(), $changedSetConfigContent);
     }
 

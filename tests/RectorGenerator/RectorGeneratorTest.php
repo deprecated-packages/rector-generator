@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\Tests\RectorGenerator;
 
-use Rector\Core\HttpKernel\RectorKernel;
 use Rector\RectorGenerator\Generator\RectorRecipeGenerator;
 use Rector\RectorGenerator\Tests\HttpKernel\DummyKernel;
 use Rector\RectorGenerator\Tests\RectorGenerator\Source\StaticRectorRecipeFactory;
@@ -48,7 +47,7 @@ final class RectorGeneratorTest extends AbstractKernelTestCase
 
     public function test(): void
     {
-        $rectorRecipe = $this->createConfiguration(true);
+        $rectorRecipe = $this->createConfiguration(__DIR__ . '/Source/config/some_set.php', true);
         $this->rectorRecipeGenerator->generate($rectorRecipe, self::DESTINATION_DIRECTORY);
 
         $this->assertDirectoryEquals(__DIR__ . '/Fixture/expected', self::DESTINATION_DIRECTORY);
@@ -56,14 +55,14 @@ final class RectorGeneratorTest extends AbstractKernelTestCase
 
     public function test3rdParty(): void
     {
-        $rectorRecipe = $this->createConfiguration(false);
+        $rectorRecipe = $this->createConfiguration(__DIR__ . '/Source/config/some_set.php',false);
         $this->rectorRecipeGenerator->generate($rectorRecipe, self::DESTINATION_DIRECTORY);
 
         $this->assertDirectoryEquals(__DIR__ . '/Fixture/expected_3rd_party', self::DESTINATION_DIRECTORY);
     }
 
-    private function createConfiguration(bool $isRectorRepository): RectorRecipe
+    private function createConfiguration(string $set, bool $isRectorRepository): RectorRecipe
     {
-        return StaticRectorRecipeFactory::createRectorRecipe($isRectorRepository);
+        return StaticRectorRecipeFactory::createRectorRecipe($set, $isRectorRepository);
     }
 }

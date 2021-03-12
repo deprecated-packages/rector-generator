@@ -20,11 +20,6 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\ParamTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\IdentifierTypeNode;
 use PHPStan\Type\ArrayType;
 use PHPStan\Type\MixedType;
-use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory;
-use Rector\Core\Configuration\Option;
-use Rector\Core\PhpParser\Node\NodeFactory;
-use Rector\Core\Util\StaticRectorStrings;
-use Rector\Core\ValueObject\PhpVersionFeature;
 use Symplify\PackageBuilder\Parameter\ParameterProvider;
 
 final class ConfigurationNodeFactory

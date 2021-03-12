@@ -11,10 +11,10 @@ use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
-use Rector\Core\PhpParser\Node\NodeFactory;
-use Rector\Core\PhpParser\Printer\BetterStandardPrinter;
+use PhpParser\PrettyPrinter\Standard;
 use Rector\RectorGenerator\Config\ConfigFilesystem;
 use Rector\RectorGenerator\NodeFactory\ConfigurationNodeFactory;
+use Rector\RectorGenerator\NodeFactory\NodeFactory;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
 
 final class TemplateVariablesFactory
@@ -50,17 +50,17 @@ final class TemplateVariablesFactory
     private $templateFactory;
 
     /**
-     * @var BetterStandardPrinter
+     * @var Standard
      */
-    private $betterStandardPrinter;
+    private $standard;
 
     public function __construct(
-        BetterStandardPrinter $betterStandardPrinter,
+        Standard $standard,
         ConfigurationNodeFactory $configurationNodeFactory,
         NodeFactory $nodeFactory,
         TemplateFactory $templateFactory
     ) {
-        $this->betterStandardPrinter = $betterStandardPrinter;
+        $this->standard = $standard;
         $this->nodeFactory = $nodeFactory;
         $this->configurationNodeFactory = $configurationNodeFactory;
         $this->templateFactory = $templateFactory;
@@ -179,7 +179,7 @@ final class TemplateVariablesFactory
         }
 
         $array = new Array_($arrayItems);
-        return $this->betterStandardPrinter->print($array);
+        return $this->standard->prettyPrint($array);
     }
 
     /**
@@ -188,7 +188,7 @@ final class TemplateVariablesFactory
     private function createConfigurationProperty(array $ruleConfiguration): string
     {
         $properties = $this->configurationNodeFactory->createProperties($ruleConfiguration);
-        return $this->betterStandardPrinter->print($properties);
+        return $this->standard->prettyPrint($properties);
     }
 
     /**
@@ -197,7 +197,7 @@ final class TemplateVariablesFactory
     private function createConfigurationConstants(array $ruleConfiguration): string
     {
         $configurationConstants = $this->configurationNodeFactory->createConfigurationConstants($ruleConfiguration);
-        return $this->betterStandardPrinter->print($configurationConstants);
+        return $this->standard->prettyPrint($configurationConstants);
     }
 
     /**
@@ -206,7 +206,7 @@ final class TemplateVariablesFactory
     private function createConfigureClassMethod(array $ruleConfiguration): string
     {
         $classMethod = $this->configurationNodeFactory->createConfigureClassMethod($ruleConfiguration);
-        return $this->betterStandardPrinter->print($classMethod);
+        return $this->standard->print($classMethod);
     }
 
     private function createNodeTypePhp(RectorRecipe $rectorRecipe): string
@@ -217,6 +217,6 @@ final class TemplateVariablesFactory
         }
 
         $array = $this->nodeFactory->createArray($referencingClassConsts);
-        return $this->betterStandardPrinter->print($array);
+        return $this->standard->print($array);
     }
 }
