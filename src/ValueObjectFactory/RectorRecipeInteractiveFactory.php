@@ -90,7 +90,7 @@ CODE_SAMPLE;
 
         $set = $this->askForSet();
         if ($set !== null) {
-            $rectorRecipe->setSet($set);
+            $rectorRecipe->setSetFilePath($set);
         }
 
         return $rectorRecipe;

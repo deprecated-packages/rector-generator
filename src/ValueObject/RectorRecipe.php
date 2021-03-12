@@ -72,7 +72,7 @@ final class RectorRecipe
     /**
      * @var string|null
      */
-    private $set;
+    private $setFilePath;
 
     /**
      * @var string|null
@@ -154,14 +154,14 @@ final class RectorRecipe
         return $this->resources;
     }
 
-    public function setSet(string $set): void
+    public function setSetFilePath(string $setFilePath): void
     {
-        $this->set = $set;
+        $this->setFilePath = $setFilePath;
     }
 
-    public function getSet(): ?string
+    public function getSetFilePath(): ?string
     {
-        return $this->set;
+        return $this->setFilePath;
     }
 
     /**
@@ -255,6 +255,7 @@ final class RectorRecipe
                 __METHOD__,
                 $package
             );
+
             throw new ShouldNotHappenException($message);
         }
 

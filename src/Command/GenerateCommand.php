@@ -129,9 +129,9 @@ final class GenerateCommand extends Command
             $rectorRecipe,
             $targetDirectory
         );
+
         if ($isUnwantedOverride) {
             $this->symfonyStyle->warning('No files were changed');
-
             return ShellCode::SUCCESS;
         }
 
@@ -144,7 +144,6 @@ final class GenerateCommand extends Command
 
         $this->configFilesystem->appendRectorServiceToSet($rectorRecipe, $templateVariables);
         $testCaseDirectoryPath = $this->resolveTestCaseDirectoryPath($generatedFilePaths);
-
         $this->printSuccess($rectorRecipe->getName(), $generatedFilePaths, $testCaseDirectoryPath);
 
         return ShellCode::SUCCESS;
