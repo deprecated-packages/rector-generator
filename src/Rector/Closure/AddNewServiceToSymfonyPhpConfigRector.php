@@ -80,7 +80,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 };
 CODE_SAMPLE
                 ,
-<<<'CODE_SAMPLE'
+                <<<'CODE_SAMPLE'
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
