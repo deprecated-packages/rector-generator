@@ -14,6 +14,7 @@ use PhpParser\Node\Name\FullyQualified;
 use PhpParser\PrettyPrinter\Standard;
 use Rector\RectorGenerator\Config\ConfigFilesystem;
 use Rector\RectorGenerator\NodeFactory\ConfigurationNodeFactory;
+use Rector\RectorGenerator\NodeFactory\ConfigureClassMethodFactory;
 use Rector\RectorGenerator\NodeFactory\NodeFactory;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
 
@@ -54,9 +55,15 @@ final class TemplateVariablesFactory
      */
     private $standard;
 
+    /**
+     * @var ConfigureClassMethodFactory
+     */
+    private $configureClassMethodFactory;
+
     public function __construct(
         Standard $standard,
         ConfigurationNodeFactory $configurationNodeFactory,
+        ConfigureClassMethodFactory $configureClassMethodFactory,
         NodeFactory $nodeFactory,
         TemplateFactory $templateFactory
     ) {
@@ -64,6 +71,7 @@ final class TemplateVariablesFactory
         $this->nodeFactory = $nodeFactory;
         $this->configurationNodeFactory = $configurationNodeFactory;
         $this->templateFactory = $templateFactory;
+        $this->configureClassMethodFactory = $configureClassMethodFactory;
     }
 
     /**
@@ -205,7 +213,7 @@ final class TemplateVariablesFactory
      */
     private function createConfigureClassMethod(array $ruleConfiguration): string
     {
-        $classMethod = $this->configurationNodeFactory->createConfigureClassMethod($ruleConfiguration);
+        $classMethod = $this->configureClassMethodFactory->create($ruleConfiguration);
         return $this->standard->prettyPrint([$classMethod]);
     }
 
