@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\NodeFactory;
 
 use PhpParser\BuilderHelpers;
+use PhpParser\Comment\Doc;
 use PhpParser\Node\Const_;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
@@ -25,13 +26,18 @@ use Symplify\Astral\ValueObject\NodeBuilder\PropertyBuilder;
 final class NodeFactory
 {
     /**
-     * @param mixed[] $values
+     * @param array<string|int, mixed> $values
      */
     public function createArray(array $values): Array_
     {
         $arrayItems = [];
-        foreach ($values as $value) {
-            $arrayItems[] = new ArrayItem(BuilderHelpers::normalizeValue($value));
+        foreach ($values as $key => $value) {
+            // natural key, no need for value
+            if (is_int($key)) {
+                $arrayItems[] = new ArrayItem(BuilderHelpers::normalizeValue($value));
+            } else {
+                $arrayItems[] = new ArrayItem(BuilderHelpers::normalizeValue($value), BuilderHelpers::normalizeValue($key));
+            }
         }
 
         return new Array_($arrayItems);
@@ -57,16 +63,21 @@ final class NodeFactory
         return $methodBuilder->getNode();
     }
 
-    /**
-     * @param mixed $constantValue
-     */
-    public function createPublicClassConst(string $constantName, $constantValue): ClassConst
+    public function createPublicClassConst(string $constantName, string $stringConstantValue): ClassConst
     {
-        $valueExpr = BuilderHelpers::normalizeValue($constantValue);
+        $valueExpr = BuilderHelpers::normalizeValue($stringConstantValue);
         $const = new Const_($constantName, $valueExpr);
 
         $classConst = new ClassConst([$const]);
         $classConst->flags = Class_::MODIFIER_PUBLIC;
+
+        $docContent = <<<'CODE_SAMPLE'
+/**
+ * @var string
+ */
+CODE_SAMPLE;
+
+        $classConst->setDocComment(new Doc($docContent));
 
         return $classConst;
     }
@@ -75,7 +86,14 @@ final class NodeFactory
     {
         $propertyBuilder = new PropertyBuilder($propertyName);
         $propertyBuilder->makePrivate();
-        $propertyBuilder->setType(new Identifier('array'));
+
+        $docContent = <<<'CODE_SAMPLE'
+/**
+ * @var mixed[]
+ */
+CODE_SAMPLE;
+
+        $propertyBuilder->setDocComment($docContent);
 
         return $propertyBuilder->getNode();
     }

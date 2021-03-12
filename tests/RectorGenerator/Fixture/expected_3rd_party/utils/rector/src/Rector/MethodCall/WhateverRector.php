@@ -78,9 +78,9 @@ CODE_SAMPLE
     }
 
     /**
- * @param mixed[] $configuration
+ * @param array<string, mixed> $configuration
  */
-public function configure(array $configuration): void
+public function configure(array $configuration) : void
 {
     $this->classTypeToMethodName = $configuration[self::CLASS_TYPE_TO_METHOD_NAME] ?? [];
 }

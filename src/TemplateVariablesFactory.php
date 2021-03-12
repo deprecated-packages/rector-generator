@@ -154,7 +154,7 @@ final class TemplateVariablesFactory
     }
 
     /**
-     * @param mixed[] $configuration
+     * @param array<string, mixed> $configuration
      */
     private function createRuleConfiguration(string $rectorClass, array $configuration): string
     {

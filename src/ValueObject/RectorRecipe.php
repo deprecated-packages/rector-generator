@@ -218,7 +218,7 @@ final class RectorRecipe
 
     /**
      * @api
-     * @param mixed[] $configuration
+     * @param array<string, mixed> $configuration
      */
     public function setConfiguration(array $configuration): void
     {

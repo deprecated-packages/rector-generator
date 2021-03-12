@@ -30,8 +30,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->load('Rector\\RectorGenerator\\', __DIR__ . '/../src')
         ->exclude([__DIR__ . '/../src/ValueObject']);
 
-    $services->set(ParameterProvider::class)
-        ->arg('$container', service('service_container'));
+    $services->set(ParameterProvider::class);
 
     // console
     $services->set(SymfonyStyleFactory::class);
@@ -49,7 +48,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(PrivatesAccessor::class);
 
     // php-parser
-    $services->set(Standard::class);
+    $services->set(Standard::class)
+        ->arg('$options', [
+            'shortArraySyntax' => true
+        ]);
     $services->set(ParserFactory::class);
     $services->set(Parser::class)
         ->factory([service(ParserFactory::class), 'create'])
