@@ -1,0 +1,16 @@
+/vendor
+composer.lock
+
+# PHPStorm meta files
+.idea/
+
+.phpunit.result.cache
+
+# often customized locally - example on Github is just fine
+rector-recipe.php
+
+# testing
+abz
+
+php-scoper.phar
+box.phar
