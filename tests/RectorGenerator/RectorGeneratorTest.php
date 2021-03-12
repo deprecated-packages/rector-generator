@@ -55,7 +55,7 @@ final class RectorGeneratorTest extends AbstractKernelTestCase
 
     public function test3rdParty(): void
     {
-        $rectorRecipe = $this->createConfiguration(__DIR__ . '/Source/config/some_set.php',false);
+        $rectorRecipe = $this->createConfiguration(__DIR__ . '/Source/config/some_set.php', false);
         $this->rectorRecipeGenerator->generate($rectorRecipe, self::DESTINATION_DIRECTORY);
 
         $this->assertDirectoryEquals(__DIR__ . '/Fixture/expected_3rd_party', self::DESTINATION_DIRECTORY);
