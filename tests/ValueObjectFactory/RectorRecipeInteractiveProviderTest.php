@@ -53,6 +53,12 @@ final class RectorRecipeInteractiveProviderTest extends AbstractKernelTestCase
         $this->smartFileSystem = $this->getService(SmartFileSystem::class);
     }
 
+    protected function tearDown(): void
+    {
+        // clear it
+        // $this->smartFileSystem->remove(self::DESTINATION_DIRECTORY);
+    }
+
     public function test(): void
     {
         $this->manualInteractiveInputProvider->setInput(['Naming', 'T', 'Arg', 'Description']);
@@ -75,12 +81,5 @@ final class RectorRecipeInteractiveProviderTest extends AbstractKernelTestCase
 
         // compare it
         $this->assertDirectoryEquals(__DIR__ . '/Fixture/expected_interactive', self::DESTINATION_DIRECTORY);
-
-    }
-
-    protected function tearDown(): void
-    {
-        // clear it
-        // $this->smartFileSystem->remove(self::DESTINATION_DIRECTORY);
     }
 }
