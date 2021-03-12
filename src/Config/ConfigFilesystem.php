@@ -7,6 +7,7 @@ namespace Rector\RectorGenerator\Config;
 use Nette\Utils\Strings;
 use PhpParser\Parser;
 use PhpParser\PrettyPrinter\Standard;
+use Rector\RectorGenerator\Exception\ShouldNotHappenException;
 use Rector\RectorGenerator\TemplateFactory;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
 use Symplify\SmartFileSystem\SmartFileSystem;
@@ -17,6 +18,16 @@ final class ConfigFilesystem
      * @var string
      */
     public const RECTOR_FQN_NAME_PATTERN = 'Rector\__Package__\Rector\__Category__\__Name__';
+
+    /**
+     * @var string[]
+     */
+    private const REQUIRED_KEYS = ['__Package__', '__Category__', '__Name__'];
+
+    /**
+     * @see https://regex101.com/r/gJ0bHJ/1
+     */
+    private const LAST_ITEM_REGEX = '#;\n};#';
 
     /**
      * @var TemplateFactory
@@ -55,32 +66,40 @@ final class ConfigFilesystem
      */
     public function appendRectorServiceToSet(RectorRecipe $rectorRecipe, array $templateVariables): void
     {
-        if ($rectorRecipe->getSet() === null) {
+        // no set required, skip it
+        if ($rectorRecipe->getSetFilePath() === null) {
             return;
         }
 
-        $setFilePath = $rectorRecipe->getSet();
+        $setFilePath = $rectorRecipe->getSetFilePath();
         $setFileContents = $this->smartFileSystem->readFile($setFilePath);
 
+        $this->ensureRequiredKeysAreSet($templateVariables);
+
         // already added?
-        $rectorFqnName = $this->templateFactory->create(self::RECTOR_FQN_NAME_PATTERN, $templateVariables);
-        if (Strings::contains($setFileContents, $rectorFqnName)) {
+        $servicesFullyQualifiedName = $this->templateFactory->create(self::RECTOR_FQN_NAME_PATTERN, $templateVariables);
+        if (Strings::contains($setFileContents, $servicesFullyQualifiedName)) {
             return;
         }
 
-        // 1. parse the file
-//        $setFileContent = $this->smartFileSystem->readFile($setFileContents);
-//        $setConfigNodes = $this->parser->parse($setFileContent);
-
-        // 2. add the set() call
-//        $this->decorateNamesToFullyQualified($setConfigNodes);
-
-        dump($setFileContents);
-//        $changedSetConfigContent = $this->standard->prettyPrintFile($setConfigNodes);
-
-        dump('add with regular expression, keep it simple :)');
+        $registerServiceLine = sprintf(';' . PHP_EOL . '    $services->set(\%s::class);' . PHP_EOL . '};', $servicesFullyQualifiedName);
+        $setFileContents = Strings::replace($setFileContents, self::LAST_ITEM_REGEX, $registerServiceLine);
 
         // 3. print the content back to file
         $this->smartFileSystem->dumpFile($setFilePath, $setFileContents);
+    }
+
+    /**
+     * @param array<string, mixed> $templateVariables
+     */
+    private function ensureRequiredKeysAreSet(array $templateVariables): void
+    {
+        $missingKeys = array_diff(self::REQUIRED_KEYS, array_keys($templateVariables));
+        if ($missingKeys === []) {
+            return;
+        }
+
+        $message = sprintf('Template variables for "%s" keys are missing', implode('", "', $missingKeys));
+        throw new ShouldNotHappenException($message);
     }
 }

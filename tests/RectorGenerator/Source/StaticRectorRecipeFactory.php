@@ -5,12 +5,18 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\Tests\RectorGenerator\Source;
 
 use PhpParser\Node\Expr\MethodCall;
+use Rector\RectorGenerator\Exception\ShouldNotHappenException;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
 
 final class StaticRectorRecipeFactory
 {
-    public static function createRectorRecipe(string $set, bool $isRectorRepository): RectorRecipe
+    public static function createRectorRecipe(string $setFilePath, bool $isRectorRepository): RectorRecipe
     {
+        if (! file_exists($setFilePath)) {
+            $message = sprintf('Set file path "%s" was not found', $setFilePath);
+            throw new ShouldNotHappenException($message);
+        }
+
         $rectorRecipe = new RectorRecipe(
             'Utils',
             'WhateverRector',
@@ -51,12 +57,11 @@ CODE_SAMPLE
         ]);
 
         $rectorRecipe->setIsRectorRepository($isRectorRepository);
-
         if ($isRectorRepository) {
             $rectorRecipe->setPackage('ModeratePackage');
         }
 
-        $rectorRecipe->setSet($set);
+        $rectorRecipe->setSetFilePath($setFilePath);
 
         return $rectorRecipe;
     }

@@ -9,7 +9,7 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
 use Rector\RectorGenerator\Exception\ConfigurationException;
 use Rector\RectorGenerator\Exception\ShouldNotHappenException;
-use Rector\RectorGenerator\Utils\StringTransformator;
+use Stringy\Stringy;
 
 final class RectorRecipe
 {
@@ -72,7 +72,7 @@ final class RectorRecipe
     /**
      * @var string|null
      */
-    private $set;
+    private $setFilePath;
 
     /**
      * @var string|null
@@ -154,14 +154,14 @@ final class RectorRecipe
         return $this->resources;
     }
 
-    public function setSet(string $set): void
+    public function setSetFilePath(string $setFilePath): void
     {
-        $this->set = $set;
+        $this->setFilePath = $setFilePath;
     }
 
-    public function getSet(): ?string
+    public function getSetFilePath(): ?string
     {
-        return $this->set;
+        return $this->setFilePath;
     }
 
     /**
@@ -203,8 +203,8 @@ final class RectorRecipe
             return 'phpunit';
         }
 
-        $stringTransformator = new StringTransformator();
-        return $stringTransformator->camelCaseToDashes($this->getPackage());
+        $stringy = new Stringy($this->package);
+        return (string) $stringy->dasherize();
     }
 
     /**
@@ -255,6 +255,7 @@ final class RectorRecipe
                 __METHOD__,
                 $package
             );
+
             throw new ShouldNotHappenException($message);
         }
 
