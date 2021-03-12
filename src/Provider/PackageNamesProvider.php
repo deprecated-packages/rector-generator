@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\Provider;
 
-use Rector\Core\Util\StaticRectorStrings;
+use Rector\RectorGenerator\Utils\StringTransformator;
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 
@@ -13,6 +13,16 @@ use Symfony\Component\Finder\Finder;
  */
 final class PackageNamesProvider
 {
+    /**
+     * @var StringTransformator
+     */
+    private $stringTransformator;
+
+    public function __construct(StringTransformator $stringTransformator)
+    {
+        $this->stringTransformator = $stringTransformator;
+    }
+
     /**
      * @return string[]
      */
@@ -30,7 +40,7 @@ final class PackageNamesProvider
 
         foreach ($fileInfos as $fileInfo) {
             /** @var SplFileInfo $fileInfo */
-            $packageNames[] = StaticRectorStrings::dashesToCamelCase($fileInfo->getFilename());
+            $packageNames[] = $this->stringTransformator->dashesToCamelCase($fileInfo->getFilename());
         }
 
         return $packageNames;

@@ -21,8 +21,6 @@ final class RectorRecipeInteractiveFactory
      * @var string
      */
     public const EXAMPLE_CODE_BEFORE = <<<'CODE_SAMPLE'
-<?php
-
 class SomeClass
 {
     public function run()
@@ -30,15 +28,12 @@ class SomeClass
         $this->something();
     }
 }
-
 CODE_SAMPLE;
 
     /**
      * @var string
      */
     public const EXAMPLE_CODE_AFTER = <<<'CODE_SAMPLE'
-<?php
-
 class SomeClass
 {
     public function run()
@@ -46,7 +41,6 @@ class SomeClass
         $this->somethingElse();
     }
 }
-
 CODE_SAMPLE;
 
     /**
@@ -169,8 +163,8 @@ CODE_SAMPLE;
                 'Link to resource that explains why the change is needed (e.g. <fg=yellow>%s</>)',
                 'https://github.com/symfony/symfony/blob/704c648ba53be38ef2b0105c97c6497744fef8d8/UPGRADE-6.0.md',
             );
-            $resource = $this->symfonyStyle->ask($question);
 
+            $resource = $this->symfonyStyle->ask($question);
             if ($resource === null) {
                 break;
             }
@@ -183,7 +177,9 @@ CODE_SAMPLE;
 
     private function askForSet(): ?string
     {
-        $question = new Question(sprintf('Set to which Rector should be added (e.g. <fg=yellow>%s</>)', 'SYMFONY_52'));
+        $questionMessage = sprintf('Set to which Rector should be added (e.g. <fg=yellow>%s</>)', 'SYMFONY_52');
+
+        $question = new Question($questionMessage);
         $question->setAutocompleterValues($this->setsListProvider->provide());
 
         $setName = $this->symfonyStyle->askQuestion($question);
@@ -191,6 +187,6 @@ CODE_SAMPLE;
             return null;
         }
 
-        return constant(SetList::class . $setName);
+        return constant('Rector\Set\ValueObject\SetList::' . $setName);
     }
 }

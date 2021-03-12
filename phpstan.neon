@@ -12,3 +12,7 @@ parameters:
     excludePaths:
         - tests/RectorGenerator/Fixture
         - tests/ValueObjectFactory/Fixture/expected_interactive
+
+    ignoreErrors:
+         - '#Parameter \#1 \$files of method Symplify\\SmartFileSystem\\Finder\\FinderSanitizer\:\:sanitize\(\) expects \(iterable<SplFileInfo\|string\>&Nette\\Utils\\Finder\)\|Symfony\\Component\\Finder\\Finder, array<string\> given#'
+

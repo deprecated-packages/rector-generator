@@ -6,6 +6,7 @@ namespace Rector\RectorGenerator\Composer;
 
 use Rector\RectorGenerator\ValueObject\Package;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
+use Rector\RectorGenerator\ValueObjectFactory\PackageFactory;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\ComposerJsonManipulator\ValueObject\ComposerJsonSection;
 use Symplify\SmartFileSystem\Json\JsonFileSystem;
@@ -27,10 +28,19 @@ final class ComposerPackageAutoloadUpdater
      */
     private $symfonyStyle;
 
-    public function __construct(JsonFileSystem $jsonFileSystem, SymfonyStyle $symfonyStyle)
-    {
+    /**
+     * @var PackageFactory
+     */
+    private $packageFactory;
+
+    public function __construct(
+        JsonFileSystem $jsonFileSystem,
+        SymfonyStyle $symfonyStyle,
+        PackageFactory $packageFactory
+    ) {
         $this->jsonFileSystem = $jsonFileSystem;
         $this->symfonyStyle = $symfonyStyle;
+        $this->packageFactory = $packageFactory;
     }
 
     public function processComposerAutoload(RectorRecipe $rectorRecipe): void
@@ -38,7 +48,7 @@ final class ComposerPackageAutoloadUpdater
         $composerJsonFilePath = getcwd() . '/composer.json';
         $composerJson = $this->jsonFileSystem->loadFilePathToJson($composerJsonFilePath);
 
-        $package = $this->resolvePackage($rectorRecipe);
+        $package = $this->packageFactory->create($rectorRecipe);
 
         if ($this->isPackageAlreadyLoaded($composerJson, $package)) {
             return;
@@ -63,25 +73,6 @@ final class ComposerPackageAutoloadUpdater
         $this->jsonFileSystem->writeJsonToFilePath($composerJson, $composerJsonFilePath);
 
         $this->rebuildAutoload();
-    }
-
-    private function resolvePackage(RectorRecipe $rectorRecipe): Package
-    {
-        if (! $rectorRecipe->isRectorRepository()) {
-            return new Package(
-                'Utils\\Rector\\',
-                'Utils\\Rector\\Tests\\',
-                'utils/rector/src',
-                'utils/rector/tests'
-            );
-        }
-
-        return new Package(
-            'Rector\\' . $rectorRecipe->getPackage() . '\\',
-            'Rector\\' . $rectorRecipe->getPackage() . '\\Tests\\',
-            'rules/' . $rectorRecipe->getPackageDirectory() . '/src',
-            'rules/' . $rectorRecipe->getPackageDirectory() . '/tests'
-        );
     }
 
     /**

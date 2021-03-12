@@ -5,15 +5,10 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\Config;
 
 use Nette\Utils\Strings;
-use PhpParser\Node;
-use PhpParser\NodeTraverser;
-use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\Parser;
 use PhpParser\PrettyPrinter\Standard;
-use Rector\RectorGenerator\Rector\Closure\AddNewServiceToSymfonyPhpConfigRector;
 use Rector\RectorGenerator\TemplateFactory;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
-use Symplify\SmartFileSystem\SmartFileInfo;
 use Symplify\SmartFileSystem\SmartFileSystem;
 
 final class ConfigFilesystem
@@ -29,14 +24,9 @@ final class ConfigFilesystem
     private $templateFactory;
 
     /**
-     * @var \PhpParser\ParserAbstract
+     * @var Parser
      */
     private $parser;
-
-    /**
-     * @var AddNewServiceToSymfonyPhpConfigRector
-     */
-    private $addNewServiceToSymfonyPhpConfigRector;
 
     /**
      * @var SmartFileSystem
@@ -49,7 +39,6 @@ final class ConfigFilesystem
     private $standard;
 
     public function __construct(
-        AddNewServiceToSymfonyPhpConfigRector $addNewServiceToSymfonyPhpConfigRector,
         Standard $standard,
         Parser $parser,
         SmartFileSystem $smartFileSystem,
@@ -57,7 +46,6 @@ final class ConfigFilesystem
     ) {
         $this->templateFactory = $templateFactory;
         $this->parser = $parser;
-        $this->addNewServiceToSymfonyPhpConfigRector = $addNewServiceToSymfonyPhpConfigRector;
         $this->standard = $standard;
         $this->smartFileSystem = $smartFileSystem;
     }
@@ -72,8 +60,10 @@ final class ConfigFilesystem
         }
 
         $setFilePath = $rectorRecipe->getSet();
-        $setFileInfo = new SmartFileInfo($setFilePath);
-        $setFileContents = $setFileInfo->getContents();
+        $setFileContents = $this->smartFileSystem->readFile($setFilePath);
+
+//        $setFileInfo = new SmartFileInfo($setFilePath);
+//        $setFileContents = $setFileInfo->getContents();
 
         // already added?
         $rectorFqnName = $this->templateFactory->create(self::RECTOR_FQN_NAME_PATTERN, $templateVariables);
@@ -82,31 +72,19 @@ final class ConfigFilesystem
         }
 
         // 1. parse the file
-        $setFileContent = $this->smartFileSystem->readFile($setFileContents);
-        $setConfigNodes = $this->parser->parse($setFileContent);
+//        $setFileContent = $this->smartFileSystem->readFile($setFileContents);
+//        $setConfigNodes = $this->parser->parse($setFileContent);
 
         // 2. add the set() call
-        $this->decorateNamesToFullyQualified($setConfigNodes);
+//        $this->decorateNamesToFullyQualified($setConfigNodes);
 
-        $nodeTraverser = new NodeTraverser();
+        dump($setFileContents);
+//        $changedSetConfigContent = $this->standard->prettyPrintFile($setConfigNodes);
 
-        $this->addNewServiceToSymfonyPhpConfigRector->setRectorClass($rectorFqnName);
-        $nodeTraverser->addVisitor($this->addNewServiceToSymfonyPhpConfigRector);
-        $setConfigNodes = $nodeTraverser->traverse($setConfigNodes);
+        dump('add with regular expression, keep it simple :)');
+        die;
 
         // 3. print the content back to file
-        $changedSetConfigContent = $this->standard->prettyPrintFile($setConfigNodes);
         $this->smartFileSystem->dumpFile($setFileInfo->getRealPath(), $changedSetConfigContent);
-    }
-
-    /**
-     * @param Node[] $nodes
-     */
-    private function decorateNamesToFullyQualified(array $nodes): void
-    {
-        // decorate nodes with names first
-        $nameResolverNodeTraverser = new NodeTraverser();
-        $nameResolverNodeTraverser->addVisitor(new NameResolver());
-        $nameResolverNodeTraverser->traverse($nodes);
     }
 }

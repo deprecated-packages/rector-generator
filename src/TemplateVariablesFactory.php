@@ -179,7 +179,7 @@ final class TemplateVariablesFactory
         }
 
         $array = new Array_($arrayItems);
-        return $this->standard->prettyPrint($array);
+        return $this->standard->prettyPrintExpr($array);
     }
 
     /**
@@ -206,7 +206,7 @@ final class TemplateVariablesFactory
     private function createConfigureClassMethod(array $ruleConfiguration): string
     {
         $classMethod = $this->configurationNodeFactory->createConfigureClassMethod($ruleConfiguration);
-        return $this->standard->print($classMethod);
+        return $this->standard->prettyPrint([$classMethod]);
     }
 
     private function createNodeTypePhp(RectorRecipe $rectorRecipe): string
@@ -217,6 +217,6 @@ final class TemplateVariablesFactory
         }
 
         $array = $this->nodeFactory->createArray($referencingClassConsts);
-        return $this->standard->print($array);
+        return $this->standard->prettyPrintExpr($array);
     }
 }

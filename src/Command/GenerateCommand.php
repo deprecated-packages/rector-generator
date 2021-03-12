@@ -212,6 +212,6 @@ final class GenerateCommand extends Command
             return false;
         }
 
-        return StaticPHPUnitEnvironment::isPHPUnitRun();
+        return defined('PHPUNIT_COMPOSER_INSTALL');
     }
 }

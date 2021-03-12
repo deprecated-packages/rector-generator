@@ -8,7 +8,6 @@ use Nette\Utils\Strings;
 use Rector\RectorGenerator\Finder\TemplateFinder;
 use Rector\RectorGenerator\TemplateFactory;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
-use Rector\Testing\PHPUnit\StaticPHPUnitEnvironment;
 use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class TemplateFileSystem
@@ -70,7 +69,7 @@ final class TemplateFileSystem
 
         // special hack for tests, to PHPUnit doesn't load the generated file as test case
         /** @var string $destination */
-        if (Strings::endsWith($destination, 'Test.php') && StaticPHPUnitEnvironment::isPHPUnitRun()) {
+        if (Strings::endsWith($destination, 'Test.php') && defined('PHPUNIT_COMPOSER_INSTALL')) {
             $destination .= '.inc';
         }
 

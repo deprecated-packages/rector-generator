@@ -7,9 +7,9 @@ namespace Rector\RectorGenerator\ValueObject;
 use Nette\Utils\Strings;
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
-use Rector\Core\Exception\ShouldNotHappenException;
-use Rector\Core\Util\StaticRectorStrings;
 use Rector\RectorGenerator\Exception\ConfigurationException;
+use Rector\RectorGenerator\Exception\ShouldNotHappenException;
+use Rector\RectorGenerator\Utils\StringTransformator;
 
 final class RectorRecipe
 {
@@ -203,7 +203,8 @@ final class RectorRecipe
             return 'phpunit';
         }
 
-        return StaticRectorStrings::camelCaseToDashes($this->getPackage());
+        $stringTransformator = new StringTransformator();
+        return $stringTransformator->camelCaseToDashes($this->getPackage());
     }
 
     /**

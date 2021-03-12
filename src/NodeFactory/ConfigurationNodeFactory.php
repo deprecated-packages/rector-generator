@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\NodeFactory;
 
+use PhpParser\Comment\Doc;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayDimFetch;
 use PhpParser\Node\Expr\BinaryOp\Coalesce;
@@ -16,10 +17,7 @@ use PhpParser\Node\Stmt\ClassConst;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Expression;
 use PhpParser\Node\Stmt\Property;
-use PHPStan\PhpDocParser\Ast\PhpDoc\ParamTagValueNode;
-use PHPStan\PhpDocParser\Ast\Type\IdentifierTypeNode;
-use PHPStan\Type\ArrayType;
-use PHPStan\Type\MixedType;
+use Rector\RectorGenerator\Utils\StringTransformator;
 
 final class ConfigurationNodeFactory
 {
@@ -29,16 +27,16 @@ final class ConfigurationNodeFactory
     private $nodeFactory;
 
     /**
-     * @var PhpDocInfoFactory
+     * @var StringTransformator
      */
-    private $phpDocInfoFactory;
+    private $stringTransformator;
 
     public function __construct(
         NodeFactory $nodeFactory,
-        PhpDocInfoFactory $phpDocInfoFactory
+        StringTransformator $stringTransformator
     ) {
         $this->nodeFactory = $nodeFactory;
-        $this->phpDocInfoFactory = $phpDocInfoFactory;
+        $this->stringTransformator = $stringTransformator;
     }
 
     /**
@@ -48,11 +46,10 @@ final class ConfigurationNodeFactory
     public function createProperties(array $ruleConfiguration): array
     {
         $properties = [];
-        foreach (array_keys($ruleConfiguration) as $constantName) {
-            $propertyName = StaticRectorStrings::uppercaseUnderscoreToCamelCase($constantName);
-            $type = new ArrayType(new MixedType(), new MixedType());
 
-            $property = $this->nodeFactory->createPrivatePropertyFromNameAndType($propertyName, $type);
+        foreach (array_keys($ruleConfiguration) as $constantName) {
+            $propertyName = $this->stringTransformator->uppercaseUnderscoreToCamelCase($constantName);
+            $property = $this->nodeFactory->createPrivateArrayProperty($propertyName);
             $property->props[0]->default = new Array_([]);
             $properties[] = $property;
         }
@@ -95,18 +92,20 @@ final class ConfigurationNodeFactory
         foreach (array_keys($ruleConfiguration) as $constantName) {
             $coalesce = $this->createConstantInConfigurationCoalesce($constantName, $configurationVariable);
 
-            $propertyName = StaticRectorStrings::uppercaseUnderscoreToCamelCase($constantName);
-            $assign = $this->nodeFactory->createPropertyAssignmentWithExpr($propertyName, $coalesce);
+            $propertyName = $this->stringTransformator->uppercaseUnderscoreToCamelCase($constantName);
+            $assign = $this->nodeFactory->createPropertyAssign($propertyName, $coalesce);
             $assigns[] = new Expression($assign);
         }
 
         $classMethod->stmts = $assigns;
 
-        $phpDocInfo = $this->phpDocInfoFactory->createFromNodeOrEmpty($classMethod);
+        $paramDoc = <<<'CODE_SAMPLE'
+/**
+ * @param array<string, mixed> $configuration
+ */
+CODE_SAMPLE;
 
-        $identifierTypeNode = new IdentifierTypeNode('mixed[]');
-        $paramTagValueNode = new ParamTagValueNode($identifierTypeNode, false, '$configuration', '');
-        $phpDocInfo->addTagValueNode($paramTagValueNode);
+        $classMethod->setDocComment(new Doc($paramDoc));
 
         return $classMethod;
     }

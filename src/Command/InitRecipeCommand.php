@@ -32,7 +32,7 @@ final class InitRecipeCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->templateInitializer->initialize(
-            __DIR__ . '/../../../../templates/rector-recipe.php.dist',
+            __DIR__ . '/../../templates/rector-recipe.php.dist',
             'rector-recipe.php'
         );
 

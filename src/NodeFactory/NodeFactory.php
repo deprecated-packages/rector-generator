@@ -4,6 +4,79 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\NodeFactory;
 
+use PhpParser\BuilderHelpers;
+use PhpParser\Node\Const_;
+use PhpParser\Node\Expr;
+use PhpParser\Node\Expr\Array_;
+use PhpParser\Node\Expr\ArrayItem;
+use PhpParser\Node\Expr\Assign;
+use PhpParser\Node\Expr\ClassConstFetch;
+use PhpParser\Node\Expr\PropertyFetch;
+use PhpParser\Node\Expr\Variable;
+use PhpParser\Node\Identifier;
+use PhpParser\Node\Name\FullyQualified;
+use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassConst;
+use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\Property;
+use Symplify\Astral\ValueObject\NodeBuilder\MethodBuilder;
+use Symplify\Astral\ValueObject\NodeBuilder\PropertyBuilder;
+
 final class NodeFactory
 {
+    /**
+     * @param mixed[] $values
+     */
+    public function createArray(array $values): Array_
+    {
+        $arrayItems = [];
+        foreach ($values as $value) {
+            $arrayItems[] = new ArrayItem(BuilderHelpers::normalizeValue($value));
+        }
+
+        return new Array_($arrayItems);
+    }
+
+    public function createClassConstReference(string $class): ClassConstFetch
+    {
+        $fullyQualified = new FullyQualified($class);
+        return new ClassConstFetch($fullyQualified, 'class');
+    }
+
+    public function createPropertyAssign(string $propertyName, Expr $expr): Assign
+    {
+        $propertyFetch = new PropertyFetch(new Variable('this'), $propertyName);
+        return new Assign($propertyFetch, $expr);
+    }
+
+    public function createPublicMethod(string $methodName): ClassMethod
+    {
+        $methodBuilder = new MethodBuilder($methodName);
+        $methodBuilder->makePublic();
+
+        return $methodBuilder->getNode();
+    }
+
+    /**
+     * @param mixed $constantValue
+     */
+    public function createPublicClassConst(string $constantName, $constantValue): ClassConst
+    {
+        $valueExpr = BuilderHelpers::normalizeValue($constantValue);
+        $const = new Const_($constantName, $valueExpr);
+
+        $classConst = new ClassConst([$const]);
+        $classConst->flags = Class_::MODIFIER_PUBLIC;
+
+        return $classConst;
+    }
+
+    public function createPrivateArrayProperty(string $propertyName): Property
+    {
+        $propertyBuilder = new PropertyBuilder($propertyName);
+        $propertyBuilder->makePrivate();
+        $propertyBuilder->setType(new Identifier('array'));
+
+        return $propertyBuilder->getNode();
+    }
 }

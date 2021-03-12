@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\Tests\Provider;
 
-use Rector\Core\HttpKernel\RectorKernel;
 use Rector\RectorGenerator\Provider\PackageNamesProvider;
+use Rector\RectorGenerator\Tests\HttpKernel\DummyKernel;
 use Symplify\PackageBuilder\Testing\AbstractKernelTestCase;
 
 final class PackageNamesProviderTest extends AbstractKernelTestCase
@@ -17,7 +17,7 @@ final class PackageNamesProviderTest extends AbstractKernelTestCase
 
     protected function setUp(): void
     {
-        $this->bootKernel(RectorKernel::class);
+        $this->bootKernel(DummyKernel::class);
         $this->packageNamesProvider = $this->getService(PackageNamesProvider::class);
     }
 

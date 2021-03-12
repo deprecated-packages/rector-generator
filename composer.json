@@ -18,7 +18,8 @@
         "symfony/dependency-injection": "^5.1",
         "symfony/finder": "^4.4.8|^5.1",
         "symplify/astral": "^9.2.4",
-        "symplify/package-builder": "^9.2.4"
+        "symplify/package-builder": "^9.2.4",
+        "danielstjules/stringy": "^3.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.18.2",
