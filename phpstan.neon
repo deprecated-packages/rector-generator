@@ -21,4 +21,3 @@ parameters:
              message: '#Parameter \#1 \$objectOrClass of class ReflectionClass constructor expects class\-string<T of object\>\|T of object, string given#'
              paths:
                  - src/Provider/NodeTypesProvider.php
-
