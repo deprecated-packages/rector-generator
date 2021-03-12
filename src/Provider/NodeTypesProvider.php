@@ -16,11 +16,6 @@ final class NodeTypesProvider
     /**
      * @var string
      */
-    private const PHP_PARSER_NODES_PATH = __DIR__ . '/../../../../vendor/nikic/php-parser/lib/PhpParser/Node';
-
-    /**
-     * @var string
-     */
     private const PHP_PARSER_NAMESPACE = 'PhpParser\Node\\';
 
     /**
@@ -30,7 +25,7 @@ final class NodeTypesProvider
     {
         $finder = new Finder();
         $finder = $finder->files()
-            ->in(self::PHP_PARSER_NODES_PATH);
+            ->in($this->resolvePhpParserNodesDirectory());
 
         $fileInfos = iterator_to_array($finder->getIterator());
 
@@ -52,5 +47,12 @@ final class NodeTypesProvider
         }
 
         return $nodeTypes;
+    }
+
+    private function resolvePhpParserNodesDirectory(): string
+    {
+        $stmtReflectionClass = new ReflectionClass(\PhpParser\Node\Stmt::class);
+        $phpParserNodesDirectory = dirname($stmtReflectionClass->getFileName());
+        return $phpParserNodesDirectory;
     }
 }

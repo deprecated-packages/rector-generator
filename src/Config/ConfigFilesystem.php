@@ -51,7 +51,7 @@ final class ConfigFilesystem
     }
 
     /**
-     * @param string[] $templateVariables
+     * @param array<string, string> $templateVariables
      */
     public function appendRectorServiceToSet(RectorRecipe $rectorRecipe, array $templateVariables): void
     {
@@ -61,9 +61,6 @@ final class ConfigFilesystem
 
         $setFilePath = $rectorRecipe->getSet();
         $setFileContents = $this->smartFileSystem->readFile($setFilePath);
-
-//        $setFileInfo = new SmartFileInfo($setFilePath);
-//        $setFileContents = $setFileInfo->getContents();
 
         // already added?
         $rectorFqnName = $this->templateFactory->create(self::RECTOR_FQN_NAME_PATTERN, $templateVariables);
@@ -82,7 +79,6 @@ final class ConfigFilesystem
 //        $changedSetConfigContent = $this->standard->prettyPrintFile($setConfigNodes);
 
         dump('add with regular expression, keep it simple :)');
-        die;
 
         // 3. print the content back to file
         $this->smartFileSystem->dumpFile($setFileInfo->getRealPath(), $changedSetConfigContent);

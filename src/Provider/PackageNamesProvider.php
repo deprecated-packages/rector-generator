@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\Provider;
 
 use Rector\RectorGenerator\Utils\StringTransformator;
+use Rector\RectorGenerator\ValueObject\Option;
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
+use Symplify\PackageBuilder\Parameter\ParameterProvider;
 
 /**
  * @see \Rector\RectorGenerator\Tests\Provider\PackageNamesProviderTest
@@ -18,9 +20,15 @@ final class PackageNamesProvider
      */
     private $stringTransformator;
 
-    public function __construct(StringTransformator $stringTransformator)
+    /**
+     * @var ParameterProvider
+     */
+    private $parameterProvider;
+
+    public function __construct(StringTransformator $stringTransformator, ParameterProvider $parameterProvider)
     {
         $this->stringTransformator = $stringTransformator;
+        $this->parameterProvider = $parameterProvider;
     }
 
     /**
@@ -28,10 +36,12 @@ final class PackageNamesProvider
      */
     public function provide(): array
     {
+        $rulesDirectory = $this->parameterProvider->provideStringParameter(Option::RULES_DIRECTORY);
+
         $finder = new Finder();
         $finder = $finder->directories()
             ->depth(0)
-            ->in(__DIR__ . '/../../../../rules')
+            ->in($rulesDirectory)
             ->sortByName();
 
         $fileInfos = iterator_to_array($finder->getIterator());

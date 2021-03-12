@@ -21,5 +21,8 @@ final class DummyKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $loader->load(__DIR__ . '/../../config/config.php');
+
+        // for tests
+        $loader->load(__DIR__ . '/../config/config_tests.php');
     }
 }
