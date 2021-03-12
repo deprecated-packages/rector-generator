@@ -11,3 +11,5 @@ rector-recipe.php
 
 
 /var
+
+tests/ValueObjectFactory/__temp/
