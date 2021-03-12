@@ -21,6 +21,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(Option::SKIP, [
         __DIR__ . '/tests/RectorGenerator/Fixture',
         __DIR__ . '/tests/RectorGenerator/Source',
+        __DIR__ . '/tests/ValueObjectFactory/Fixture/expected_interactive',
     ]);
 };
 

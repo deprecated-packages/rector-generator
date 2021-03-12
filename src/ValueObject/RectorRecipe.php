@@ -95,7 +95,7 @@ final class RectorRecipe
         string $codeBefore,
         string $codeAfter
     ) {
-        $this->isRectorRepository = file_exists(__DIR__ . '/../../../../vendor');
+        $this->isRectorRepository = file_exists(__DIR__ . '/../../vendor');
 
         $this->setPackage($package);
         $this->setName($name);
