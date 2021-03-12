@@ -9,7 +9,7 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
 use Rector\RectorGenerator\Exception\ConfigurationException;
 use Rector\RectorGenerator\Exception\ShouldNotHappenException;
-use Rector\RectorGenerator\Utils\StringTransformator;
+use Stringy\Stringy;
 
 final class RectorRecipe
 {
@@ -203,8 +203,8 @@ final class RectorRecipe
             return 'phpunit';
         }
 
-        $stringTransformator = new StringTransformator();
-        return $stringTransformator->camelCaseToDashes($this->getPackage());
+        $stringy = new Stringy($this->package);
+        return (string) $stringy->dasherize();
     }
 
     /**

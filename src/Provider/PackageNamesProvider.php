@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\Provider;
 
-use Rector\RectorGenerator\Utils\StringTransformator;
 use Rector\RectorGenerator\ValueObject\Option;
 use SplFileInfo;
+use Stringy\Stringy;
 use Symfony\Component\Finder\Finder;
 use Symplify\PackageBuilder\Parameter\ParameterProvider;
 
@@ -16,18 +16,12 @@ use Symplify\PackageBuilder\Parameter\ParameterProvider;
 final class PackageNamesProvider
 {
     /**
-     * @var StringTransformator
-     */
-    private $stringTransformator;
-
-    /**
      * @var ParameterProvider
      */
     private $parameterProvider;
 
-    public function __construct(StringTransformator $stringTransformator, ParameterProvider $parameterProvider)
+    public function __construct(ParameterProvider $parameterProvider)
     {
-        $this->stringTransformator = $stringTransformator;
         $this->parameterProvider = $parameterProvider;
     }
 
@@ -50,7 +44,8 @@ final class PackageNamesProvider
 
         foreach ($fileInfos as $fileInfo) {
             /** @var SplFileInfo $fileInfo */
-            $packageNames[] = $this->stringTransformator->dashesToCamelCase($fileInfo->getFilename());
+            $stringy = new Stringy($fileInfo->getFilename());
+            $packageNames[] = (string) $stringy->upperCamelize();
         }
 
         return $packageNames;

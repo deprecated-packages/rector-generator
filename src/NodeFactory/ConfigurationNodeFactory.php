@@ -8,7 +8,7 @@ use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\ClassConst;
 use PhpParser\Node\Stmt\Property;
-use Rector\RectorGenerator\Utils\StringTransformator;
+use Stringy\Stringy;
 
 final class ConfigurationNodeFactory
 {
@@ -17,17 +17,9 @@ final class ConfigurationNodeFactory
      */
     private $nodeFactory;
 
-    /**
-     * @var StringTransformator
-     */
-    private $stringTransformator;
-
-    public function __construct(
-        NodeFactory $nodeFactory,
-        StringTransformator $stringTransformator
-    ) {
+    public function __construct(NodeFactory $nodeFactory)
+    {
         $this->nodeFactory = $nodeFactory;
-        $this->stringTransformator = $stringTransformator;
     }
 
     /**
@@ -39,7 +31,9 @@ final class ConfigurationNodeFactory
         $properties = [];
 
         foreach (array_keys($ruleConfiguration) as $constantName) {
-            $propertyName = $this->stringTransformator->uppercaseUnderscoreToCamelCase($constantName);
+            $stringy = new Stringy($constantName);
+            $propertyName = (string) $stringy->toLowerCase()->camelize();
+
             $property = $this->nodeFactory->createPrivateArrayProperty($propertyName);
             $property->props[0]->default = new Array_([]);
             $properties[] = $property;

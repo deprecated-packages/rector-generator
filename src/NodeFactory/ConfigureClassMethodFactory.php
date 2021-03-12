@@ -15,7 +15,7 @@ use PhpParser\Node\Name;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Expression;
-use Rector\RectorGenerator\Utils\StringTransformator;
+use Stringy\Stringy;
 
 final class ConfigureClassMethodFactory
 {
@@ -24,17 +24,9 @@ final class ConfigureClassMethodFactory
      */
     private $nodeFactory;
 
-    /**
-     * @var StringTransformator
-     */
-    private $stringTransformator;
-
-    public function __construct(
-        NodeFactory $nodeFactory,
-        StringTransformator $stringTransformator
-    ) {
+    public function __construct(NodeFactory $nodeFactory)
+    {
         $this->nodeFactory = $nodeFactory;
-        $this->stringTransformator = $stringTransformator;
     }
 
     /**
@@ -54,7 +46,9 @@ final class ConfigureClassMethodFactory
         foreach (array_keys($ruleConfiguration) as $constantName) {
             $coalesce = $this->createConstantInConfigurationCoalesce($constantName, $configurationVariable);
 
-            $propertyName = $this->stringTransformator->uppercaseUnderscoreToCamelCase($constantName);
+            $stringy = new Stringy($constantName);
+            $propertyName = (string) $stringy->toLowerCase()->camelize();
+
             $assign = $this->nodeFactory->createPropertyAssign($propertyName, $coalesce);
             $assigns[] = new Expression($assign);
         }

@@ -51,6 +51,7 @@ final class ConfigFilesystem
     }
 
     /**
+     * @todo test
      * @param array<string, string> $templateVariables
      */
     public function appendRectorServiceToSet(RectorRecipe $rectorRecipe, array $templateVariables): void
@@ -60,6 +61,10 @@ final class ConfigFilesystem
         }
 
         $setFilePath = $rectorRecipe->getSet();
+
+        dump($setFilePath);
+        die;
+
         $setFileContents = $this->smartFileSystem->readFile($setFilePath);
 
         // already added?
