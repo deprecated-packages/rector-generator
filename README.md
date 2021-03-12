@@ -13,7 +13,7 @@ Every Rector rule requires test, test fixtures, config and the rule.
 
 This package will **save your typing the repeated code** and gives you **more space for writing `refactor()` method logic**.
 
-## How to Generate?
+## How to Generate a new Rule?
 
 There are 2 ways to generate a new rule.
 
