@@ -4,18 +4,36 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\Provider;
 
+use Rector\RectorGenerator\ValueObject\Option;
 use ReflectionClass;
+use Symplify\PackageBuilder\Parameter\ParameterProvider;
 
 final class SetsListProvider
 {
+    /**
+     * @var ParameterProvider
+     */
+    private $parameterProvider;
+
+    public function __construct(ParameterProvider $parameterProvider)
+    {
+        $this->parameterProvider = $parameterProvider;
+    }
+
     /**
      * @return string[]
      */
     public function provide(): array
     {
-        $reflectionClass = new ReflectionClass(SetList::class);
-        $constants = $reflectionClass->getConstants();
+        $setListClasses = $this->parameterProvider->provideArrayParameter(Option::SET_LIST_CLASSES);
 
-        return array_keys($constants);
+        $setListNames = [];
+
+        foreach ($setListClasses as $setListClass) {
+            $reflectionClass = new ReflectionClass($setListClass);
+            $setListNames[] = array_merge($setListNames, array_keys($reflectionClass->getConstants()));
+        }
+
+        return $setListNames;
     }
 }
