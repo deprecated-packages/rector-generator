@@ -8,6 +8,7 @@ parameters:
 
     level: max
 
+    reportUnmatchedIgnoredErrors: false
 
     excludePaths:
         - tests/RectorGenerator/Fixture
@@ -18,6 +19,6 @@ parameters:
 
          # known values
          -
-             message: '#Parameter \#1 \$objectOrClass of class ReflectionClass constructor expects class\-string<T of object\>\|T of object, string given#'
+             message: '#Parameter \#1 (.*?) of class ReflectionClass constructor expects class\-string<T of object\>\|T of object, string given#'
              paths:
                  - src/Provider/NodeTypesProvider.php

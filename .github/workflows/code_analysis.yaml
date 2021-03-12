@@ -22,7 +22,7 @@ jobs:
 
                     -
                         name: 'PHPStan'
-                        run: 'vendor/bin/phpstan --ansi'
+                        run: 'composer phpstan --ansi'
 
 
         name: ${{ matrix.actions.name }}
