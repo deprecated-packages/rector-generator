@@ -2,6 +2,9 @@ name: PHP Linter
 
 on:
     pull_request: null
+    push:
+        branches:
+            - main
 
 jobs:
     php_linter:
