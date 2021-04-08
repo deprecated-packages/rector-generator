@@ -12,7 +12,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
 
- * @see \Rector\ModeratePackage\Tests\Rector\MethodCall\WhateverRector\WhateverRectorTest
+ * @see \Rector\Tests\ModeratePackage\Rector\MethodCall\WhateverRector\WhateverRectorTest
  */
 final class WhateverRector extends AbstractRector implements ConfigurableRectorInterface
 {

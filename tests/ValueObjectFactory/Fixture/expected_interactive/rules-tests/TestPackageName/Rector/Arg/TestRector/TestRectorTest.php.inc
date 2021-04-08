@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rector\TestPackageName\Tests\Rector\Arg\TestRector;
+namespace Rector\Tests\TestPackageName\Rector\Arg\TestRector;
 
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 

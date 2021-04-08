@@ -11,7 +11,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
 __Resources__
- * @see \Rector\__Package__\Tests\Rector\__Category__\__Name__\__Name__Test
+ * @see \Rector\Tests\__Package__\Rector\__Category__\__Name__\__Name__Test
  */
 final class __Name__ extends AbstractRector
 {

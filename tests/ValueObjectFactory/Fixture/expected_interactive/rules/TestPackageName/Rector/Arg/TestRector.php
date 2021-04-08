@@ -11,7 +11,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
 
- * @see \Rector\TestPackageName\Tests\Rector\Arg\TestRector\TestRectorTest
+ * @see \Rector\Tests\TestPackageName\Rector\Arg\TestRector\TestRectorTest
  */
 final class TestRector extends AbstractRector
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rector\ModeratePackage\Tests\Rector\MethodCall\WhateverRector;
+namespace Rector\Tests\ModeratePackage\Rector\MethodCall\WhateverRector;
 
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 

@@ -20,6 +20,12 @@ final class FileGenerator
     public const RECTOR_UTILS_REGEX = '#Rector\\\\Utils#';
 
     /**
+     * @var string
+     * @see https://regex101.com/r/RVbPEX/1
+     */
+    public const RECTOR_UTILS_TESTS_REGEX = '#Rector\\\\Tests\\\\Utils#';
+
+    /**
      * @var TemplateFileSystem
      */
     private $templateFileSystem;
@@ -90,6 +96,7 @@ final class FileGenerator
         // replace "Rector\Utils\" with "Utils\Rector\" for 3rd party packages
         if (! $rectorRecipe->isRectorRepository()) {
             $content = Strings::replace($content, self::RECTOR_UTILS_REGEX, 'Utils\Rector');
+            $content = Strings::replace($content, self::RECTOR_UTILS_TESTS_REGEX, 'Utils\Rector\Tests');
         }
 
         $this->smartFileSystem->dumpFile($targetFilePath, $content);
