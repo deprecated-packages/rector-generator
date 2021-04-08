@@ -22,9 +22,9 @@ final class PackageFactory
 
         return new Package(
             'Rector\\' . $rectorRecipe->getPackage() . '\\',
-            'Rector\\' . $rectorRecipe->getPackage() . '\\Tests\\',
-            'rules/' . $rectorRecipe->getPackageDirectory() . '/src',
-            'rules/' . $rectorRecipe->getPackageDirectory() . '/tests'
+            'Rector\\Tests\\' . $rectorRecipe->getPackage(),
+            'rules/' . $rectorRecipe->getPackage(),
+            'rules-tests/' . $rectorRecipe->getPackage()
         );
     }
 }
