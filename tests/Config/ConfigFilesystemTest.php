@@ -34,7 +34,12 @@ final class ConfigFilesystemTest extends AbstractKernelTestCase
         $inputFileInfo = $inputFileInfoAndExpected->getInputFileInfo();
 
         $rectorRecipe = StaticRectorRecipeFactory::createRectorRecipe($inputFileInfo->getRealPath(), false);
-        $this->configFilesystem->appendRectorServiceToSet($rectorRecipe, [
+
+        $setFilePath = $rectorRecipe->getSetFilePath();
+        $this->assertNotNull($setFilePath);
+
+        /** @var string $setFilePath */
+        $this->configFilesystem->appendRectorServiceToSet($setFilePath, [
             '__Package__' => 'SomePackage',
             '__Category__' => 'String_',
             '__Name__' => 'SomeRector',

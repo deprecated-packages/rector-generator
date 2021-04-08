@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rector\RectorGenerator\Config;
+namespace Rector\RectorGenerator\FileSystem;
 
 use Nette\Utils\Strings;
 use PhpParser\Parser;
