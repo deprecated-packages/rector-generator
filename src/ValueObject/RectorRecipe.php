@@ -10,7 +10,6 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
 use Rector\RectorGenerator\Exception\ConfigurationException;
 use Rector\RectorGenerator\Exception\ShouldNotHappenException;
-use Stringy\Stringy;
 
 final class RectorRecipe
 {
