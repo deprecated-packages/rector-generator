@@ -3,10 +3,11 @@
 Every Rector rule requires test, test fixtures, config and the rule.
 
 ```bash
-- src/Rector/Category/SomeRector.php
-- tests/Rector/Category SomeRectorTest.php
-- tests/Rector/Category/config/config.php
-- tests/Rector/Category/Fixture/some_fixture.php.inc
+- rules/Package/Rector/Category/SomeRector.php
+
+- rules-tests/Package/Rector/Category/SomeRector/SomeRectorTest.php
+- rules-tests/Package/Rector/Category/SomeRector/config/confured_rule.php
+- rules-tests/Package/Rector/Category/SomeRector/Fixture/some_fixture.php.inc
 ```
 
 ~80 % of the code is repeated text - namespace, Rector name, default test setup etc.
