@@ -23,8 +23,8 @@ final class __Name__Test extends AbstractRectorTestCase
         yield [new \Symplify\SmartFileSystem\SmartFileInfo(__DIR__ . '/Fixture/some_class.php.inc'), '__ExtraFileName__', __DIR__ . '/Source/extra_file.php'];
     }
 
-    protected function provideConfigFilePath(): string
+    public function provideConfigFilePath(): string
     {
-        return __DIR__ . '/configured_rule.php';
+        return __DIR__ . '/config/configured_rule.php';
     }
 }

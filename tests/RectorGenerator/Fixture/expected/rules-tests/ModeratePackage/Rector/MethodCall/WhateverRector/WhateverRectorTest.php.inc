@@ -21,8 +21,8 @@ final class WhateverRectorTest extends AbstractRectorTestCase
         return $this->yieldFilesFromDirectory(__DIR__ . '/Fixture');
     }
 
-    protected function provideConfigFilePath(): string
+    public function provideConfigFilePath(): string
     {
-        return __DIR__ . '/configured_rule.php';
+        return __DIR__ . '/config/configured_rule.php';
     }
 }

@@ -21,8 +21,8 @@ final class TestRectorTest extends AbstractRectorTestCase
         return $this->yieldFilesFromDirectory(__DIR__ . '/Fixture');
     }
 
-    protected function getRectorClass(): string
+    public function provideConfigFilePath(): string
     {
-        return \Rector\TestPackageName\Rector\Arg\TestRector::class;
+        return __DIR__ . '/config/configured_rule.php';
     }
 }

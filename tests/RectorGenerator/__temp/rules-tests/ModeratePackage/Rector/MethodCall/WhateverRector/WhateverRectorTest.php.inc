@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Rector\__Package__\Tests\Rector\__Category__\__Name__;
+namespace Rector\ModeratePackage\Tests\Rector\MethodCall\WhateverRector;
 
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
-final class __Name__Test extends AbstractRectorTestCase
+final class WhateverRectorTest extends AbstractRectorTestCase
 {
     /**
      * @dataProvider provideData()
@@ -21,8 +21,8 @@ final class __Name__Test extends AbstractRectorTestCase
         return $this->yieldFilesFromDirectory(__DIR__ . '/Fixture');
     }
 
-    protected function provideConfigFilePath(): string
+    public function provideConfigFilePath(): string
     {
-        return __DIR__ . '/configured_rule.php';
+        return __DIR__ . '/config/configured_rule.php';
     }
 }

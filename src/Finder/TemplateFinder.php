@@ -55,22 +55,11 @@ final class TemplateFinder
      * @param string[] $filePaths
      * @return string[]
      *
-     * @note the ".inc" suffix is needed, so PHPUnit doens't load it as a test case;
-     * unfortunately we haven't found a way to preven it
+     * @note the ".inc" suffix is needed, so PHPUnit doens't load it as a test case
      */
     private function addRuleAndTestCase(RectorRecipe $rectorRecipe, array $filePaths): array
     {
-        if ($rectorRecipe->getConfiguration() !== []) {
-            $filePaths[] = __DIR__ . '/../../templates/rules/__Package__/Rector/__Category__/__Configured__Name__.php';
-
-            if ($rectorRecipe->getExtraFileContent()) {
-                $filePaths[] = __DIR__ . '/../../templates/rules-tests/__Package__/Rector/__Category__/__Name__/__Configured__Extra__Name__Test.php.inc';
-            } else {
-                $filePaths[] = __DIR__ . '/../../templates/rules-tests/__Package__/Rector/__Category__/__Name__/__Configured__Name__Test.php.inc';
-            }
-
-            return $filePaths;
-        }
+        $filePaths[] = __DIR__ . '/../../templates/rules-tests/__Package__/Rector/__Category__/__Name__/config/configured_rule.php';
 
         if ($rectorRecipe->getExtraFileContent()) {
             $filePaths[] = __DIR__ . '/../../templates/rules-tests/__Package__/Rector/__Category__/__Name__/__Extra__Name__Test.php.inc';
@@ -78,7 +67,11 @@ final class TemplateFinder
             $filePaths[] = __DIR__ . '/../../templates/rules-tests/__Package__/Rector/__Category__/__Name__/__Name__Test.php.inc';
         }
 
-        $filePaths[] = __DIR__ . '/../../templates/rules/__Package__/Rector/__Category__/__Name__.php';
+        if ($rectorRecipe->getConfiguration() !== []) {
+            $filePaths[] = __DIR__ . '/../../templates/rules/__Package__/Rector/__Category__/__Configured__Name__.php';
+        } else {
+            $filePaths[] = __DIR__ . '/../../templates/rules/__Package__/Rector/__Category__/__Name__.php';
+        }
 
         return $filePaths;
     }
