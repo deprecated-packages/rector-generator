@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\Tests\Config;
 
 use Iterator;
-use Rector\RectorGenerator\Config\ConfigFilesystem;
+use Rector\RectorGenerator\FileSystem\ConfigFilesystem;
 use Rector\RectorGenerator\Tests\HttpKernel\DummyKernel;
 use Rector\RectorGenerator\Tests\RectorGenerator\Source\StaticRectorRecipeFactory;
 use Symplify\EasyTesting\StaticFixtureSplitter;

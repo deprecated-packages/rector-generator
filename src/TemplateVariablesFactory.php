@@ -12,7 +12,7 @@ use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\PrettyPrinter\Standard;
-use Rector\RectorGenerator\Config\ConfigFilesystem;
+use Rector\RectorGenerator\FileSystem\ConfigFilesystem;
 use Rector\RectorGenerator\NodeFactory\ConfigurationNodeFactory;
 use Rector\RectorGenerator\NodeFactory\ConfigureClassMethodFactory;
 use Rector\RectorGenerator\NodeFactory\NodeFactory;
