@@ -13,6 +13,7 @@ use Rector\RectorGenerator\Generator\FileGenerator;
 use Rector\RectorGenerator\Guard\OverrideGuard;
 use Rector\RectorGenerator\Provider\RectorRecipeProvider;
 use Rector\RectorGenerator\TemplateVariablesFactory;
+use Rector\RectorGenerator\ValueObject\NamePattern;
 use Rector\RectorGenerator\ValueObject\Option;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
 use Rector\RectorGenerator\ValueObjectFactory\RectorRecipeInteractiveFactory;
@@ -143,7 +144,11 @@ final class GenerateCommand extends Command
 
         $setFilePath = $rectorRecipe->getSetFilePath();
         if ($setFilePath) {
-            $this->configFilesystem->appendRectorServiceToSet($setFilePath, $templateVariables);
+            $this->configFilesystem->appendRectorServiceToSet(
+                $setFilePath,
+                $templateVariables,
+                NamePattern::RECTOR_FQN_NAME_PATTERN
+            );
         }
 
         $testCaseDirectoryPath = $this->resolveTestCaseDirectoryPath($generatedFilePaths);

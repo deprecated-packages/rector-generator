@@ -14,11 +14,6 @@ use Symplify\SmartFileSystem\SmartFileSystem;
 final class ConfigFilesystem
 {
     /**
-     * @var string
-     */
-    public const RECTOR_FQN_NAME_PATTERN = 'Rector\__Package__\Rector\__Category__\__Name__';
-
-    /**
      * @var string[]
      */
     private const REQUIRED_KEYS = ['__Package__', '__Category__', '__Name__'];
@@ -63,14 +58,14 @@ final class ConfigFilesystem
     /**
      * @param array<string, string> $templateVariables
      */
-    public function appendRectorServiceToSet(string $setFilePath, array $templateVariables): void
+    public function appendRectorServiceToSet(string $setFilePath, array $templateVariables, string $rectorFqnNamePattern): void
     {
         $setFileContents = $this->smartFileSystem->readFile($setFilePath);
 
         $this->ensureRequiredKeysAreSet($templateVariables);
 
         // already added?
-        $servicesFullyQualifiedName = $this->templateFactory->create(self::RECTOR_FQN_NAME_PATTERN, $templateVariables);
+        $servicesFullyQualifiedName = $this->templateFactory->create($rectorFqnNamePattern, $templateVariables);
         if (Strings::contains($setFileContents, $servicesFullyQualifiedName)) {
             return;
         }
