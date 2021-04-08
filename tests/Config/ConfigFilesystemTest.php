@@ -8,6 +8,7 @@ use Iterator;
 use Rector\RectorGenerator\FileSystem\ConfigFilesystem;
 use Rector\RectorGenerator\Tests\HttpKernel\DummyKernel;
 use Rector\RectorGenerator\Tests\RectorGenerator\Source\StaticRectorRecipeFactory;
+use Rector\RectorGenerator\ValueObject\NamePattern;
 use Symplify\EasyTesting\StaticFixtureSplitter;
 use Symplify\PackageBuilder\Testing\AbstractKernelTestCase;
 use Symplify\SmartFileSystem\SmartFileInfo;
@@ -43,7 +44,7 @@ final class ConfigFilesystemTest extends AbstractKernelTestCase
             '__Package__' => 'SomePackage',
             '__Category__' => 'String_',
             '__Name__' => 'SomeRector',
-        ]);
+        ], NamePattern::RECTOR_FQN_NAME_PATTERN);
 
         $this->assertSame($inputFileInfoAndExpected->getExpected(), $inputFileInfo->getContents());
     }
