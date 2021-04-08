@@ -22,7 +22,13 @@ final class TemplateFileSystem
      * @var string
      * @see https://regex101.com/r/HBcfXd/1
      */
-    private const PACKAGE_RULES_PATH_REGEX = '#(packages|rules)\/__Package__#i';
+    private const PACKAGE_RULES_PATH_REGEX = '#(rules)\/__Package__#i';
+
+    /**
+     * @var string
+     * @see https://regex101.com/r/HBcfXd/1
+     */
+    private const PACKAGE_RULES_TESTS_PATH_REGEX = '#(rules-tests)\/__Package__#i';
 
     /**
      * @var string
@@ -54,7 +60,8 @@ final class TemplateFileSystem
         // normalize core package
         if (! $rectorRecipe->isRectorRepository()) {
             // special keyword for 3rd party Rectors, not for core Github contribution
-            $destination = Strings::replace($destination, self::PACKAGE_RULES_PATH_REGEX, 'utils/rector');
+            $destination = Strings::replace($destination, self::PACKAGE_RULES_PATH_REGEX, 'utils/rector/src');
+            $destination = Strings::replace($destination, self::PACKAGE_RULES_TESTS_PATH_REGEX, 'utils/rector/tests');
         }
 
         // remove _Configured|_Extra prefix
