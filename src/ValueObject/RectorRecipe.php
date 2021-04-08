@@ -339,6 +339,10 @@ final class RectorRecipe
             }
 
             $composerJsonContent = file_get_contents($possibleComposerJsonFilePath);
+            if ($composerJsonContent === false) {
+                continue;
+            }
+
             $composerJson = Json::decode($composerJsonContent, Json::FORCE_ARRAY);
             if (! isset($composerJson['name'])) {
                 continue;

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\Command;
 
 use Nette\Utils\Strings;
-use Rector\RectorGenerator\Composer\ComposerPackageAutoloadUpdater;
 use Rector\RectorGenerator\Exception\ShouldNotHappenException;
 use Rector\RectorGenerator\FileSystem\ConfigFilesystem;
 use Rector\RectorGenerator\Finder\TemplateFinder;
@@ -41,11 +40,6 @@ final class GenerateCommand extends Command
     private $templateVariablesFactory;
 
     /**
-     * @var ComposerPackageAutoloadUpdater
-     */
-    private $composerPackageAutoloadUpdater;
-
-    /**
      * @var TemplateFinder
      */
     private $templateFinder;
@@ -76,7 +70,6 @@ final class GenerateCommand extends Command
     private $rectorRecipeInteractiveFactory;
 
     public function __construct(
-        ComposerPackageAutoloadUpdater $composerPackageAutoloadUpdater,
         ConfigFilesystem $configFilesystem,
         FileGenerator $fileGenerator,
         OverrideGuard $overrideGuard,
@@ -89,7 +82,6 @@ final class GenerateCommand extends Command
         parent::__construct();
 
         $this->templateVariablesFactory = $templateVariablesFactory;
-        $this->composerPackageAutoloadUpdater = $composerPackageAutoloadUpdater;
         $this->templateFinder = $templateFinder;
         $this->configFilesystem = $configFilesystem;
         $this->overrideGuard = $overrideGuard;
@@ -115,10 +107,6 @@ final class GenerateCommand extends Command
         $rectorRecipe = $this->getRectorRecipe($input);
 
         $templateVariables = $this->templateVariablesFactory->createFromRectorRecipe($rectorRecipe);
-
-        // setup psr-4 autoload, if not already in
-        $this->composerPackageAutoloadUpdater->processComposerAutoload($rectorRecipe);
-
         $templateFileInfos = $this->templateFinder->find($rectorRecipe);
 
         $targetDirectory = getcwd();
