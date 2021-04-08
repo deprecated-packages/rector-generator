@@ -31,11 +31,6 @@ final class TemplateVariablesFactory
     private const VARIABLE_PACKAGE = '__Package__';
 
     /**
-     * @var string
-     */
-    private const VARIABLE_PACKAGE_LOWERCASE = '__package__';
-
-    /**
      * @var NodeFactory
      */
     private $nodeFactory;
@@ -81,7 +76,6 @@ final class TemplateVariablesFactory
     {
         $data = [
             self::VARIABLE_PACKAGE => $rectorRecipe->getPackage(),
-            self::VARIABLE_PACKAGE_LOWERCASE => $rectorRecipe->getPackageDirectory(),
             '__Category__' => $rectorRecipe->getCategory(),
             '__Description__' => $rectorRecipe->getDescription(),
             '__Name__' => $rectorRecipe->getName(),

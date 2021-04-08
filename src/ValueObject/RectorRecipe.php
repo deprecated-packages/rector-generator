@@ -193,21 +193,6 @@ final class RectorRecipe
         return $this->category;
     }
 
-    public function getPackageDirectory(): string
-    {
-        if (! $this->isRectorRepository) {
-            return 'rector';
-        }
-
-        // special cases
-        if ($this->getPackage() === 'PHPUnit') {
-            return 'phpunit';
-        }
-
-        $stringy = new Stringy($this->package);
-        return (string) $stringy->dasherize();
-    }
-
     /**
      * @api
      */

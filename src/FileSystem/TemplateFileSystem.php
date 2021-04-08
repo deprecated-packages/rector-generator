@@ -22,7 +22,7 @@ final class TemplateFileSystem
      * @var string
      * @see https://regex101.com/r/HBcfXd/1
      */
-    private const PACKAGE_RULES_PATH_REGEX = '#(packages|rules)\/__package__#i';
+    private const PACKAGE_RULES_PATH_REGEX = '#(packages|rules)\/__Package__#i';
 
     /**
      * @var string
