@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\ValueObject;
 
+use Nette\Utils\Json;
 use Nette\Utils\Strings;
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
@@ -95,7 +96,7 @@ final class RectorRecipe
         string $codeBefore,
         string $codeAfter
     ) {
-        $this->isRectorRepository = file_exists(__DIR__ . '/../../vendor');
+        $this->isRectorRepository = $this->detectRectorRepository();
 
         $this->setPackage($package);
         $this->setName($name);
@@ -323,5 +324,31 @@ final class RectorRecipe
         }
 
         return trim($code);
+    }
+
+    private function detectRectorRepository(): bool
+    {
+        $possibleComposerJsonFilePaths = [
+            __DIR__ . '/../../../../../composer.json',
+            __DIR__ . '/../../composer.json',
+        ];
+
+        foreach ($possibleComposerJsonFilePaths as $possibleComposerJsonFilePath) {
+            if (! file_exists($possibleComposerJsonFilePath)) {
+                continue;
+            }
+
+            $composerJsonContent = file_get_contents($possibleComposerJsonFilePath);
+            $composerJson = Json::decode($composerJsonContent, Json::FORCE_ARRAY);
+            if (! isset($composerJson['name'])) {
+                continue;
+            }
+
+            if (Strings::startsWith($composerJson['name'], 'rector/')) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
