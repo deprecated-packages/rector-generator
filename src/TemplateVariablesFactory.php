@@ -12,10 +12,10 @@ use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\PrettyPrinter\Standard;
-use Rector\RectorGenerator\FileSystem\ConfigFilesystem;
 use Rector\RectorGenerator\NodeFactory\ConfigurationNodeFactory;
 use Rector\RectorGenerator\NodeFactory\ConfigureClassMethodFactory;
 use Rector\RectorGenerator\NodeFactory\NodeFactory;
+use Rector\RectorGenerator\ValueObject\NamePattern;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
 
 final class TemplateVariablesFactory
@@ -92,7 +92,7 @@ final class TemplateVariablesFactory
             '__Resources__' => $this->createSourceDocBlock($rectorRecipe->getResources()),
         ];
 
-        $rectorClass = $this->templateFactory->create(ConfigFilesystem::RECTOR_FQN_NAME_PATTERN, $data);
+        $rectorClass = $this->templateFactory->create(NamePattern::RECTOR_FQN_NAME_PATTERN, $data);
 
         if ($rectorRecipe->getConfiguration() !== []) {
             $data['__TestRuleConfiguration__'] = $this->createRuleConfiguration(
