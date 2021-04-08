@@ -141,7 +141,11 @@ final class GenerateCommand extends Command
             $targetDirectory
         );
 
-        $this->configFilesystem->appendRectorServiceToSet($rectorRecipe, $templateVariables);
+        $setFilePath = $rectorRecipe->getSetFilePath();
+        if ($setFilePath) {
+            $this->configFilesystem->appendRectorServiceToSet($setFilePath, $templateVariables);
+        }
+
         $testCaseDirectoryPath = $this->resolveTestCaseDirectoryPath($generatedFilePaths);
         $this->printSuccess($rectorRecipe->getName(), $generatedFilePaths, $testCaseDirectoryPath);
 
