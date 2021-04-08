@@ -42,7 +42,7 @@ final class RectorGeneratorTest extends AbstractKernelTestCase
     protected function tearDown(): void
     {
         // cleanup temporary data
-        // $this->smartFileSystem->remove(self::DESTINATION_DIRECTORY);
+        $this->smartFileSystem->remove(self::DESTINATION_DIRECTORY);
     }
 
     public function test(): void
