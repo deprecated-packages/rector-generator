@@ -6,8 +6,8 @@ namespace Rector\RectorGenerator\Command;
 
 use Nette\Utils\Strings;
 use Rector\RectorGenerator\Composer\ComposerPackageAutoloadUpdater;
-use Rector\RectorGenerator\FileSystem\ConfigFilesystem;
 use Rector\RectorGenerator\Exception\ShouldNotHappenException;
+use Rector\RectorGenerator\FileSystem\ConfigFilesystem;
 use Rector\RectorGenerator\Finder\TemplateFinder;
 use Rector\RectorGenerator\Generator\FileGenerator;
 use Rector\RectorGenerator\Guard\OverrideGuard;
