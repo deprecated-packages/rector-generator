@@ -147,7 +147,7 @@ final class TemplateVariablesFactory
 
         $sourceAsString = '';
         foreach ($source as $singleSource) {
-            $sourceAsString .= ' * @see ' . $singleSource . PHP_EOL;
+            $sourceAsString .= ' * @changelog ' . $singleSource . PHP_EOL;
         }
 
         $sourceAsString .= ' *';
