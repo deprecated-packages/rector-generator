@@ -6,6 +6,7 @@ namespace Rector\RectorGenerator\Provider;
 
 use Rector\RectorGenerator\ValueObject\Option;
 use ReflectionClass;
+use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 use Symplify\PackageBuilder\Parameter\ParameterProvider;
 
 final class SetsListProvider
@@ -25,6 +26,7 @@ final class SetsListProvider
      */
     public function provide(): array
     {
+        /** @var array<class-string<\Rector\Set\Contract\SetListInterface>> $setListClasses */
         $setListClasses = $this->parameterProvider->provideArrayParameter(Option::SET_LIST_CLASSES);
 
         $setListNames = [];
