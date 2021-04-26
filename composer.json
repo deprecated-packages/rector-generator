@@ -1,5 +1,6 @@
 {
     "name": "rector/rector-generator",
+    "type": "rector-extension",
     "description": "Generate Rector rules from command line",
     "homepage": "https://getrector.org",
     "license": "MIT",
