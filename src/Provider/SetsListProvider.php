@@ -6,7 +6,6 @@ namespace Rector\RectorGenerator\Provider;
 
 use Rector\RectorGenerator\ValueObject\Option;
 use ReflectionClass;
-use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 use Symplify\PackageBuilder\Parameter\ParameterProvider;
 
 final class SetsListProvider
