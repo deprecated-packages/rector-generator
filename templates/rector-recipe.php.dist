@@ -71,7 +71,7 @@ CODE_SAMPLE
 
     // [RECTOR CORE CONTRIBUTION - OPTIONAL]
     // set the rule belongs to; is optional, because e.g. generic rules don't need a specific set to belong to
-    // $rectorRecipe->setSet(\Rector\Set\ValueObject\SetList::NAMING);
+    // $rectorRecipe->setSetFilePath(\Rector\Set\ValueObject\SetList::NAMING);
 
     $services = $containerConfigurator->services();
 
