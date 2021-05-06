@@ -47,7 +47,8 @@ final class ConfigureClassMethodFactory
             $coalesce = $this->createConstantInConfigurationCoalesce($constantName, $configurationVariable);
 
             $stringy = new Stringy($constantName);
-            $propertyName = (string) $stringy->toLowerCase()->camelize();
+            $propertyName = (string) $stringy->toLowerCase()
+                ->camelize();
 
             $assign = $this->nodeFactory->createPropertyAssign($propertyName, $coalesce);
             $assigns[] = new Expression($assign);

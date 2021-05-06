@@ -38,7 +38,9 @@ final class ManualInteractiveInputProvider
     }
 
     /**
-     * Use an in-memory input stream even if no inputs are set so that QuestionHelper::ask() does not rely on the blocking STDIN
+     * Use an in-memory input stream even if no inputs are set so that QuestionHelper::ask() does not rely on the
+     * blocking STDIN
+     *
      * @param string[]|null[] $manualInteractiveInput
      */
     public function setInput(array $manualInteractiveInput): void

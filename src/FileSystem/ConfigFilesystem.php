@@ -58,8 +58,11 @@ final class ConfigFilesystem
     /**
      * @param array<string, string> $templateVariables
      */
-    public function appendRectorServiceToSet(string $setFilePath, array $templateVariables, string $rectorFqnNamePattern): void
-    {
+    public function appendRectorServiceToSet(
+        string $setFilePath,
+        array $templateVariables,
+        string $rectorFqnNamePattern
+    ): void {
         $setFileContents = $this->smartFileSystem->readFile($setFilePath);
 
         $this->ensureRequiredKeysAreSet($templateVariables);
@@ -70,7 +73,10 @@ final class ConfigFilesystem
             return;
         }
 
-        $registerServiceLine = sprintf(';' . PHP_EOL . '    $services->set(\%s::class);' . PHP_EOL . '};', $servicesFullyQualifiedName);
+        $registerServiceLine = sprintf(
+            ';' . PHP_EOL . '    $services->set(\%s::class);' . PHP_EOL . '};',
+            $servicesFullyQualifiedName
+        );
         $setFileContents = Strings::replace($setFileContents, self::LAST_ITEM_REGEX, $registerServiceLine);
 
         // 3. print the content back to file

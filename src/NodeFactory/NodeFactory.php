@@ -35,7 +35,9 @@ final class NodeFactory
             if (is_int($key)) {
                 $arrayItems[] = new ArrayItem(BuilderHelpers::normalizeValue($value));
             } else {
-                $arrayItems[] = new ArrayItem(BuilderHelpers::normalizeValue($value), BuilderHelpers::normalizeValue($key));
+                $arrayItems[] = new ArrayItem(BuilderHelpers::normalizeValue($value), BuilderHelpers::normalizeValue(
+                    $key
+                ));
             }
         }
 

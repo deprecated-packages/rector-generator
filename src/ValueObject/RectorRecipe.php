@@ -65,6 +65,7 @@ final class RectorRecipe
 
     /**
      * Use default package name, if not overriden manually
+     *
      * @var string
      */
     private $package = self::PACKAGE_UTILS;
@@ -221,6 +222,7 @@ final class RectorRecipe
 
     /**
      * For testing purposes
+     *
      * @api
      */
     public function setIsRectorRepository(bool $isRectorRepository): void
@@ -230,6 +232,7 @@ final class RectorRecipe
 
     /**
      * For tests
+     *
      * @api
      */
     public function setPackage(string $package): void

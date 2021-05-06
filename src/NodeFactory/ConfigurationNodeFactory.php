@@ -32,7 +32,8 @@ final class ConfigurationNodeFactory
 
         foreach (array_keys($ruleConfiguration) as $constantName) {
             $stringy = new Stringy($constantName);
-            $propertyName = (string) $stringy->toLowerCase()->camelize();
+            $propertyName = (string) $stringy->toLowerCase()
+                ->camelize();
 
             $property = $this->nodeFactory->createPrivateArrayProperty($propertyName);
             $property->props[0]->default = new Array_([]);
