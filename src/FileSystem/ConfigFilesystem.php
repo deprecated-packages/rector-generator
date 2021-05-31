@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\FileSystem;
 
 use Nette\Utils\Strings;
-use PhpParser\Parser;
-use PhpParser\PrettyPrinter\Standard;
 use Rector\RectorGenerator\Exception\ShouldNotHappenException;
 use Rector\RectorGenerator\TemplateFactory;
 use Symplify\SmartFileSystem\SmartFileSystem;
@@ -23,36 +21,10 @@ final class ConfigFilesystem
      */
     private const LAST_ITEM_REGEX = '#;\n};#';
 
-    /**
-     * @var TemplateFactory
-     */
-    private $templateFactory;
-
-    /**
-     * @var Parser
-     */
-    private $parser;
-
-    /**
-     * @var SmartFileSystem
-     */
-    private $smartFileSystem;
-
-    /**
-     * @var Standard
-     */
-    private $standard;
-
     public function __construct(
-        Standard $standard,
-        Parser $parser,
-        SmartFileSystem $smartFileSystem,
-        TemplateFactory $templateFactory
+        private SmartFileSystem $smartFileSystem,
+        private TemplateFactory $templateFactory
     ) {
-        $this->templateFactory = $templateFactory;
-        $this->parser = $parser;
-        $this->standard = $standard;
-        $this->smartFileSystem = $smartFileSystem;
     }
 
     /**
@@ -69,12 +41,12 @@ final class ConfigFilesystem
 
         // already added?
         $servicesFullyQualifiedName = $this->templateFactory->create($rectorFqnNamePattern, $templateVariables);
-        if (Strings::contains($setFileContents, $servicesFullyQualifiedName)) {
+        if (\str_contains($setFileContents, $servicesFullyQualifiedName)) {
             return;
         }
 
         $registerServiceLine = sprintf(
-            ';' . PHP_EOL . '    $services->set(\%s::class);' . PHP_EOL . '};',
+            ';' . PHP_EOL . '    $services->set(\\%s::class);' . PHP_EOL . '};',
             $servicesFullyQualifiedName
         );
         $setFileContents = Strings::replace($setFileContents, self::LAST_ITEM_REGEX, $registerServiceLine);

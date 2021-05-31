@@ -19,14 +19,9 @@ use Stringy\Stringy;
 
 final class ConfigureClassMethodFactory
 {
-    /**
-     * @var NodeFactory
-     */
-    private $nodeFactory;
-
-    public function __construct(NodeFactory $nodeFactory)
-    {
-        $this->nodeFactory = $nodeFactory;
+    public function __construct(
+        private NodeFactory $nodeFactory
+    ) {
     }
 
     /**

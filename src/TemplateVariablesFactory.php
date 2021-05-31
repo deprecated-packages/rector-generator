@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator;
 
-use Nette\Utils\Strings;
 use PhpParser\BuilderHelpers;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
@@ -30,43 +29,13 @@ final class TemplateVariablesFactory
      */
     private const VARIABLE_PACKAGE = '__Package__';
 
-    /**
-     * @var NodeFactory
-     */
-    private $nodeFactory;
-
-    /**
-     * @var ConfigurationNodeFactory
-     */
-    private $configurationNodeFactory;
-
-    /**
-     * @var TemplateFactory
-     */
-    private $templateFactory;
-
-    /**
-     * @var Standard
-     */
-    private $standard;
-
-    /**
-     * @var ConfigureClassMethodFactory
-     */
-    private $configureClassMethodFactory;
-
     public function __construct(
-        Standard $standard,
-        ConfigurationNodeFactory $configurationNodeFactory,
-        ConfigureClassMethodFactory $configureClassMethodFactory,
-        NodeFactory $nodeFactory,
-        TemplateFactory $templateFactory
+        private Standard $standard,
+        private ConfigurationNodeFactory $configurationNodeFactory,
+        private ConfigureClassMethodFactory $configureClassMethodFactory,
+        private NodeFactory $nodeFactory,
+        private TemplateFactory $templateFactory
     ) {
-        $this->standard = $standard;
-        $this->nodeFactory = $nodeFactory;
-        $this->configurationNodeFactory = $configurationNodeFactory;
-        $this->templateFactory = $templateFactory;
-        $this->configureClassMethodFactory = $configureClassMethodFactory;
     }
 
     /**
@@ -127,7 +96,7 @@ final class TemplateVariablesFactory
 
     private function createCodeForDefinition(string $code): string
     {
-        if (Strings::contains($code, PHP_EOL)) {
+        if (\str_contains($code, PHP_EOL)) {
             // multi lines
             return sprintf("<<<'CODE_SAMPLE'%s%s%sCODE_SAMPLE%s", PHP_EOL, $code, PHP_EOL, PHP_EOL);
         }

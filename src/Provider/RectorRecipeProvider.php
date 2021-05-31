@@ -15,16 +15,11 @@ final class RectorRecipeProvider
     private const MESSAGE = 'Make sure the "rector-recipe.php" config file is imported and parameter set. Are you sure its in your main config?';
 
     /**
-     * @var RectorRecipe|null
-     */
-    private $rectorRecipe;
-
-    /**
      * Parameter must be configured in the rector config
      */
-    public function __construct(?RectorRecipe $rectorRecipe = null)
-    {
-        $this->rectorRecipe = $rectorRecipe;
+    public function __construct(
+        private ?\Rector\RectorGenerator\ValueObject\RectorRecipe $rectorRecipe = null
+    ) {
     }
 
     public function provide(): RectorRecipe

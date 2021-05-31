@@ -16,20 +16,10 @@ final class TemplateFinder
      */
     public const TEMPLATES_DIRECTORY = __DIR__ . '/../../templates';
 
-    /**
-     * @var FinderSanitizer
-     */
-    private $finderSanitizer;
-
-    /**
-     * @var FileSystemGuard
-     */
-    private $fileSystemGuard;
-
-    public function __construct(FinderSanitizer $finderSanitizer, FileSystemGuard $fileSystemGuard)
-    {
-        $this->finderSanitizer = $finderSanitizer;
-        $this->fileSystemGuard = $fileSystemGuard;
+    public function __construct(
+        private FinderSanitizer $finderSanitizer,
+        private FileSystemGuard $fileSystemGuard
+    ) {
     }
 
     /**

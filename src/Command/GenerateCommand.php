@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\Command;
 
-use Nette\Utils\Strings;
 use Rector\RectorGenerator\Exception\ShouldNotHappenException;
 use Rector\RectorGenerator\FileSystem\ConfigFilesystem;
 use Rector\RectorGenerator\Finder\TemplateFinder;
@@ -29,66 +28,17 @@ use Symplify\SmartFileSystem\SmartFileInfo;
  */
 final class GenerateCommand extends Command
 {
-    /**
-     * @var SymfonyStyle
-     */
-    private $symfonyStyle;
-
-    /**
-     * @var TemplateVariablesFactory
-     */
-    private $templateVariablesFactory;
-
-    /**
-     * @var TemplateFinder
-     */
-    private $templateFinder;
-
-    /**
-     * @var ConfigFilesystem
-     */
-    private $configFilesystem;
-
-    /**
-     * @var OverrideGuard
-     */
-    private $overrideGuard;
-
-    /**
-     * @var FileGenerator
-     */
-    private $fileGenerator;
-
-    /**
-     * @var RectorRecipeProvider
-     */
-    private $rectorRecipeProvider;
-
-    /**
-     * @var RectorRecipeInteractiveFactory
-     */
-    private $rectorRecipeInteractiveFactory;
-
     public function __construct(
-        ConfigFilesystem $configFilesystem,
-        FileGenerator $fileGenerator,
-        OverrideGuard $overrideGuard,
-        SymfonyStyle $symfonyStyle,
-        TemplateFinder $templateFinder,
-        TemplateVariablesFactory $templateVariablesFactory,
-        RectorRecipeProvider $rectorRecipeProvider,
-        RectorRecipeInteractiveFactory $rectorRecipeInteractiveFactory
+        private ConfigFilesystem $configFilesystem,
+        private FileGenerator $fileGenerator,
+        private OverrideGuard $overrideGuard,
+        private SymfonyStyle $symfonyStyle,
+        private TemplateFinder $templateFinder,
+        private TemplateVariablesFactory $templateVariablesFactory,
+        private RectorRecipeProvider $rectorRecipeProvider,
+        private RectorRecipeInteractiveFactory $rectorRecipeInteractiveFactory
     ) {
         parent::__construct();
-
-        $this->templateVariablesFactory = $templateVariablesFactory;
-        $this->templateFinder = $templateFinder;
-        $this->configFilesystem = $configFilesystem;
-        $this->overrideGuard = $overrideGuard;
-        $this->symfonyStyle = $symfonyStyle;
-        $this->fileGenerator = $fileGenerator;
-        $this->rectorRecipeProvider = $rectorRecipeProvider;
-        $this->rectorRecipeInteractiveFactory = $rectorRecipeInteractiveFactory;
     }
 
     protected function configure(): void
@@ -195,11 +145,11 @@ final class GenerateCommand extends Command
 
     private function isGeneratedFilePathTestCase(string $generatedFilePath): bool
     {
-        if (Strings::endsWith($generatedFilePath, 'Test.php')) {
+        if (\str_ends_with($generatedFilePath, 'Test.php')) {
             return true;
         }
 
-        if (! Strings::endsWith($generatedFilePath, 'Test.php.inc')) {
+        if (! \str_ends_with($generatedFilePath, 'Test.php.inc')) {
             return false;
         }
 

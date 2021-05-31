@@ -11,20 +11,10 @@ use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class OverrideGuard
 {
-    /**
-     * @var TemplateFileSystem
-     */
-    private $templateFileSystem;
-
-    /**
-     * @var SymfonyStyle
-     */
-    private $symfonyStyle;
-
-    public function __construct(SymfonyStyle $symfonyStyle, TemplateFileSystem $templateFileSystem)
-    {
-        $this->templateFileSystem = $templateFileSystem;
-        $this->symfonyStyle = $symfonyStyle;
+    public function __construct(
+        private SymfonyStyle $symfonyStyle,
+        private TemplateFileSystem $templateFileSystem
+    ) {
     }
 
     /**

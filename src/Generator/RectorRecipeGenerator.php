@@ -10,29 +10,11 @@ use Rector\RectorGenerator\ValueObject\RectorRecipe;
 
 final class RectorRecipeGenerator
 {
-    /**
-     * @var TemplateFinder
-     */
-    private $templateFinder;
-
-    /**
-     * @var TemplateVariablesFactory
-     */
-    private $templateVariablesFactory;
-
-    /**
-     * @var FileGenerator
-     */
-    private $fileGenerator;
-
     public function __construct(
-        TemplateFinder $templateFinder,
-        TemplateVariablesFactory $templateVariablesFactory,
-        FileGenerator $fileGenerator
+        private TemplateFinder $templateFinder,
+        private TemplateVariablesFactory $templateVariablesFactory,
+        private FileGenerator $fileGenerator
     ) {
-        $this->templateFinder = $templateFinder;
-        $this->templateVariablesFactory = $templateVariablesFactory;
-        $this->fileGenerator = $fileGenerator;
     }
 
     public function generate(RectorRecipe $rectorRecipe, string $destinationDirectory): void
