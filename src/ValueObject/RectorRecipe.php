@@ -26,11 +26,6 @@ final class RectorRecipe
     /**
      * @var string
      */
-    private $description;
-
-    /**
-     * @var string
-     */
     private $codeBefore;
 
     /**
@@ -92,7 +87,7 @@ final class RectorRecipe
         string $package,
         string $name,
         array $nodeTypes,
-        string $description,
+        private string $description,
         string $codeBefore,
         string $codeAfter
     ) {
@@ -101,8 +96,6 @@ final class RectorRecipe
         $this->setPackage($package);
         $this->setName($name);
         $this->setNodeTypes($nodeTypes);
-
-        $this->description = $description;
 
         if ($codeBefore === $codeAfter) {
             throw new ConfigurationException('Code before and after are identical. They have to be different');
@@ -252,7 +245,7 @@ final class RectorRecipe
 
     private function setName(string $name): void
     {
-        if (! Strings::endsWith($name, 'Rector')) {
+        if (! \str_ends_with($name, 'Rector')) {
             $message = sprintf('Rector name "%s" must end with "Rector"', $name);
             throw new ConfigurationException($message);
         }
@@ -306,7 +299,7 @@ final class RectorRecipe
 
     private function normalizeCode(string $code): string
     {
-        if (Strings::startsWith($code, '<?php')) {
+        if (\str_starts_with($code, '<?php')) {
             $code = ltrim($code, '<?php');
         }
 
@@ -335,7 +328,7 @@ final class RectorRecipe
                 continue;
             }
 
-            if (Strings::startsWith($composerJson['name'], 'rector/')) {
+            if (\str_starts_with($composerJson['name'], 'rector/')) {
                 return true;
             }
         }

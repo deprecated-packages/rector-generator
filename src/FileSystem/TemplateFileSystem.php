@@ -36,14 +36,9 @@ final class TemplateFileSystem
      */
     private const CONFIGURED_OR_EXTRA_REGEX = '#(__Configured|__Extra)#';
 
-    /**
-     * @var TemplateFactory
-     */
-    private $templateFactory;
-
-    public function __construct(TemplateFactory $templateFactory)
-    {
-        $this->templateFactory = $templateFactory;
+    public function __construct(
+        private TemplateFactory $templateFactory
+    ) {
     }
 
     /**
@@ -76,7 +71,7 @@ final class TemplateFileSystem
 
         // special hack for tests, to PHPUnit doesn't load the generated file as test case
         /** @var string $destination */
-        if (Strings::endsWith($destination, 'Test.php') && defined('PHPUNIT_COMPOSER_INSTALL')) {
+        if (\str_ends_with($destination, 'Test.php') && defined('PHPUNIT_COMPOSER_INSTALL')) {
             $destination .= '.inc';
         }
 
@@ -89,6 +84,6 @@ final class TemplateFileSystem
             return false;
         }
 
-        return Strings::endsWith($filePath, '.inc');
+        return \str_ends_with($filePath, '.inc');
     }
 }

@@ -12,16 +12,10 @@ use Symplify\PackageBuilder\Console\ShellCode;
 
 final class InitRecipeCommand extends Command
 {
-    /**
-     * @var TemplateInitializer
-     */
-    private $templateInitializer;
-
-    public function __construct(TemplateInitializer $templateInitializer)
-    {
+    public function __construct(
+        private TemplateInitializer $templateInitializer
+    ) {
         parent::__construct();
-
-        $this->templateInitializer = $templateInitializer;
     }
 
     protected function configure(): void

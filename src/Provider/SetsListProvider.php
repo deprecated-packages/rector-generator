@@ -10,14 +10,9 @@ use Symplify\PackageBuilder\Parameter\ParameterProvider;
 
 final class SetsListProvider
 {
-    /**
-     * @var ParameterProvider
-     */
-    private $parameterProvider;
-
-    public function __construct(ParameterProvider $parameterProvider)
-    {
-        $this->parameterProvider = $parameterProvider;
+    public function __construct(
+        private ParameterProvider $parameterProvider
+    ) {
     }
 
     /**

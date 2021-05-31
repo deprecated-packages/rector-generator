@@ -12,29 +12,11 @@ use Symplify\PackageBuilder\Reflection\PrivatesCaller;
 
 final class ManualInteractiveInputProvider
 {
-    /**
-     * @var SymfonyStyle
-     */
-    private $symfonyStyle;
-
-    /**
-     * @var PrivatesCaller
-     */
-    private $privatesCaller;
-
-    /**
-     * @var PrivatesAccessor
-     */
-    private $privatesAccessor;
-
     public function __construct(
-        SymfonyStyle $symfonyStyle,
-        PrivatesCaller $privatesCaller,
-        PrivatesAccessor $privatesAccessor
+        private SymfonyStyle $symfonyStyle,
+        private PrivatesCaller $privatesCaller,
+        private PrivatesAccessor $privatesAccessor
     ) {
-        $this->symfonyStyle = $symfonyStyle;
-        $this->privatesCaller = $privatesCaller;
-        $this->privatesAccessor = $privatesAccessor;
     }
 
     /**

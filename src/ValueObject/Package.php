@@ -11,36 +11,12 @@ final class Package
      */
     public const UTILS = 'Utils';
 
-    /**
-     * @var string
-     */
-    private $srcNamespace;
-
-    /**
-     * @var string
-     */
-    private $testsNamespace;
-
-    /**
-     * @var string
-     */
-    private $srcDirectory;
-
-    /**
-     * @var string
-     */
-    private $testsDirectory;
-
     public function __construct(
-        string $srcNamespace,
-        string $testsNamespace,
-        string $srcDirectory,
-        string $testsDirectory
+        private string $srcNamespace,
+        private string $testsNamespace,
+        private string $srcDirectory,
+        private string $testsDirectory
     ) {
-        $this->srcNamespace = $srcNamespace;
-        $this->testsNamespace = $testsNamespace;
-        $this->srcDirectory = $srcDirectory;
-        $this->testsDirectory = $testsDirectory;
     }
 
     public function getSrcNamespace(): string

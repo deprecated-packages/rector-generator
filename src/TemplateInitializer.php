@@ -10,29 +10,11 @@ use Symplify\SmartFileSystem\SmartFileSystem;
 
 final class TemplateInitializer
 {
-    /**
-     * @var SymfonyStyle
-     */
-    private $symfonyStyle;
-
-    /**
-     * @var SmartFileSystem
-     */
-    private $smartFileSystem;
-
-    /**
-     * @var FileSystemGuard
-     */
-    private $fileSystemGuard;
-
     public function __construct(
-        SymfonyStyle $symfonyStyle,
-        SmartFileSystem $smartFileSystem,
-        FileSystemGuard $fileSystemGuard
+        private SymfonyStyle $symfonyStyle,
+        private SmartFileSystem $smartFileSystem,
+        private FileSystemGuard $fileSystemGuard
     ) {
-        $this->symfonyStyle = $symfonyStyle;
-        $this->smartFileSystem = $smartFileSystem;
-        $this->fileSystemGuard = $fileSystemGuard;
     }
 
     public function initialize(string $templateFilePath, string $rootFileName): void

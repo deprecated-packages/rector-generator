@@ -43,36 +43,12 @@ class SomeClass
 }
 CODE_SAMPLE;
 
-    /**
-     * @var SymfonyStyle
-     */
-    private $symfonyStyle;
-
-    /**
-     * @var PackageNamesProvider
-     */
-    private $packageNamesProvider;
-
-    /**
-     * @var NodeTypesProvider
-     */
-    private $nodeTypesProvider;
-
-    /**
-     * @var SetsListProvider
-     */
-    private $setsListProvider;
-
     public function __construct(
-        PackageNamesProvider $packageNamesProvider,
-        NodeTypesProvider $nodeTypesProvider,
-        SetsListProvider $setsListProvider,
-        SymfonyStyle $symfonyStyle
+        private PackageNamesProvider $packageNamesProvider,
+        private NodeTypesProvider $nodeTypesProvider,
+        private SetsListProvider $setsListProvider,
+        private SymfonyStyle $symfonyStyle
     ) {
-        $this->packageNamesProvider = $packageNamesProvider;
-        $this->nodeTypesProvider = $nodeTypesProvider;
-        $this->setsListProvider = $setsListProvider;
-        $this->symfonyStyle = $symfonyStyle;
     }
 
     public function create(): RectorRecipe
