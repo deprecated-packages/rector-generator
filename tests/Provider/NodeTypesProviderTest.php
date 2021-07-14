@@ -10,10 +10,7 @@ use Symplify\PackageBuilder\Testing\AbstractKernelTestCase;
 
 final class NodeTypesProviderTest extends AbstractKernelTestCase
 {
-    /**
-     * @var NodeTypesProvider
-     */
-    private $nodeTypesProvider;
+    private NodeTypesProvider $nodeTypesProvider;
 
     protected function setUp(): void
     {

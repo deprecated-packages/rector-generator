@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Rector\TestPackageName\Rector\Arg;
 
+use PhpParser\Node\Arg;
 use PhpParser\Node;
 use Rector\Core\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
@@ -45,15 +46,15 @@ CODE_SAMPLE
     }
 
     /**
-     * @return array<class-string<\PhpParser\Node>>
+     * @return array<class-string<Node>>
      */
     public function getNodeTypes(): array
     {
-        return [\PhpParser\Node\Arg::class];
+        return [Arg::class];
     }
 
     /**
-     * @param \PhpParser\Node\Arg $node
+     * @param Arg $node
      */
     public function refactor(Node $node): ?Node
     {

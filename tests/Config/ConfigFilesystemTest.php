@@ -15,10 +15,7 @@ use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class ConfigFilesystemTest extends AbstractKernelTestCase
 {
-    /**
-     * @var ConfigFilesystem
-     */
-    private $configFilesystem;
+    private ConfigFilesystem $configFilesystem;
 
     protected function setUp(): void
     {

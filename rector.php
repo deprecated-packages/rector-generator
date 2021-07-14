@@ -9,9 +9,11 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->import(SetList::PHP_80);
+    $containerConfigurator->import(SetList::PHP_74);
 
     $parameters = $containerConfigurator->parameters();
     $parameters->set(Option::PATHS, [__DIR__ . '/src', __DIR__ . '/tests']);
 
     $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_80);
+    $parameters->set(Option::AUTO_IMPORT_NAMES, true);
 };

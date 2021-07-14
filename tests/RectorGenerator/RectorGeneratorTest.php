@@ -21,15 +21,9 @@ final class RectorGeneratorTest extends AbstractKernelTestCase
      */
     private const DESTINATION_DIRECTORY = __DIR__ . '/__temp';
 
-    /**
-     * @var SmartFileSystem
-     */
-    private $smartFileSystem;
+    private SmartFileSystem $smartFileSystem;
 
-    /**
-     * @var RectorRecipeGenerator
-     */
-    private $rectorRecipeGenerator;
+    private RectorRecipeGenerator $rectorRecipeGenerator;
 
     protected function setUp(): void
     {

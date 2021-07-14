@@ -10,10 +10,7 @@ use Symplify\PackageBuilder\Testing\AbstractKernelTestCase;
 
 final class PackageNamesProviderTest extends AbstractKernelTestCase
 {
-    /**
-     * @var PackageNamesProvider
-     */
-    private $packageNamesProvider;
+    private PackageNamesProvider $packageNamesProvider;
 
     protected function setUp(): void
     {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Utils\Rector\Rector\MethodCall;
 
+use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node;
 use Rector\Core\Contract\Rector\ConfigurableRectorInterface;
 use Rector\Core\Rector\AbstractRector;
@@ -24,7 +25,7 @@ public const CLASS_TYPE_TO_METHOD_NAME = 'class_type_to_method_name';
     /**
  * @var mixed[]
  */
-private $classTypeToMethodName = [];
+private array $classTypeToMethodName = [];
 
     public function getRuleDefinition(): RuleDefinition
     {
@@ -60,15 +61,15 @@ CODE_SAMPLE
     }
 
     /**
-     * @return array<class-string<\PhpParser\Node>>
+     * @return array<class-string<Node>>
      */
     public function getNodeTypes(): array
     {
-        return [\PhpParser\Node\Expr\MethodCall::class];
+        return [MethodCall::class];
     }
 
     /**
-     * @param \PhpParser\Node\Expr\MethodCall $node
+     * @param MethodCall $node
      */
     public function refactor(Node $node): ?Node
     {

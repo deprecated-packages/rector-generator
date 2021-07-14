@@ -18,7 +18,7 @@ final class RectorRecipeProvider
      * Parameter must be configured in the rector config
      */
     public function __construct(
-        private ?\Rector\RectorGenerator\ValueObject\RectorRecipe $rectorRecipe = null
+        private ?RectorRecipe $rectorRecipe = null
     ) {
     }
 

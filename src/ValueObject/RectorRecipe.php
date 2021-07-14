@@ -18,30 +18,15 @@ final class RectorRecipe
      */
     private const PACKAGE_UTILS = 'Utils';
 
-    /**
-     * @var string
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string
-     */
-    private $codeBefore;
+    private ?string $codeBefore = null;
 
-    /**
-     * @var string
-     */
-    private $codeAfter;
+    private ?string $codeAfter = null;
 
-    /**
-     * @var bool
-     */
-    private $isRectorRepository = false;
+    private bool $isRectorRepository = false;
 
-    /**
-     * @var string
-     */
-    private $category;
+    private ?string $category = null;
 
     /**
      * @var class-string[]
@@ -60,25 +45,14 @@ final class RectorRecipe
 
     /**
      * Use default package name, if not overriden manually
-     *
-     * @var string
      */
-    private $package = self::PACKAGE_UTILS;
+    private string $package = self::PACKAGE_UTILS;
 
-    /**
-     * @var string|null
-     */
-    private $setFilePath;
+    private ?string $setFilePath = null;
 
-    /**
-     * @var string|null
-     */
-    private $extraFileName;
+    private ?string $extraFileName = null;
 
-    /**
-     * @var string|null
-     */
-    private $extraFileContent;
+    private ?string $extraFileContent = null;
 
     /**
      * @param class-string[] $nodeTypes

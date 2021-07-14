@@ -22,25 +22,13 @@ final class RectorRecipeInteractiveProviderTest extends AbstractKernelTestCase
      */
     private const DESTINATION_DIRECTORY = __DIR__ . '/__temp';
 
-    /**
-     * @var RectorRecipeInteractiveFactory
-     */
-    private $rectorRecipeInteractiveFactory;
+    private RectorRecipeInteractiveFactory $rectorRecipeInteractiveFactory;
 
-    /**
-     * @var RectorRecipeGenerator
-     */
-    private $rectorRecipeGenerator;
+    private RectorRecipeGenerator $rectorRecipeGenerator;
 
-    /**
-     * @var SmartFileSystem
-     */
-    private $smartFileSystem;
+    private SmartFileSystem $smartFileSystem;
 
-    /**
-     * @var ManualInteractiveInputProvider
-     */
-    private $manualInteractiveInputProvider;
+    private ManualInteractiveInputProvider $manualInteractiveInputProvider;
 
     protected function setUp(): void
     {
