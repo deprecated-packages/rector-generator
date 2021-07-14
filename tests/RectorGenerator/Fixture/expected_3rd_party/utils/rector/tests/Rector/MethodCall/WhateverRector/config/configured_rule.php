@@ -1,11 +1,10 @@
 <?php
 
 declare(strict_types=1);
-use Utils\Rector\Rector\MethodCall\WhateverRector;
 
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
-    $services->set(WhateverRector::class);
+    $services->set(\Utils\Rector\Rector\MethodCall\WhateverRector::class);
 };
