@@ -31,17 +31,17 @@ final class RectorRecipe
     /**
      * @var class-string[]
      */
-    private $nodeTypes = [];
+    private array $nodeTypes = [];
 
     /**
      * @var string[]
      */
-    private $resources = [];
+    private array $resources = [];
 
     /**
      * @var mixed[]
      */
-    private $configuration = [];
+    private array $configuration = [];
 
     /**
      * Use default package name, if not overriden manually

@@ -12,8 +12,6 @@ parameters:
         - tests/ValueObjectFactory/Fixture/expected_interactive
 
     ignoreErrors:
-        - '#Parameter \#1 \$files of method Symplify\\SmartFileSystem\\Finder\\FinderSanitizer\:\:sanitize\(\) expects \(iterable<SplFileInfo\|string\>&Nette\\Utils\\Finder\)\|Symfony\\Component\\Finder\\Finder, array<string\> given#'
-
         # known values
         -
             message: '#Parameter \#1 (.*?) of class ReflectionClass constructor expects class\-string<T of object\>\|T of object, string given#'
@@ -31,3 +29,10 @@ parameters:
             message: '#Instead of "new ClassReflection\(\)" use ReflectionProvider service or "\(new PHPStan\\Reflection\\ClassReflection\(<desired_type\>\)\)" for static reflection to work#'
             paths:
                 - src/Provider/NodeTypesProvider.php
+
+        -
+            message: '#Method Rector\\RectorGenerator\\ValueObject\\RectorRecipe\:\:(.*?)\(\) should return string but returns string\|null#'
+            paths:
+                - src/ValueObject/RectorRecipe.php
+
+        - '#Method Rector\\RectorGenerator\\Provider\\SetsListProvider\:\:provide\(\) should return array<string\> but returns array<int, array<int, array<int, array<int, array<int, string\>\|string\>\|string\>\|string\>\>#'
