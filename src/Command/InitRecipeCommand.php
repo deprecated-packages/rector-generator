@@ -8,7 +8,6 @@ use Rector\RectorGenerator\TemplateInitializer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symplify\PackageBuilder\Console\ShellCode;
 
 final class InitRecipeCommand extends Command
 {
@@ -30,6 +29,6 @@ final class InitRecipeCommand extends Command
             'rector-recipe.php'
         );
 
-        return ShellCode::SUCCESS;
+        return self::SUCCESS;
     }
 }

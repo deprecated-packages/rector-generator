@@ -5,7 +5,7 @@ parameters:
 
     level: max
 
-#    reportUnmatchedIgnoredErrors: false
+    reportUnmatchedIgnoredErrors: false
 
     excludePaths:
         - tests/RectorGenerator/Fixture

@@ -20,7 +20,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symplify\PackageBuilder\Console\ShellCode;
 use Symplify\SmartFileSystem\SmartFileInfo;
 
 /**
@@ -70,7 +69,7 @@ final class GenerateCommand extends Command
 
         if ($isUnwantedOverride) {
             $this->symfonyStyle->warning('No files were changed');
-            return ShellCode::SUCCESS;
+            return self::SUCCESS;
         }
 
         $generatedFilePaths = $this->fileGenerator->generateFiles(
@@ -92,7 +91,7 @@ final class GenerateCommand extends Command
         $testCaseDirectoryPath = $this->resolveTestCaseDirectoryPath($generatedFilePaths);
         $this->printSuccess($rectorRecipe->getName(), $generatedFilePaths, $testCaseDirectoryPath);
 
-        return ShellCode::SUCCESS;
+        return self::SUCCESS;
     }
 
     private function getRectorRecipe(InputInterface $input): RectorRecipe
