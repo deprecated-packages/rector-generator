@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\ValueObject;
 
+/**
+ * @api
+ */
 final class RectorGeneratorConfig
 {
     /**
