@@ -12,7 +12,6 @@ use Rector\RectorGenerator\Guard\OverrideGuard;
 use Rector\RectorGenerator\Provider\RectorRecipeProvider;
 use Rector\RectorGenerator\TemplateVariablesFactory;
 use Rector\RectorGenerator\ValueObject\NamePattern;
-use Rector\RectorGenerator\ValueObjectFactory\RectorRecipeInteractiveFactory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
