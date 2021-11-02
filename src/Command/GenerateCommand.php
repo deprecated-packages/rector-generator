@@ -12,12 +12,9 @@ use Rector\RectorGenerator\Guard\OverrideGuard;
 use Rector\RectorGenerator\Provider\RectorRecipeProvider;
 use Rector\RectorGenerator\TemplateVariablesFactory;
 use Rector\RectorGenerator\ValueObject\NamePattern;
-use Rector\RectorGenerator\ValueObject\Option;
-use Rector\RectorGenerator\ValueObject\RectorRecipe;
 use Rector\RectorGenerator\ValueObjectFactory\RectorRecipeInteractiveFactory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\SmartFileSystem\SmartFileInfo;
@@ -35,7 +32,6 @@ final class GenerateCommand extends Command
         private TemplateFinder $templateFinder,
         private TemplateVariablesFactory $templateVariablesFactory,
         private RectorRecipeProvider $rectorRecipeProvider,
-        private RectorRecipeInteractiveFactory $rectorRecipeInteractiveFactory
     ) {
         parent::__construct();
     }
@@ -43,17 +39,11 @@ final class GenerateCommand extends Command
     protected function configure(): void
     {
         $this->setDescription('[DEV] Create a new Rector, in a proper location, with new tests');
-        $this->addOption(
-            Option::INTERACTIVE_MODE,
-            'i',
-            InputOption::VALUE_NONE,
-            'Turns on Interactive Mode - Rector will be generated based on responses to questions instead of using rector-recipe.php',
-        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $rectorRecipe = $this->getRectorRecipe($input);
+        $rectorRecipe = $this->rectorRecipeProvider->provide();
 
         $templateVariables = $this->templateVariablesFactory->createFromRectorRecipe($rectorRecipe);
         $templateFileInfos = $this->templateFinder->find($rectorRecipe);
@@ -92,16 +82,6 @@ final class GenerateCommand extends Command
         $this->printSuccess($rectorRecipe->getName(), $generatedFilePaths, $testCaseDirectoryPath);
 
         return self::SUCCESS;
-    }
-
-    private function getRectorRecipe(InputInterface $input): RectorRecipe
-    {
-        $isInteractive = $input->getOption(Option::INTERACTIVE_MODE);
-        if (! $isInteractive) {
-            return $this->rectorRecipeProvider->provide();
-        }
-
-        return $this->rectorRecipeInteractiveFactory->create();
     }
 
     /**

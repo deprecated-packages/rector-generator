@@ -16,10 +16,6 @@ This package will **save your typing the repeated code** and gives you **more sp
 
 ## How to Generate a new Rule?
 
-There are 2 ways to generate a new rule.
-
-### 1. Generate using Configuration File
-
 1. Initialize `rector-recipe.php` config
 
 ```bash
@@ -33,19 +29,6 @@ vendor/bin/rector init-recipe
 ```bash
 vendor/bin/rector generate
 ```
-
-### 2. Generate using Commandline Interactive Mode
-
-**Important**: using this approach will generate Rector rule with placeholder Code Samples, which should be changed
-by hand to reflect what the rule does
-
-1. Run Generate command in Interactive Mode
-
-```bash
-vendor/bin/rector generate --interactive
-```
-
-2. Provide an answer to questions asked by the command
 
 <br>
 
