@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\Tests\RectorGenerator;
 
-use Rector\RectorGenerator\Generator\RectorRecipeGenerator;
+use Rector\RectorGenerator\Generator\RectorGenerator;
 use Rector\RectorGenerator\Tests\HttpKernel\DummyKernel;
 use Rector\RectorGenerator\Tests\RectorGenerator\Source\StaticRectorRecipeFactory;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
@@ -23,14 +23,14 @@ final class RectorGeneratorTest extends AbstractKernelTestCase
 
     private SmartFileSystem $smartFileSystem;
 
-    private RectorRecipeGenerator $rectorRecipeGenerator;
+    private RectorGenerator $rectorGenerator;
 
     protected function setUp(): void
     {
         $this->bootKernel(DummyKernel::class);
 
         $this->smartFileSystem = $this->getService(SmartFileSystem::class);
-        $this->rectorRecipeGenerator = $this->getService(RectorRecipeGenerator::class);
+        $this->rectorGenerator = $this->getService(RectorGenerator::class);
     }
 
     protected function tearDown(): void
@@ -42,7 +42,7 @@ final class RectorGeneratorTest extends AbstractKernelTestCase
     public function test(): void
     {
         $rectorRecipe = $this->createConfiguration(__DIR__ . '/Source/config/some_set.php', true);
-        $this->rectorRecipeGenerator->generate($rectorRecipe, self::DESTINATION_DIRECTORY);
+        $this->rectorGenerator->generate($rectorRecipe, self::DESTINATION_DIRECTORY);
 
         $this->assertDirectoryEquals(__DIR__ . '/Fixture/expected', self::DESTINATION_DIRECTORY);
     }
@@ -50,7 +50,7 @@ final class RectorGeneratorTest extends AbstractKernelTestCase
     public function test3rdParty(): void
     {
         $rectorRecipe = $this->createConfiguration(__DIR__ . '/Source/config/some_set.php', false);
-        $this->rectorRecipeGenerator->generate($rectorRecipe, self::DESTINATION_DIRECTORY);
+        $this->rectorGenerator->generate($rectorRecipe, self::DESTINATION_DIRECTORY);
 
         $this->assertDirectoryEquals(__DIR__ . '/Fixture/expected_3rd_party', self::DESTINATION_DIRECTORY);
     }

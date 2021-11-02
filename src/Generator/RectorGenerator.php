@@ -8,7 +8,10 @@ use Rector\RectorGenerator\Finder\TemplateFinder;
 use Rector\RectorGenerator\TemplateVariablesFactory;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
 
-final class RectorRecipeGenerator
+/**
+ * @see \Rector\RectorGenerator\Tests\RectorGenerator\RectorGeneratorTest
+ */
+final class RectorGenerator
 {
     public function __construct(
         private TemplateFinder $templateFinder,
