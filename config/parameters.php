@@ -9,6 +9,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
 
     // needed for interactive command
-    $parameters->set(Option::RULES_DIRECTORY, getcwd() . '/rules');
+    $parameters->set(Option::RULES_DIRECTORY, null);
     $parameters->set(Option::SET_LIST_CLASSES, []);
 };

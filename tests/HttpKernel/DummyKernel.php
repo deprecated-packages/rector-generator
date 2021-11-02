@@ -4,25 +4,22 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\Tests\HttpKernel;
 
-use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\HttpKernel\Bundle\BundleInterface;
-use Symfony\Component\HttpKernel\Kernel;
+use Psr\Container\ContainerInterface;
+use Symplify\SymplifyKernel\HttpKernel\AbstractSymplifyKernel;
 
-final class DummyKernel extends Kernel
+final class DummyKernel extends AbstractSymplifyKernel
 {
     /**
-     * @return BundleInterface[]
+     * @param string[] $configFiles
      */
-    public function registerBundles(): iterable
+    public function createFromConfigs(array $configFiles): ContainerInterface
     {
-        return [];
-    }
+        $configFiles = [
+            // for tests
+            __DIR__ . '/../config/config_tests.php',
+            __DIR__ . '/../../config/config.php',
+        ];
 
-    public function registerContainerConfiguration(LoaderInterface $loader): void
-    {
-        $loader->load(__DIR__ . '/../../config/config.php');
-
-        // for tests
-        $loader->load(__DIR__ . '/../config/config_tests.php');
+        return $this->create([], [], $configFiles);
     }
 }
