@@ -6,9 +6,7 @@ namespace Rector\RectorGenerator\Command;
 
 use Rector\RectorGenerator\Exception\ShouldNotHappenException;
 use Rector\RectorGenerator\FileSystem\ConfigFilesystem;
-use Rector\RectorGenerator\Finder\TemplateFinder;
-use Rector\RectorGenerator\Generator\FileGenerator;
-use Rector\RectorGenerator\Guard\OverrideGuard;
+use Rector\RectorGenerator\Generator\RectorGenerator;
 use Rector\RectorGenerator\Provider\RectorRecipeProvider;
 use Rector\RectorGenerator\TemplateVariablesFactory;
 use Rector\RectorGenerator\ValueObject\NamePattern;
@@ -25,12 +23,10 @@ final class GenerateCommand extends Command
 {
     public function __construct(
         private ConfigFilesystem $configFilesystem,
-        private FileGenerator $fileGenerator,
-        private OverrideGuard $overrideGuard,
         private SymfonyStyle $symfonyStyle,
-        private TemplateFinder $templateFinder,
         private TemplateVariablesFactory $templateVariablesFactory,
         private RectorRecipeProvider $rectorRecipeProvider,
+        private RectorGenerator $rectorGenerator,
     ) {
         parent::__construct();
     }
@@ -43,33 +39,19 @@ final class GenerateCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $rectorRecipe = $this->rectorRecipeProvider->provide();
-
-        $templateVariables = $this->templateVariablesFactory->createFromRectorRecipe($rectorRecipe);
-        $templateFileInfos = $this->templateFinder->find($rectorRecipe);
-
         $targetDirectory = getcwd();
 
-        $isUnwantedOverride = $this->overrideGuard->isUnwantedOverride(
-            $templateFileInfos,
-            $templateVariables,
-            $rectorRecipe,
-            $targetDirectory
-        );
+        $generatedFilePaths = $this->rectorGenerator->generate($rectorRecipe, $targetDirectory);
 
-        if ($isUnwantedOverride) {
-            $this->symfonyStyle->warning('No files were changed');
+        // nothing new
+        if ($generatedFilePaths === []) {
             return self::SUCCESS;
         }
 
-        $generatedFilePaths = $this->fileGenerator->generateFiles(
-            $templateFileInfos,
-            $templateVariables,
-            $rectorRecipe,
-            $targetDirectory
-        );
-
         $setFilePath = $rectorRecipe->getSetFilePath();
         if ($setFilePath) {
+            $templateVariables = $this->templateVariablesFactory->createFromRectorRecipe($rectorRecipe);
+
             $this->configFilesystem->appendRectorServiceToSet(
                 $setFilePath,
                 $templateVariables,
