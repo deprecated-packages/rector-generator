@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\ValueObject;
 
+/**
+ * @api
+ */
 final class Option
 {
     /**
@@ -15,9 +18,4 @@ final class Option
      * @var string
      */
     public const SET_LIST_CLASSES = 'set_list_classes';
-
-    /**
-     * @var string
-     */
-    public const INTERACTIVE_MODE = 'interactive';
 }
