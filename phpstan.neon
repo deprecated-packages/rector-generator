@@ -36,3 +36,5 @@ parameters:
                 - src/ValueObject/RectorRecipe.php
 
         - '#Method Rector\\RectorGenerator\\Provider\\SetsListProvider\:\:provide\(\) should return array<string\> but returns array<int, array<int, array<int, array<int, array<int, string\>\|string\>\|string\>\|string\>\>#'
+
+        - '#Dynamic call to static method PHPUnit\\Framework\\Assert\:\:(.*?)\(\)#'

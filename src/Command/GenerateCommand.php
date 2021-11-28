@@ -49,7 +49,7 @@ final class GenerateCommand extends Command
         }
 
         $setFilePath = $rectorRecipe->getSetFilePath();
-        if ($setFilePath) {
+        if ($setFilePath !== null) {
             $templateVariables = $this->templateVariablesFactory->createFromRectorRecipe($rectorRecipe);
 
             $this->configFilesystem->appendRectorServiceToSet(
