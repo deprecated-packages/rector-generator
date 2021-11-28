@@ -80,7 +80,7 @@ final class TemplateFileSystem
 
     private function isNonFixtureFileWithIncSuffix(string $filePath): bool
     {
-        if (Strings::match($filePath, self::FIXTURE_SHORT_REGEX)) {
+        if (Strings::match($filePath, self::FIXTURE_SHORT_REGEX) !== null) {
             return false;
         }
 
