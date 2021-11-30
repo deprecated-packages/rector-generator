@@ -30,7 +30,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->load('Rector\\RectorGenerator\\', __DIR__ . '/../src')
         ->exclude([__DIR__ . '/../src/ValueObject']);
 
-    $services->set(ParameterProvider::class);
+    $services->set(ParameterProvider::class)
+        ->arg('$container', service('service_container'));
 
     // console
     $services->set(SymfonyStyleFactory::class);
