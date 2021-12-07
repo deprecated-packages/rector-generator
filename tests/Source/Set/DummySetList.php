@@ -9,5 +9,5 @@ final class DummySetList
     /**
      * @var string
      */
-    public final const SYMFONY = __DIR__ . '/../../config/sets/some-symfony-set.php';
+    final public const SYMFONY = __DIR__ . '/../../config/sets/some-symfony-set.php';
 }
