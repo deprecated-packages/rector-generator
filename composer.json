@@ -28,6 +28,7 @@
         "phpstan/extension-installer": "^1.1",
         "rector/phpstan-rules": "^0.4.15",
         "symplify/monorepo-builder": "^10.0",
+        "symplify/vendor-patches": "^10.0",
         "phpstan/phpstan-strict-rules": "^1.1",
         "phpstan/phpstan-webmozart-assert": "^1.0"
     },
@@ -48,6 +49,7 @@
         "phpstan": "vendor/bin/phpstan analyse --ansi --error-format symplify"
     },
     "extra": {
+        "patches-file": "https://raw.githubusercontent.com/rectorphp/vendor-patches/master/composer.patches.json",
         "rector": {
             "includes": [
                 "config/config.php"
