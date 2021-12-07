@@ -30,11 +30,11 @@ final class TemplateVariablesFactory
     private const VARIABLE_PACKAGE = '__Package__';
 
     public function __construct(
-        private Standard $standard,
-        private ConfigurationNodeFactory $configurationNodeFactory,
-        private ConfigureClassMethodFactory $configureClassMethodFactory,
-        private NodeFactory $nodeFactory,
-        private TemplateFactory $templateFactory
+        private readonly Standard $standard,
+        private readonly ConfigurationNodeFactory $configurationNodeFactory,
+        private readonly ConfigureClassMethodFactory $configureClassMethodFactory,
+        private readonly NodeFactory $nodeFactory,
+        private readonly TemplateFactory $templateFactory
     ) {
     }
 
@@ -133,11 +133,7 @@ final class TemplateVariablesFactory
         foreach ($configuration as $constantName => $variableConfiguration) {
             $constantName = strtoupper($constantName);
 
-            if ($rectorClass === self::SELF) {
-                $class = new Name(self::SELF);
-            } else {
-                $class = new FullyQualified($rectorClass);
-            }
+            $class = $rectorClass === self::SELF ? new Name(self::SELF) : new FullyQualified($rectorClass);
             $classConstFetch = new ClassConstFetch($class, $constantName);
 
             if (is_array($variableConfiguration)) {

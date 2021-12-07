@@ -22,11 +22,11 @@ use Symplify\SmartFileSystem\SmartFileInfo;
 final class GenerateCommand extends Command
 {
     public function __construct(
-        private ConfigFilesystem $configFilesystem,
-        private SymfonyStyle $symfonyStyle,
-        private TemplateVariablesFactory $templateVariablesFactory,
-        private RectorRecipeProvider $rectorRecipeProvider,
-        private RectorGenerator $rectorGenerator,
+        private readonly ConfigFilesystem $configFilesystem,
+        private readonly SymfonyStyle $symfonyStyle,
+        private readonly TemplateVariablesFactory $templateVariablesFactory,
+        private readonly RectorRecipeProvider $rectorRecipeProvider,
+        private readonly RectorGenerator $rectorGenerator,
     ) {
         parent::__construct();
     }

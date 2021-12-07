@@ -20,6 +20,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         __DIR__ . '/tests/ValueObjectFactory/Fixture',
     ]);
 
-    $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_80);
     $parameters->set(Option::AUTO_IMPORT_NAMES, true);
 };

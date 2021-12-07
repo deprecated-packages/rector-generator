@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class InitRecipeCommand extends Command
 {
     public function __construct(
-        private TemplateInitializer $templateInitializer
+        private readonly TemplateInitializer $templateInitializer
     ) {
         parent::__construct();
     }

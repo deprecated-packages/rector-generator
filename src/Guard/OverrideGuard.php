@@ -12,8 +12,8 @@ use Symplify\SmartFileSystem\SmartFileInfo;
 final class OverrideGuard
 {
     public function __construct(
-        private SymfonyStyle $symfonyStyle,
-        private TemplateFileSystem $templateFileSystem
+        private readonly SymfonyStyle $symfonyStyle,
+        private readonly TemplateFileSystem $templateFileSystem
     ) {
     }
 

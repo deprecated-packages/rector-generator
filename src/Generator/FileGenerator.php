@@ -17,18 +17,18 @@ final class FileGenerator
      * @var string
      * @see https://regex101.com/r/RVbPEX/1
      */
-    public const RECTOR_UTILS_REGEX = '#Rector\\\\Utils#';
+    public final const RECTOR_UTILS_REGEX = '#Rector\\\\Utils#';
 
     /**
      * @var string
      * @see https://regex101.com/r/RVbPEX/1
      */
-    public const RECTOR_UTILS_TESTS_REGEX = '#Rector\\\\Tests\\\\Utils#';
+    public final const RECTOR_UTILS_TESTS_REGEX = '#Rector\\\\Tests\\\\Utils#';
 
     public function __construct(
-        private SmartFileSystem $smartFileSystem,
-        private TemplateFactory $templateFactory,
-        private TemplateFileSystem $templateFileSystem
+        private readonly SmartFileSystem $smartFileSystem,
+        private readonly TemplateFactory $templateFactory,
+        private readonly TemplateFileSystem $templateFileSystem
     ) {
     }
 

@@ -11,9 +11,9 @@ use Symplify\SmartFileSystem\SmartFileSystem;
 final class TemplateInitializer
 {
     public function __construct(
-        private SymfonyStyle $symfonyStyle,
-        private SmartFileSystem $smartFileSystem,
-        private FileSystemGuard $fileSystemGuard
+        private readonly SymfonyStyle $symfonyStyle,
+        private readonly SmartFileSystem $smartFileSystem,
+        private readonly FileSystemGuard $fileSystemGuard
     ) {
     }
 

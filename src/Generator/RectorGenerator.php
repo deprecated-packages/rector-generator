@@ -16,11 +16,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 final class RectorGenerator
 {
     public function __construct(
-        private TemplateFinder $templateFinder,
-        private TemplateVariablesFactory $templateVariablesFactory,
-        private FileGenerator $fileGenerator,
-        private OverrideGuard $overrideGuard,
-        private SymfonyStyle $symfonyStyle,
+        private readonly TemplateFinder $templateFinder,
+        private readonly TemplateVariablesFactory $templateVariablesFactory,
+        private readonly FileGenerator $fileGenerator,
+        private readonly OverrideGuard $overrideGuard,
+        private readonly SymfonyStyle $symfonyStyle,
     ) {
     }
 

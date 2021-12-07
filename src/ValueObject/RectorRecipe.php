@@ -61,7 +61,7 @@ final class RectorRecipe
         string $package,
         string $name,
         array $nodeTypes,
-        private string $description,
+        private readonly string $description,
         string $codeBefore,
         string $codeAfter
     ) {

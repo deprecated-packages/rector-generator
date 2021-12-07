@@ -14,11 +14,11 @@ final class TemplateFinder
     /**
      * @var string
      */
-    public const TEMPLATES_DIRECTORY = __DIR__ . '/../../templates';
+    public final const TEMPLATES_DIRECTORY = __DIR__ . '/../../templates';
 
     public function __construct(
-        private FinderSanitizer $finderSanitizer,
-        private FileSystemGuard $fileSystemGuard
+        private readonly FinderSanitizer $finderSanitizer,
+        private readonly FileSystemGuard $fileSystemGuard
     ) {
     }
 

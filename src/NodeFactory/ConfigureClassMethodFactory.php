@@ -20,7 +20,7 @@ use Stringy\Stringy;
 final class ConfigureClassMethodFactory
 {
     public function __construct(
-        private NodeFactory $nodeFactory
+        private readonly NodeFactory $nodeFactory
     ) {
     }
 

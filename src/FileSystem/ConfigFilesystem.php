@@ -22,8 +22,8 @@ final class ConfigFilesystem
     private const LAST_ITEM_REGEX = '#;\n};#';
 
     public function __construct(
-        private SmartFileSystem $smartFileSystem,
-        private TemplateFactory $templateFactory
+        private readonly SmartFileSystem $smartFileSystem,
+        private readonly TemplateFactory $templateFactory
     ) {
     }
 

@@ -37,7 +37,7 @@ final class TemplateFileSystem
     private const CONFIGURED_OR_EXTRA_REGEX = '#(__Configured|__Extra)#';
 
     public function __construct(
-        private TemplateFactory $templateFactory
+        private readonly TemplateFactory $templateFactory
     ) {
     }
 
