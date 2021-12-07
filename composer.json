@@ -5,7 +5,7 @@
     "homepage": "https://getrector.org",
     "license": "MIT",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "nette/utils": "^3.2",
         "rector/rector-src": "dev-main",
         "nikic/php-parser": "^4.13",
