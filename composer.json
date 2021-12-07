@@ -49,7 +49,7 @@
         "phpstan": "vendor/bin/phpstan analyse --ansi --error-format symplify"
     },
     "extra": {
-        "patches-file": "https://raw.githubusercontent.com/rectorphp/vendor-patches/master/composer.patches.json",
+        "patches-file": "https://raw.githubusercontent.com/rectorphp/vendor-patches/main/composer.patches.json",
         "rector": {
             "includes": [
                 "config/config.php"
