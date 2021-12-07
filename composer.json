@@ -9,9 +9,9 @@
         "nette/utils": "^3.2",
         "rector/rector-src": "dev-main",
         "nikic/php-parser": "^4.13",
-        "symfony/console": "6.0 as 5.4",
-        "symfony/dependency-injection": "6.0 as 5.4",
-        "symfony/finder": "6.0 as 5.4",
+        "symfony/console": "^5.4|^6.0",
+        "symfony/dependency-injection": "^5.4|^6.0",
+        "symfony/finder": "^5.4|^6.0",
         "symplify/astral": "^10.0",
         "symplify/package-builder": "^10.0",
         "danielstjules/stringy": "^3.1"
