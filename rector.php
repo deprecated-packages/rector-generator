@@ -17,6 +17,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(Option::SKIP, [
         __DIR__ . '/tests/RectorGenerator/Fixture',
         __DIR__ . '/tests/ValueObjectFactory/Fixture',
+
+        \Rector\Php81\Rector\Property\ReadOnlyPropertyRector::class => [
+            // value object inliner breaks on readonly properties, so this object cannot have them
+            __DIR__ . '/src/ValueObject/RectorRecipe.php',
+        ],
     ]);
 
     $parameters->set(Option::AUTO_IMPORT_NAMES, true);
