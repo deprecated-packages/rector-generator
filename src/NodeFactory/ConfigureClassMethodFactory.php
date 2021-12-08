@@ -15,7 +15,7 @@ use PhpParser\Node\Name;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Expression;
-use Stringy\Stringy;
+use Symfony\Component\String\UnicodeString;
 
 final class ConfigureClassMethodFactory
 {
@@ -41,9 +41,10 @@ final class ConfigureClassMethodFactory
         foreach (array_keys($ruleConfiguration) as $constantName) {
             $coalesce = $this->createConstantInConfigurationCoalesce($constantName, $configurationVariable);
 
-            $stringy = new Stringy($constantName);
-            $propertyName = (string) $stringy->toLowerCase()
-                ->camelize();
+            $constantNameString = new UnicodeString($constantName);
+            $propertyName = $constantNameString->lower()
+                ->camel()
+                ->toString();
 
             $assign = $this->nodeFactory->createPropertyAssign($propertyName, $coalesce);
             $assigns[] = new Expression($assign);

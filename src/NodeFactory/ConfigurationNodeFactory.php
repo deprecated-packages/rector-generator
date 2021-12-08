@@ -8,7 +8,7 @@ use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\ClassConst;
 use PhpParser\Node\Stmt\Property;
-use Stringy\Stringy;
+use Symfony\Component\String\UnicodeString;
 
 final class ConfigurationNodeFactory
 {
@@ -26,9 +26,10 @@ final class ConfigurationNodeFactory
         $properties = [];
 
         foreach (array_keys($ruleConfiguration) as $constantName) {
-            $stringy = new Stringy($constantName);
-            $propertyName = (string) $stringy->toLowerCase()
-                ->camelize();
+            $constantNameString = new UnicodeString($constantName);
+            $propertyName = $constantNameString->lower()
+                ->camel()
+                ->toString();
 
             $property = $this->nodeFactory->createPrivateArrayProperty($propertyName);
             $property->props[0]->default = new Array_([]);
