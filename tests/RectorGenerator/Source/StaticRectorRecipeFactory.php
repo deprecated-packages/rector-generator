@@ -51,9 +51,7 @@ CODE_SAMPLE
         );
 
         $rectorRecipe->setConfiguration([
-            'CLASS_TYPE_TO_METHOD_NAME' => [
-                'SomeClass' => 'configure'
-            ]
+            'SomeClass' => 'configure'
         ]);
 
         $rectorRecipe->setIsRectorRepository($isRectorRepository);

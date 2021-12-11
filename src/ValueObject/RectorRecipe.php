@@ -51,7 +51,7 @@ final class RectorRecipe
     private ?string $setFilePath = null;
 
     /**
-     * @param class-string[] $nodeTypes
+     * @param array<class-string<\PhpParser\Node>> $nodeTypes
      */
     public function __construct(
         string $package,

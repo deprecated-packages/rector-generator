@@ -8,6 +8,10 @@ use Rector\Set\ValueObject\SetList;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
+    // add "generate" command here for testing
+    $containerConfigurator->import(__DIR__ . '/config/config.php');
+    $containerConfigurator->import(__DIR__ . '/templates/rector-recipe.php');
+
     $containerConfigurator->import(LevelSetList::UP_TO_PHP_81);
     $containerConfigurator->import(SetList::CODE_QUALITY);
     $containerConfigurator->import(SetList::DEAD_CODE);
