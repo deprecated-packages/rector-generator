@@ -29,10 +29,6 @@ final class TemplateFinder
     {
         $filePaths = [];
 
-        if ($rectorRecipe->getExtraFileContent() !== null) {
-            $filePaths[] = __DIR__ . '/../../templates/rules-tests/__Package__/Rector/__Category__/__Name__/Source/extra_file.php.inc';
-        }
-
         $filePaths = $this->addRuleAndTestCase($rectorRecipe, $filePaths);
         $filePaths[] = $this->resolveFixtureFilePath();
 
@@ -51,11 +47,7 @@ final class TemplateFinder
     {
         $filePaths[] = __DIR__ . '/../../templates/rules-tests/__Package__/Rector/__Category__/__Name__/config/configured_rule.php';
 
-        if ($rectorRecipe->getExtraFileContent() !== null) {
-            $filePaths[] = __DIR__ . '/../../templates/rules-tests/__Package__/Rector/__Category__/__Name__/__Extra__Name__Test.php.inc';
-        } else {
-            $filePaths[] = __DIR__ . '/../../templates/rules-tests/__Package__/Rector/__Category__/__Name__/__Name__Test.php.inc';
-        }
+        $filePaths[] = __DIR__ . '/../../templates/rules-tests/__Package__/Rector/__Category__/__Name__/__Name__Test.php.inc';
 
         if ($rectorRecipe->getConfiguration() !== []) {
             $filePaths[] = __DIR__ . '/../../templates/rules/__Package__/Rector/__Category__/__Configured__Name__.php';
