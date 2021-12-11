@@ -5,17 +5,11 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\NodeFactory;
 
 use PhpParser\Comment\Doc;
-use PhpParser\Node\Expr\Array_;
-use PhpParser\Node\Expr\ArrayDimFetch;
-use PhpParser\Node\Expr\BinaryOp\Coalesce;
-use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Identifier;
-use PhpParser\Node\Name;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Expression;
-use Symfony\Component\String\UnicodeString;
 
 final class ConfigureClassMethodFactory
 {
@@ -38,15 +32,9 @@ final class ConfigureClassMethodFactory
         $classMethod->params[] = $configurationParam;
 
         $assigns = [];
-        foreach (array_keys($ruleConfiguration) as $constantName) {
-            $coalesce = $this->createConstantInConfigurationCoalesce($constantName, $configurationVariable);
 
-            $constantNameString = new UnicodeString($constantName);
-            $propertyName = $constantNameString->lower()
-                ->camel()
-                ->toString();
-
-            $assign = $this->nodeFactory->createPropertyAssign($propertyName, $coalesce);
+        foreach (array_keys($ruleConfiguration) as $propertyName) {
+            $assign = $this->nodeFactory->createPropertyAssign($propertyName, $configurationVariable);
             $assigns[] = new Expression($assign);
         }
 
@@ -54,26 +42,12 @@ final class ConfigureClassMethodFactory
 
         $paramDoc = <<<'CODE_SAMPLE'
 /**
- * @param array<string, mixed> $configuration
+ * @param mixed[] $configuration
  */
 CODE_SAMPLE;
 
         $classMethod->setDocComment(new Doc($paramDoc));
 
         return $classMethod;
-    }
-
-    private function createConstantInConfigurationCoalesce(
-        string $constantName,
-        Variable $configurationVariable
-    ): Coalesce {
-        $constantName = strtoupper($constantName);
-
-        $classConstFetch = new ClassConstFetch(new Name('self'), $constantName);
-        $arrayDimFetch = new ArrayDimFetch($configurationVariable, $classConstFetch);
-
-        $emptyArray = new Array_([]);
-
-        return new Coalesce($arrayDimFetch, $emptyArray);
     }
 }

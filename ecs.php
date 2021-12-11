@@ -18,9 +18,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $parameters->set(Option::PATHS, [
         __DIR__ . '/src',
+        __DIR__ . '/config',
         __DIR__ . '/tests',
         __DIR__ . '/ecs.php',
         __DIR__ . '/rector.php',
+        __DIR__ . '/templates/rector-recipe.php',
     ]);
 
     $parameters->set(Option::SKIP, [

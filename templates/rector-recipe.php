@@ -4,34 +4,33 @@ declare(strict_types=1);
 
 use PhpParser\Node\Expr\MethodCall;
 use Rector\RectorGenerator\Provider\RectorRecipeProvider;
-use Rector\RectorGenerator\ValueObject\RectorRecipe;
+use Rector\RectorGenerator\ValueObject\Option;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symplify\SymfonyPhpConfig\ValueObjectInliner;
 
 // run "bin/rector generate" to a new Rector basic schema + tests from this config
 return static function (ContainerConfigurator $containerConfigurator): void {
+    $services = $containerConfigurator->services();
+
     // [REQUIRED]
 
-    $rectorRecipe = new RectorRecipe(
+    $rectorRecipeConfiguration = [
         // [RECTOR CORE CONTRIBUTION - REQUIRED]
         // package name, basically namespace part in `rules/<package>/src`, use PascalCase
-        'Naming',
+        Option::PACKAGE => 'Naming',
 
         // name, basically short class name; use PascalCase
-        'RenameMethodCallRector',
+        Option::NAME => 'RenameMethodCallRector',
 
         // 1+ node types to change, pick from classes here https://github.com/nikic/PHP-Parser/tree/master/lib/PhpParser/Node
         // the best practise is to have just 1 type here if possible, and make separated rule for other node types
-        [MethodCall::class],
+        Option::NODE_TYPES => [MethodCall::class],
 
         // describe what the rule does
-        '"something()" will be renamed to "somethingElse()"',
+        Option::DESCRIPTION => '"something()" will be renamed to "somethingElse()"',
 
         // code before change
         // this is used for documentation and first test fixture
-        <<<'CODE_SAMPLE'
-<?php
-
+        Option::CODE_BEFORE => <<<'CODE_SAMPLE'
 class SomeClass
 {
     public function run()
@@ -39,12 +38,10 @@ class SomeClass
         $this->something();
     }
 }
-
 CODE_SAMPLE
+        ,
         // code after change
-        , <<<'CODE_SAMPLE'
-<?php
-
+        Option::CODE_AFTER => <<<'CODE_SAMPLE'
 class SomeClass
 {
     public function run()
@@ -53,24 +50,26 @@ class SomeClass
     }
 }
 CODE_SAMPLE
-    );
+        ,
 
-    // [OPTIONAL - UNCOMMENT TO USE]
+        // [OPTIONAL - UNCOMMENT TO USE]
 
-    // links to useful websites, that explain why the change is needed
-    // $rectorRecipe->setResources([
-    //      'https://github.com/symfony/symfony/blob/704c648ba53be38ef2b0105c97c6497744fef8d8/UPGRADE-6.0.md'
-    // ]);
+        // links to useful websites, that explain why the change is needed
+        //        Option::RESOURCES => [
+        //            'https://github.com/symfony/symfony/blob/6.1/UPGRADE-6.0.md'
+        //        ],
 
-    // is the rule configurable? add default configuration here
-    // $rectorRecipe->setConfiguration(['SOME_CONSTANT_KEY' => ['before' => 'after']]);
+        // is the rule configurable?
+        //        Option::CONFIGURATION => [
+        //            'privatePropertyName' => [
+        //                'old_value' => 'newValue',
+        //            ],
+        //        ],
 
-    // [RECTOR CORE CONTRIBUTION - OPTIONAL]
-    // set the rule belongs to; is optional, because e.g. generic rules don't need a specific set to belong to
-    // $rectorRecipe->setSetFilePath(\Rector\Set\ValueObject\SetList::NAMING);
-
-    $services = $containerConfigurator->services();
+        // set the rule belongs to; is optional, because e.g. generic rules don't need a specific set to belong to
+        // Option::SET_FILE_PATH => \Rector\Set\ValueObject\SetList::NAMING,
+    ];
 
     $services->set(RectorRecipeProvider::class)
-        ->arg('$rectorRecipe', ValueObjectInliner::inlineArgumentObject($rectorRecipe, $services));
+        ->arg('$rectorRecipeConfiguration', $rectorRecipeConfiguration);
 };

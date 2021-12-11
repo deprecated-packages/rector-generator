@@ -18,6 +18,7 @@ final class DummyKernel extends AbstractSymplifyKernel
             // for tests
             __DIR__ . '/../config/config_tests.php',
             __DIR__ . '/../../config/config.php',
+            __DIR__ . '/../../templates/rector-recipe.php',
         ];
 
         return $this->create([], [], $configFiles);

@@ -17,14 +17,9 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 final class WhateverRector extends AbstractRector implements ConfigurableRectorInterface
 {
     /**
- * @var string
- */
-public const CLASS_TYPE_TO_METHOD_NAME = 'class_type_to_method_name';
-
-    /**
  * @var mixed[]
  */
-private $classTypeToMethodName = [];
+private $renamedPackages = [];
 
     public function getRuleDefinition(): RuleDefinition
     {
@@ -54,7 +49,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 }
 CODE_SAMPLE
 ,
-                [self::CLASS_TYPE_TO_METHOD_NAME => ['SomeClass' => 'configure']]
+                [['old_package_name' => 'new_package_name']]
             )
         ]);
     }
@@ -78,10 +73,10 @@ CODE_SAMPLE
     }
 
     /**
- * @param array<string, mixed> $configuration
+ * @param mixed[] $configuration
  */
 public function configure(array $configuration) : void
 {
-    $this->classTypeToMethodName = $configuration[self::CLASS_TYPE_TO_METHOD_NAME] ?? [];
+    $this->renamedPackages = $configuration;
 }
 }

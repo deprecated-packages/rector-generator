@@ -51,8 +51,8 @@ CODE_SAMPLE
         );
 
         $rectorRecipe->setConfiguration([
-            'CLASS_TYPE_TO_METHOD_NAME' => [
-                'SomeClass' => 'configure'
+            'renamedPackages' => [
+                'old_package_name' => 'new_package_name'
             ]
         ]);
 
