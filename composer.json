@@ -55,6 +55,9 @@
             ]
         }
     },
+    "conflict": {
+        "rector/rector": "*"
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
