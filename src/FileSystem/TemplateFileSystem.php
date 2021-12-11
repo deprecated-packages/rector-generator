@@ -42,7 +42,7 @@ final class TemplateFileSystem
     }
 
     /**
-     * @param array<string, mixed> $templateVariables
+     * @param array<string, string> $templateVariables
      */
     public function resolveDestination(
         SmartFileInfo $smartFileInfo,

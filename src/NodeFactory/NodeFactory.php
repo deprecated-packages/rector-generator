@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\NodeFactory;
 
 use PhpParser\BuilderHelpers;
-use PhpParser\Comment\Doc;
-use PhpParser\Node\Const_;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
@@ -15,8 +13,6 @@ use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Name\FullyQualified;
-use PhpParser\Node\Stmt\Class_;
-use PhpParser\Node\Stmt\ClassConst;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Property;
 use Symplify\Astral\ValueObject\NodeBuilder\MethodBuilder;
@@ -62,25 +58,6 @@ final class NodeFactory
         $methodBuilder->makePublic();
 
         return $methodBuilder->getNode();
-    }
-
-    public function createPublicClassConst(string $constantName, string $stringConstantValue): ClassConst
-    {
-        $valueExpr = BuilderHelpers::normalizeValue($stringConstantValue);
-        $const = new Const_($constantName, $valueExpr);
-
-        $classConst = new ClassConst([$const]);
-        $classConst->flags = Class_::MODIFIER_PUBLIC;
-
-        $docContent = <<<'CODE_SAMPLE'
-/**
- * @var string
- */
-CODE_SAMPLE;
-
-        $classConst->setDocComment(new Doc($docContent));
-
-        return $classConst;
     }
 
     public function createPrivateArrayProperty(string $propertyName): Property

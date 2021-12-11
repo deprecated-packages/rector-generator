@@ -11,22 +11,16 @@ use PhpParser\PrettyPrinter\Standard;
 use Rector\RectorGenerator\NodeFactory\ConfigurationNodeFactory;
 use Rector\RectorGenerator\NodeFactory\ConfigureClassMethodFactory;
 use Rector\RectorGenerator\NodeFactory\NodeFactory;
-use Rector\RectorGenerator\ValueObject\NamePattern;
+use Rector\RectorGenerator\ValueObject\Placeholder;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
 
 final class TemplateVariablesFactory
 {
-    /**
-     * @var string
-     */
-    private const VARIABLE_PACKAGE = '__Package__';
-
     public function __construct(
         private readonly Standard $standard,
         private readonly ConfigurationNodeFactory $configurationNodeFactory,
         private readonly ConfigureClassMethodFactory $configureClassMethodFactory,
         private readonly NodeFactory $nodeFactory,
-        private readonly TemplateFactory $templateFactory
     ) {
     }
 
@@ -36,18 +30,16 @@ final class TemplateVariablesFactory
     public function createFromRectorRecipe(RectorRecipe $rectorRecipe): array
     {
         $data = [
-            self::VARIABLE_PACKAGE => $rectorRecipe->getPackage(),
-            '__Category__' => $rectorRecipe->getCategory(),
-            '__Description__' => $rectorRecipe->getDescription(),
-            '__Name__' => $rectorRecipe->getName(),
-            '__CodeBefore__' => trim($rectorRecipe->getCodeBefore()) . PHP_EOL,
-            '__CodeBeforeExample__' => $this->createCodeForDefinition($rectorRecipe->getCodeBefore()),
-            '__CodeAfter__' => trim($rectorRecipe->getCodeAfter()) . PHP_EOL,
-            '__CodeAfterExample__' => $this->createCodeForDefinition($rectorRecipe->getCodeAfter()),
-            '__Resources__' => $this->createSourceDocBlock($rectorRecipe->getResources()),
+            Placeholder::PACKAGE => $rectorRecipe->getPackage(),
+            Placeholder::CATEGORY => $rectorRecipe->getCategory(),
+            Placeholder::DESCRIPTION => $rectorRecipe->getDescription(),
+            Placeholder::NAME => $rectorRecipe->getName(),
+            Placeholder::CODE_BEFORE => trim($rectorRecipe->getCodeBefore()) . PHP_EOL,
+            Placeholder::CODE_BEFORE_EXAMPLE => $this->createCodeForDefinition($rectorRecipe->getCodeBefore()),
+            Placeholder::CODE_AFTER => trim($rectorRecipe->getCodeAfter()) . PHP_EOL,
+            Placeholder::CODE_AFTER_EXAMPLE => $this->createCodeForDefinition($rectorRecipe->getCodeAfter()),
+            Placeholder::RESOURCES => $this->createSourceDocBlock($rectorRecipe->getResources()),
         ];
-
-        $rectorClass = $this->templateFactory->create(NamePattern::RECTOR_FQN_NAME_PATTERN, $data);
 
         if ($rectorRecipe->getConfiguration() !== []) {
             $configurationData = $this->createConfigurationData($rectorRecipe);
@@ -157,6 +149,21 @@ final class TemplateVariablesFactory
             $rectorRecipe->getConfiguration()
         );
 
+        $configurationData['__MainConfiguration__'] = $this->createMainConfiguration(
+            $rectorRecipe->getConfiguration()
+        );
+
         return $configurationData;
+    }
+
+    /**
+     * @param array<string, mixed> $ruleConfiguration
+     */
+    private function createMainConfiguration(array $ruleConfiguration): string
+    {
+        $firstItem = array_pop($ruleConfiguration);
+
+        $valueExpr = BuilderHelpers::normalizeValue($firstItem);
+        return $this->standard->prettyPrintExpr($valueExpr);
     }
 }
