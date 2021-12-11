@@ -62,9 +62,6 @@ CODE_SAMPLE
     //      'https://github.com/symfony/symfony/blob/704c648ba53be38ef2b0105c97c6497744fef8d8/UPGRADE-6.0.md'
     // ]);
 
-    // do you need to check for extra generated file?
-    // $rectorRecipe->addExtraFile('SomeExtraFile.php', '<?php ... SomeExtraFileContent');
-
     // is the rule configurable? add default configuration here
     // $rectorRecipe->setConfiguration(['SOME_CONSTANT_KEY' => ['before' => 'after']]);
 

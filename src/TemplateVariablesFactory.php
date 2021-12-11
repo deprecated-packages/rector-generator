@@ -80,14 +80,6 @@ final class TemplateVariablesFactory
             );
         }
 
-        if ($rectorRecipe->getExtraFileContent() !== null && $rectorRecipe->getExtraFileName() !== null) {
-            $data['__ExtraFileName__'] = $rectorRecipe->getExtraFileName();
-            $data['__ExtraFileContent__'] = trim($rectorRecipe->getExtraFileContent()) . PHP_EOL;
-            $data['__ExtraFileContentExample__'] = $this->createCodeForDefinition(
-                $rectorRecipe->getExtraFileContent()
-            );
-        }
-
         $data['__NodeTypesPhp__'] = $this->createNodeTypePhp($rectorRecipe);
         $data['__NodeTypesDoc__'] = '\\' . implode('|\\', $rectorRecipe->getNodeTypes());
 
