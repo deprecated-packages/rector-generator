@@ -1,5 +1,38 @@
 # Rector Generator
 
+## Installation
+
+This package require to use `rector-src`, you need to install `rector-src` to use it with the following steps:
+
+```
+composer config minimum-stability dev
+composer config prefer-stable true
+composer require --dev rector/rector-src
+composer require --dev symplify/vendor-patches
+```
+
+After that, update composer.json and add extra:
+
+```
+    "extra": {
+        "enable-patching": true
+    }
+```
+
+After that, run composer update: 
+
+```
+composer update
+```
+
+After that, require rector-generator:
+
+```
+composer require --dev rector/rector-generator:dev-main
+```
+
+## Structure
+
 Every Rector rule requires test, test fixtures, config and the rule.
 
 ```bash
