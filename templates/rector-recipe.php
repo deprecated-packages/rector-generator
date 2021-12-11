@@ -41,7 +41,6 @@ class SomeClass
 }
 
 CODE_SAMPLE
-
         // code after change
         , <<<'CODE_SAMPLE'
 <?php
