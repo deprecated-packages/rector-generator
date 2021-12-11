@@ -6,6 +6,6 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
-    $services->set(\Rector\ModeratePackage\Rector\MethodCall\WhateverRector::class)
-        ->configure(['old_package_name' => 'new_package_name']);
+    $services->set(\Rector\__Package__\Rector\__Category__\__Name__::class)
+        ->configure(__MainConfiguration__);
 };

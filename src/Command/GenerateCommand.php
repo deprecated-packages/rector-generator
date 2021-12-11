@@ -33,6 +33,7 @@ final class GenerateCommand extends Command
 
     protected function configure(): void
     {
+        $this->setName('generate');
         $this->setDescription('[DEV] Create a new Rector, in a proper location, with new tests');
     }
 

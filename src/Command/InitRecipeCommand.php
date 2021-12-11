@@ -19,6 +19,7 @@ final class InitRecipeCommand extends Command
 
     protected function configure(): void
     {
+        $this->setName('init-recipe');
         $this->setDescription('[DEV] Initialize "rector-recipe.php" config');
     }
 

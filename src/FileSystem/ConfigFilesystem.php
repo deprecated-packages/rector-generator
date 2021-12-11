@@ -56,7 +56,7 @@ final class ConfigFilesystem
     }
 
     /**
-     * @param array<string, mixed> $templateVariables
+     * @param array<string, string> $templateVariables
      */
     private function ensureRequiredKeysAreSet(array $templateVariables): void
     {

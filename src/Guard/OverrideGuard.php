@@ -46,7 +46,7 @@ final class OverrideGuard
     }
 
     /**
-     * @param array<string, mixed> $templateVariables
+     * @param array<string, string> $templateVariables
      */
     private function doesFileInfoAlreadyExist(
         array $templateVariables,
