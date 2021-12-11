@@ -13,7 +13,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     // [REQUIRED]
 
-    $configuration = [
+    $rectorRecipeConfiguration = [
         // [RECTOR CORE CONTRIBUTION - REQUIRED]
         // package name, basically namespace part in `rules/<package>/src`, use PascalCase
         Option::PACKAGE => 'Naming',
@@ -38,7 +38,8 @@ class SomeClass
         $this->something();
     }
 }
-CODE_SAMPLE,
+CODE_SAMPLE
+        ,
         // code after change
         Option::CODE_AFTER => <<<'CODE_SAMPLE'
 class SomeClass
@@ -48,24 +49,27 @@ class SomeClass
         $this->somethingElse();
     }
 }
-CODE_SAMPLE,
+CODE_SAMPLE
+        ,
 
         // [OPTIONAL - UNCOMMENT TO USE]
 
         // links to useful websites, that explain why the change is needed
-//        Option::RESOURCES => [
-//            'https://github.com/symfony/symfony/blob/6.1/UPGRADE-6.0.md'
-//        ],
+        //        Option::RESOURCES => [
+        //            'https://github.com/symfony/symfony/blob/6.1/UPGRADE-6.0.md'
+        //        ],
 
         // is the rule configurable?
-//        Option::CONFIGURATION => [
-//             'key' => 'value',
-//        ],
+        //        Option::CONFIGURATION => [
+        //            'privatePropertyName' => [
+        //                'old_value' => 'newValue',
+        //            ],
+        //        ],
 
         // set the rule belongs to; is optional, because e.g. generic rules don't need a specific set to belong to
         // Option::SET_FILE_PATH => \Rector\Set\ValueObject\SetList::NAMING,
     ];
 
     $services->set(RectorRecipeProvider::class)
-        ->arg('$configuration', $configuration);
+        ->arg('$rectorRecipeConfiguration', $rectorRecipeConfiguration);
 };

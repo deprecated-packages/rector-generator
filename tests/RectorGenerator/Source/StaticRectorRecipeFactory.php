@@ -51,7 +51,9 @@ CODE_SAMPLE
         );
 
         $rectorRecipe->setConfiguration([
-            'SomeClass' => 'configure'
+            'renamedPackages' => [
+                'old_package_name' => 'new_package_name'
+            ]
         ]);
 
         $rectorRecipe->setIsRectorRepository($isRectorRepository);

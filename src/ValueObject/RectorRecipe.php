@@ -39,7 +39,9 @@ final class RectorRecipe
     private array $resources = [];
 
     /**
-     * @var mixed[]
+     * The key is a private property name that holds the configuration value (can be multiple properties)
+     *
+     * @var array<string, mixed[]>
      */
     private array $configuration = [];
 
@@ -51,7 +53,7 @@ final class RectorRecipe
     private ?string $setFilePath = null;
 
     /**
-     * @param array<class-string<\PhpParser\Node>> $nodeTypes
+     * @param array<class-string<Node>> $nodeTypes
      */
     public function __construct(
         string $package,
@@ -129,7 +131,7 @@ final class RectorRecipe
     }
 
     /**
-     * @return mixed[]
+     * @return array<string, mixed[]>
      */
     public function getConfiguration(): array
     {
@@ -148,7 +150,7 @@ final class RectorRecipe
 
     /**
      * @api
-     * @param mixed[] $configuration
+     * @param array<string, mixed[]> $configuration
      */
     public function setConfiguration(array $configuration): void
     {

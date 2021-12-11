@@ -4,40 +4,46 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\Provider;
 
+use Rector\RectorGenerator\Exception\ConfigurationException;
 use Rector\RectorGenerator\ValueObject\Option;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
 
 final class RectorRecipeProvider
 {
-    private RectorRecipe $rectorRecipe;
+    private RectorRecipe|null $rectorRecipe = null;
 
     /**
      * Configure in the rector-recipe.php config
      *
-     * @param array<Option::*, mixed> $configuration
+     * @param array<Option::*, mixed> $rectorRecipeConfiguration
      */
-    public function __construct(array $configuration)
+    public function __construct(array $rectorRecipeConfiguration = [])
     {
+        // no configuration provided - due to autowiring
+        if ($rectorRecipeConfiguration === []) {
+            return;
+        }
+
         $rectorRecipe = new RectorRecipe(
-            $configuration[Option::PACKAGE],
-            $configuration[Option::NAME],
-            $configuration[Option::NODE_TYPES],
-            $configuration[Option::DESCRIPTION],
-            $configuration[Option::CODE_BEFORE],
-            $configuration[Option::CODE_AFTER],
+            $rectorRecipeConfiguration[Option::PACKAGE],
+            $rectorRecipeConfiguration[Option::NAME],
+            $rectorRecipeConfiguration[Option::NODE_TYPES],
+            $rectorRecipeConfiguration[Option::DESCRIPTION],
+            $rectorRecipeConfiguration[Option::CODE_BEFORE],
+            $rectorRecipeConfiguration[Option::CODE_AFTER],
         );
 
         // optional parameters
-        if (isset($configuration[Option::CONFIGURATION])) {
-            $rectorRecipe->setConfiguration($configuration[Option::CONFIGURATION]);
+        if (isset($rectorRecipeConfiguration[Option::CONFIGURATION])) {
+            $rectorRecipe->setConfiguration($rectorRecipeConfiguration[Option::CONFIGURATION]);
         }
 
-        if (isset($configuration[Option::RESOURCES])) {
-            $rectorRecipe->setResources($configuration[Option::RESOURCES]);
+        if (isset($rectorRecipeConfiguration[Option::RESOURCES])) {
+            $rectorRecipe->setResources($rectorRecipeConfiguration[Option::RESOURCES]);
         }
 
-        if (isset($configuration[Option::SET_FILE_PATH])) {
-            $rectorRecipe->setResources($configuration[Option::SET_FILE_PATH]);
+        if (isset($rectorRecipeConfiguration[Option::SET_FILE_PATH])) {
+            $rectorRecipe->setResources($rectorRecipeConfiguration[Option::SET_FILE_PATH]);
         }
 
         $this->rectorRecipe = $rectorRecipe;
@@ -45,6 +51,12 @@ final class RectorRecipeProvider
 
     public function provide(): RectorRecipe
     {
+        if (! $this->rectorRecipe instanceof RectorRecipe) {
+            throw new ConfigurationException(
+                'Make sure the "rector-recipe.php" config file is imported and parameter set. Are you sure its in your main config?'
+            );
+        }
+
         return $this->rectorRecipe;
     }
 }
