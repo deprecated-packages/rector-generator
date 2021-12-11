@@ -13,18 +13,8 @@ parameters:
 
     ignoreErrors:
         -
-            message: '#"setDocComment\(\)" call on "PhpParser\\Node" type is not allowed#'
-            paths:
-                - src/NodeFactory/ConfigureClassMethodFactory.php
-                - src/NodeFactory/NodeFactory.php
-
-        -
             message: '#Method Rector\\RectorGenerator\\ValueObject\\RectorRecipe\:\:(.*?)\(\) should return string but returns string\|null#'
             paths:
                 - src/ValueObject/RectorRecipe.php
 
         - '#Dynamic call to static method PHPUnit\\Framework\\Assert\:\:(.*?)\(\)#'
-
-        -
-            message: '#Do not use chained method calls\. Put each on separated lines#'
-            path: src/NodeFactory
