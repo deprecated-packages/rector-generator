@@ -12,6 +12,8 @@ use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class TemplateFileSystem
 {
+    public const ROOT_PACKAGES = ['Symfony', 'Nette', 'Doctrine', 'Laravel', 'PHPUnit', 'CakePHP'];
+
     /**
      * @var string
      * @see https://regex101.com/r/fw3jBe/1
@@ -51,6 +53,7 @@ final class TemplateFileSystem
         string $targetDirectory
     ): string {
         $destination = $smartFileInfo->getRelativeFilePathFromDirectory(TemplateFinder::TEMPLATES_DIRECTORY);
+        $destination = $this->changeRootPathForRootPackage($rectorRecipe, $destination);
 
         // normalize core package
         if (! $rectorRecipe->isRectorRepository()) {
@@ -85,5 +88,16 @@ final class TemplateFileSystem
         }
 
         return \str_ends_with($filePath, '.inc');
+    }
+
+    private function changeRootPathForRootPackage(RectorRecipe $rectorRecipe, string $destination): string
+    {
+        // rector split package? path are in the root directory
+        if (! in_array($rectorRecipe->getPackage(), self::ROOT_PACKAGES, true)) {
+            return $destination;
+        }
+
+        $destination = str_replace('rules/__Package__', 'src', $destination);
+        return str_replace('rules-tests/__Package__', 'tests', $destination);
     }
 }
