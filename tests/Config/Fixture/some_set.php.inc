@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Rector\Config\RectorConfig;
 
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $services = $containerConfigurator->services();
+return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->rule('SomeDummyRector');
 };
 
 ?>
@@ -14,11 +14,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
 declare(strict_types=1);
 
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Rector\Config\RectorConfig;
 
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $services = $containerConfigurator->services();
-    $services->set(\Rector\SomePackage\Rector\String_\SomeRector::class);
+return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->rule('SomeDummyRector');
+    $rectorConfig->rule(\Rector\SomePackage\Rector\String_\SomeRector::class);
 };
 
 ?>

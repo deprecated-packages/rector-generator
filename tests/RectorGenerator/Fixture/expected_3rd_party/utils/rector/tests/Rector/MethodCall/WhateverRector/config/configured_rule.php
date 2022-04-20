@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Rector\Config\RectorConfig;
 
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $services = $containerConfigurator->services();
-    $services->set(\Utils\Rector\Rector\MethodCall\WhateverRector::class)
-        ->configure(['old_package_name' => 'new_package_name']);
+return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->ruleWithConfiguration(\Utils\Rector\Rector\MethodCall\WhateverRector::class,
+        ['old_package_name' => 'new_package_name']
+    );
 };
