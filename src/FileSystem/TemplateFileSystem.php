@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\FileSystem;
 
 use Nette\Utils\Strings;
-use Rector\RectorGenerator\Enum\GitHubPackages;
+use Rector\RectorGenerator\Enum\Packages;
 use Rector\RectorGenerator\Finder\TemplateFinder;
 use Rector\RectorGenerator\TemplateFactory;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
@@ -92,7 +92,7 @@ final class TemplateFileSystem
     private function changeRootPathForRootPackage(RectorRecipe $rectorRecipe, string $destination): string
     {
         // rector split package? path are in the root directory
-        if (! in_array($rectorRecipe->getPackage(), GitHubPackages::ROOT, true)) {
+        if (! in_array($rectorRecipe->getPackage(), Packages::RECTOR_CORE, true)) {
             return $destination;
         }
 

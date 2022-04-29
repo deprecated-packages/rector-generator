@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\Generator;
 
 use Nette\Utils\Strings;
+use Rector\RectorGenerator\Enum\Packages;
 use Rector\RectorGenerator\FileSystem\TemplateFileSystem;
 use Rector\RectorGenerator\TemplateFactory;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
@@ -79,6 +80,15 @@ final class FileGenerator
         if (! $rectorRecipe->isRectorRepository()) {
             $content = Strings::replace($content, self::RECTOR_UTILS_REGEX, 'Utils\Rector');
             $content = Strings::replace($content, self::RECTOR_UTILS_TESTS_REGEX, 'Utils\Rector\Tests');
+        }
+
+        // correct tests PSR-4 namespace for core rector packages
+        if (in_array($rectorRecipe->getPackage(), Packages::RECTOR_CORE, true)) {
+            $content = Strings::replace(
+                $content,
+                '#namespace Rector\\\\Tests\\\\' . $rectorRecipe->getPackage() . '#',
+                'namespace Rector\\' . $rectorRecipe->getPackage() . '\\Tests',
+            );
         }
 
         $this->smartFileSystem->dumpFile($targetFilePath, $content);
