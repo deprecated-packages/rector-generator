@@ -19,9 +19,5 @@ return static function (ECSConfig $ecsConfig): void {
         __DIR__ . '/templates/rector-recipe.php',
     ]);
 
-    $ecsConfig->skip([
-        __DIR__ . '/tests/RectorGenerator/Fixture',
-        __DIR__ . '/tests/RectorGenerator/Source',
-        __DIR__ . '/tests/ValueObjectFactory/Fixture/expected_interactive',
-    ]);
+    $ecsConfig->skip([__DIR__ . '/tests/RectorGenerator/Fixture', __DIR__ . '/tests/RectorGenerator/Source']);
 };

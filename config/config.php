@@ -18,8 +18,6 @@ use Symplify\SmartFileSystem\Json\JsonFileSystem;
 use Symplify\SmartFileSystem\SmartFileSystem;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    $containerConfigurator->import(__DIR__ . '/parameters.php');
-
     $services = $containerConfigurator->services();
 
     $services->defaults()
