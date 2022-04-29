@@ -26,27 +26,13 @@ private $renamedPackages = [];
         return new RuleDefinition('Change $service->arg(...) to $service->call(...)', [
             new ConfiguredCodeSample(
                 <<<'CODE_SAMPLE'
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $services = $containerConfigurator->services();
-
-    $services->set(SomeClass::class)
-        ->arg('$key', 'value');
-}
+$result = [];
+echo 'code before';
 CODE_SAMPLE
 ,
                 <<<'CODE_SAMPLE'
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $services = $containerConfigurator->services();
-
-    $services->set(SomeClass::class)
-        ->call('configure', [[
-            '$key' => 'value'
-        ]]);
-}
+$result = [];
+echo 'code after';
 CODE_SAMPLE
 ,
                 [['old_package_name' => 'new_package_name']]

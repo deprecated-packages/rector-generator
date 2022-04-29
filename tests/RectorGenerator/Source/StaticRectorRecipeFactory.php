@@ -25,28 +25,14 @@ final class StaticRectorRecipeFactory
     <<<'CODE_SAMPLE'
 <?php
 
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $services = $containerConfigurator->services();
-
-    $services->set(SomeClass::class)
-        ->arg('$key', 'value');
-}
+$result = [];
+echo 'code before';
 CODE_SAMPLE
             , <<<'CODE_SAMPLE'
 <?php
 
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $services = $containerConfigurator->services();
-
-    $services->set(SomeClass::class)
-        ->call('configure', [[
-            '$key' => 'value'
-        ]]);
-}
+$result = [];
+echo 'code after';
 CODE_SAMPLE
         );
 
