@@ -9,7 +9,6 @@ parameters:
 
     excludePaths:
         - tests/RectorGenerator/Fixture
-        - tests/ValueObjectFactory/Fixture/expected_interactive
 
     ignoreErrors:
         -
