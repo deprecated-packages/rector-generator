@@ -12,6 +12,9 @@ use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class TemplateFileSystem
 {
+    /**
+     * @var string[]
+     */
     public const ROOT_PACKAGES = ['Symfony', 'Nette', 'Doctrine', 'Laravel', 'PHPUnit', 'CakePHP'];
 
     /**
@@ -72,7 +75,7 @@ final class TemplateFileSystem
             $destination = Strings::before($destination, '.inc');
         }
 
-        // special hack for tests, to PHPUnit doesn't load the generated file as test case
+        // special hack for tests, so PHPUnit doesn't load the generated file as a test case
         /** @var string $destination */
         if (\str_ends_with($destination, 'Test.php') && defined('PHPUNIT_COMPOSER_INSTALL')) {
             $destination .= '.inc';
