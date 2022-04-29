@@ -9,7 +9,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use Symplify\PackageBuilder\Console\Style\SymfonyStyleFactory;
-use Symplify\PackageBuilder\Parameter\ParameterProvider;
 use Symplify\PackageBuilder\Reflection\PrivatesAccessor;
 use Symplify\PackageBuilder\Reflection\PrivatesCaller;
 use Symplify\SmartFileSystem\FileSystemGuard;
@@ -26,10 +25,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->autoconfigure();
 
     $services->load('Rector\\RectorGenerator\\', __DIR__ . '/../src')
-        ->exclude([__DIR__ . '/../src/ValueObject']);
-
-    $services->set(ParameterProvider::class)
-        ->arg('$container', service('service_container'));
+        ->exclude([__DIR__ . '/../src/ValueObject', __DIR__ . '/../src/Enum']);
 
     // console
     $services->set(SymfonyStyleFactory::class);
