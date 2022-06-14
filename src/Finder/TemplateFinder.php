@@ -14,7 +14,7 @@ final class TemplateFinder
     /**
      * @var string
      */
-    final public const TEMPLATES_DIRECTORY = __DIR__ . '/../../templates';
+    public const TEMPLATES_DIRECTORY = __DIR__ . '/../../templates';
 
     public function __construct(
         private readonly FinderSanitizer $finderSanitizer,

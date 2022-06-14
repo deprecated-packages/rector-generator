@@ -281,7 +281,7 @@ final class RectorRecipe
                 continue;
             }
 
-            if (\str_starts_with($composerJson['name'], 'rector/')) {
+            if (\str_starts_with((string) $composerJson['name'], 'rector/')) {
                 return true;
             }
         }

@@ -12,5 +12,5 @@ final class RectorGeneratorConfig
     /**
      * @var string
      */
-    final public const FILE_PATH = __DIR__ . '/../../config/config.php';
+    public const FILE_PATH = __DIR__ . '/../../config/config.php';
 }
