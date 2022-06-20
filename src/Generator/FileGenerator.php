@@ -96,7 +96,7 @@ final class FileGenerator
 
                 $content = str_replace(
                     $rectorConfigLine,
-                    $rectorConfigLine . PHP_EOL . '    $rectorConfig->import(__DIR__ . \'/../../../../../config/config.php\')' . PHP_EOL,
+                    $rectorConfigLine . PHP_EOL . '    $rectorConfig->import(__DIR__ . \'/../../../../../config/config.php\');' . PHP_EOL,
                     $content
                 );
             }
