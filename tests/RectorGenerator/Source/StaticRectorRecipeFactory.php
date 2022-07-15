@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\Tests\RectorGenerator\Source;
 
 use PhpParser\Node\Expr\MethodCall;
+use PHPStan\Node\ClassMethod;
 use Rector\RectorGenerator\Exception\ShouldNotHappenException;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
 
