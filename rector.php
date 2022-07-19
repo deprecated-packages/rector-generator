@@ -12,7 +12,9 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__ . '/config/config.php');
     $rectorConfig->import(__DIR__ . '/templates/rector-recipe.php');
 
-    $rectorConfig->sets([LevelSetList::UP_TO_PHP_81, SetList::CODE_QUALITY, SetList::CODING_STYLE, SetList::DEAD_CODE]);
+    $rectorConfig->sets(
+        [LevelSetList::UP_TO_PHP_81, SetList::CODE_QUALITY, SetList::CODING_STYLE, SetList::DEAD_CODE, SetList::NAMING]
+    );
 
     $rectorConfig->paths([__DIR__ . '/src', __DIR__ . '/tests']);
 
