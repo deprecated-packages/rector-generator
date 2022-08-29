@@ -9,8 +9,8 @@ use Rector\RectorGenerator\Enum\Packages;
 use Rector\RectorGenerator\FileSystem\TemplateFileSystem;
 use Rector\RectorGenerator\TemplateFactory;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
+use Symfony\Component\Filesystem\Filesystem;
 use Symplify\SmartFileSystem\SmartFileInfo;
-use Symplify\SmartFileSystem\SmartFileSystem;
 
 final class FileGenerator
 {
@@ -27,7 +27,7 @@ final class FileGenerator
     public const RECTOR_UTILS_TESTS_REGEX = '#Rector\\\\Tests\\\\Utils#';
 
     public function __construct(
-        private readonly SmartFileSystem $smartFileSystem,
+        private readonly Filesystem $filesystem,
         private readonly TemplateFactory $templateFactory,
         private readonly TemplateFileSystem $templateFileSystem
     ) {
@@ -102,7 +102,7 @@ final class FileGenerator
             }
         }
 
-        $this->smartFileSystem->dumpFile($targetFilePath, $content);
+        $this->filesystem->dumpFile($targetFilePath, $content);
 
         return $targetFilePath;
     }

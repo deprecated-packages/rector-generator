@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\Finder;
 
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
-use Symplify\SmartFileSystem\FileSystemGuard;
 use Symplify\SmartFileSystem\Finder\FinderSanitizer;
 use Symplify\SmartFileSystem\SmartFileInfo;
+use Webmozart\Assert\Assert;
 
 final class TemplateFinder
 {
@@ -18,7 +18,6 @@ final class TemplateFinder
 
     public function __construct(
         private readonly FinderSanitizer $finderSanitizer,
-        private readonly FileSystemGuard $fileSystemGuard
     ) {
     }
 
@@ -67,8 +66,6 @@ final class TemplateFinder
      */
     private function ensureFilePathsExists(array $filePaths): void
     {
-        foreach ($filePaths as $filePath) {
-            $this->fileSystemGuard->ensureFileExists($filePath, __METHOD__);
-        }
+        Assert::allFileExists($filePaths, __METHOD__);
     }
 }

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\FileSystem;
 
+use Nette\Utils\FileSystem;
 use Nette\Utils\Strings;
 use Rector\RectorGenerator\Exception\ShouldNotHappenException;
 use Rector\RectorGenerator\TemplateFactory;
-use Symplify\SmartFileSystem\SmartFileSystem;
 
 final class ConfigFilesystem
 {
@@ -23,7 +23,7 @@ final class ConfigFilesystem
     private const LAST_ITEM_REGEX = '#;\n};#';
 
     public function __construct(
-        private readonly SmartFileSystem $smartFileSystem,
+        private readonly \Symfony\Component\Filesystem\Filesystem $filesystem,
         private readonly TemplateFactory $templateFactory
     ) {
     }
@@ -36,8 +36,7 @@ final class ConfigFilesystem
         array $templateVariables,
         string $rectorFqnNamePattern
     ): void {
-        $setFileContents = $this->smartFileSystem->readFile($setFilePath);
-
+        $setFileContents = FileSystem::read($setFilePath);
         $this->ensureRequiredKeysAreSet($templateVariables);
 
         // already added?
@@ -53,7 +52,8 @@ final class ConfigFilesystem
         $setFileContents = Strings::replace($setFileContents, self::LAST_ITEM_REGEX, $registerServiceLine);
 
         // 3. print the content back to file
-        $this->smartFileSystem->dumpFile($setFilePath, $setFileContents);
+
+        $this->filesystem->dumpFile($setFilePath, $setFileContents);
     }
 
     /**
