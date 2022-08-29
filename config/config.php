@@ -8,13 +8,10 @@ use PhpParser\PrettyPrinter\Standard;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
+use Symfony\Component\Filesystem\Filesystem;
 use Symplify\PackageBuilder\Console\Style\SymfonyStyleFactory;
 use Symplify\PackageBuilder\Reflection\PrivatesAccessor;
 use Symplify\PackageBuilder\Reflection\PrivatesCaller;
-use Symplify\SmartFileSystem\FileSystemGuard;
-use Symplify\SmartFileSystem\Finder\FinderSanitizer;
-use Symplify\SmartFileSystem\Json\JsonFileSystem;
-use Symplify\SmartFileSystem\SmartFileSystem;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
@@ -33,10 +30,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->factory([service(SymfonyStyleFactory::class), 'create']);
 
     // filesystem
-    $services->set(JsonFileSystem::class);
-    $services->set(SmartFileSystem::class);
-    $services->set(FinderSanitizer::class);
-    $services->set(FileSystemGuard::class);
+    $services->set(Filesystem::class);
 
     // privates
     $services->set(PrivatesCaller::class);
