@@ -31,6 +31,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     // filesystem
     $services->set(Filesystem::class);
+    $services->set(\Rector\Core\FileSystem\FilePathHelper::class);
 
     // privates
     $services->set(PrivatesCaller::class);

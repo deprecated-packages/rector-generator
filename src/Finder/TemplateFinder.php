@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\Finder;
 
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
-use Symplify\SmartFileSystem\Finder\FinderSanitizer;
-use Symplify\SmartFileSystem\SmartFileInfo;
 use Webmozart\Assert\Assert;
 
 final class TemplateFinder
@@ -16,13 +14,8 @@ final class TemplateFinder
      */
     public const TEMPLATES_DIRECTORY = __DIR__ . '/../../templates';
 
-    public function __construct(
-        private readonly FinderSanitizer $finderSanitizer,
-    ) {
-    }
-
     /**
-     * @return SmartFileInfo[]
+     * @return string[]
      */
     public function find(RectorRecipe $rectorRecipe): array
     {
@@ -33,7 +26,7 @@ final class TemplateFinder
 
         $this->ensureFilePathsExists($filePaths);
 
-        return $this->finderSanitizer->sanitize($filePaths);
+        return $filePaths;
     }
 
     /**

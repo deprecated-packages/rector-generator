@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\FileSystem;
 
 use Nette\Utils\Strings;
+use Rector\Core\FileSystem\FilePathHelper;
 use Rector\RectorGenerator\Enum\Packages;
 use Rector\RectorGenerator\Finder\TemplateFinder;
 use Rector\RectorGenerator\TemplateFactory;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
-use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class TemplateFileSystem
 {
@@ -38,7 +38,8 @@ final class TemplateFileSystem
     private const CONFIGURED_OR_EXTRA_REGEX = '#(__Configured|__Extra)#';
 
     public function __construct(
-        private readonly TemplateFactory $templateFactory
+        private readonly TemplateFactory $templateFactory,
+        private readonly FilePathHelper $filePathHelper
     ) {
     }
 
@@ -46,12 +47,15 @@ final class TemplateFileSystem
      * @param array<string, string> $templateVariables
      */
     public function resolveDestination(
-        SmartFileInfo $smartFileInfo,
+        string $filePath,
         array $templateVariables,
         RectorRecipe $rectorRecipe,
         string $targetDirectory
     ): string {
-        $destination = $smartFileInfo->getRelativeFilePathFromDirectory(TemplateFinder::TEMPLATES_DIRECTORY);
+        $destination = $this->filePathHelper->relativeFilePathFromDirectory(
+            $filePath,
+            TemplateFinder::TEMPLATES_DIRECTORY
+        );
         $destination = $this->changeRootPathForRootPackage($rectorRecipe, $destination);
 
         // normalize core package

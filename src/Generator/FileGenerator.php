@@ -10,7 +10,6 @@ use Rector\RectorGenerator\FileSystem\TemplateFileSystem;
 use Rector\RectorGenerator\TemplateFactory;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
 use Symfony\Component\Filesystem\Filesystem;
-use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class FileGenerator
 {
@@ -34,21 +33,21 @@ final class FileGenerator
     }
 
     /**
-     * @param SmartFileInfo[] $templateFileInfos
+     * @param string[] $templateFilePaths
      * @param array<string, string> $templateVariables
      * @return string[]
      */
     public function generateFiles(
-        array $templateFileInfos,
+        array $templateFilePaths,
         array $templateVariables,
         RectorRecipe $rectorRecipe,
         string $destinationDirectory
     ): array {
         $generatedFilePaths = [];
 
-        foreach ($templateFileInfos as $templateFileInfo) {
+        foreach ($templateFilePaths as $templateFilePath) {
             $generatedFilePaths[] = $this->generateFileInfoWithTemplateVariables(
-                $templateFileInfo,
+                $templateFilePath,
                 $templateVariables,
                 $rectorRecipe,
                 $destinationDirectory
@@ -62,19 +61,21 @@ final class FileGenerator
      * @param array<string, string> $templateVariables
      */
     private function generateFileInfoWithTemplateVariables(
-        SmartFileInfo $smartFileInfo,
+        string $templateFilePath,
         array $templateVariables,
         RectorRecipe $rectorRecipe,
         string $targetDirectory
     ): string {
         $targetFilePath = $this->templateFileSystem->resolveDestination(
-            $smartFileInfo,
+            $templateFilePath,
             $templateVariables,
             $rectorRecipe,
             $targetDirectory
         );
 
-        $content = $this->templateFactory->create($smartFileInfo->getContents(), $templateVariables);
+        $templateFileContents = \Nette\Utils\FileSystem::read($templateFilePath);
+
+        $content = $this->templateFactory->create($templateFileContents, $templateVariables);
 
         // replace "Rector\Utils\" with "Utils\Rector\" for 3rd party packages
         if (! $rectorRecipe->isRectorRepository()) {
