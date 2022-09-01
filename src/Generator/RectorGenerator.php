@@ -30,12 +30,12 @@ final class RectorGenerator
     public function generate(RectorRecipe $rectorRecipe, string $destinationDirectory): array
     {
         // generate and compare
-        $templateFileInfos = $this->templateFinder->find($rectorRecipe);
+        $templateFilePaths = $this->templateFinder->find($rectorRecipe);
 
         $templateVariables = $this->templateVariablesFactory->createFromRectorRecipe($rectorRecipe);
 
         $isUnwantedOverride = $this->overrideGuard->isUnwantedOverride(
-            $templateFileInfos,
+            $templateFilePaths,
             $templateVariables,
             $rectorRecipe,
             $destinationDirectory
@@ -47,7 +47,7 @@ final class RectorGenerator
         }
 
         return $this->fileGenerator->generateFiles(
-            $templateFileInfos,
+            $templateFilePaths,
             $templateVariables,
             $rectorRecipe,
             $destinationDirectory
