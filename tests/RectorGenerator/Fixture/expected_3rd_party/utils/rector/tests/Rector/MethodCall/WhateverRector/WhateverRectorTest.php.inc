@@ -17,7 +17,7 @@ final class WhateverRectorTest extends AbstractRectorTestCase
     }
 
     /**
-     * @return \Iterator<\Symplify\SmartFileSystem\SmartFileInfo>
+     * @return string[]
      */
     public function provideData(): \Iterator
     {
