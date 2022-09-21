@@ -17,7 +17,7 @@ final class WhateverRectorTest extends AbstractRectorTestCase
     }
 
     /**
-     * @return string[]
+     * @return \Iterator<string>
      */
     public function provideData(): \Iterator
     {
