@@ -15,5 +15,3 @@ parameters:
             message: '#Method Rector\\RectorGenerator\\ValueObject\\RectorRecipe\:\:(.*?)\(\) should return string but returns string\|null#'
             paths:
                 - src/ValueObject/RectorRecipe.php
-
-        - '#Dynamic call to static method PHPUnit\\Framework\\Assert\:\:(.*?)\(\)#'
