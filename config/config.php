@@ -7,6 +7,7 @@ use PhpParser\ParserFactory;
 use PhpParser\PrettyPrinter\Standard;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Component\Filesystem\Filesystem;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use Symplify\PackageBuilder\Console\Style\SymfonyStyleFactory;
 use Symplify\PackageBuilder\Reflection\PrivatesAccessor;
@@ -28,11 +29,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(SymfonyStyle::class)
         ->factory([service(SymfonyStyleFactory::class), 'create']);
 
-    $services->set(\Symfony\Component\Filesystem\Filesystem::class);
-
-    // privates
-    //$services->set(PrivatesCaller::class);
-    //$services->set(PrivatesAccessor::class);
+    $services->set(Filesystem::class);
 
     // php-parser
     $services->set(Standard::class)
