@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\Tests\Config;
 
 use Iterator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Rector\RectorGenerator\FileSystem\ConfigFilesystem;
 use Rector\RectorGenerator\Tests\HttpKernel\DummyKernel;
 use Rector\RectorGenerator\Tests\RectorGenerator\Source\StaticRectorRecipeFactory;
@@ -23,9 +24,7 @@ final class ConfigFilesystemTest extends AbstractKernelTestCase
         $this->configFilesystem = $this->getService(ConfigFilesystem::class);
     }
 
-    /**
-     * @dataProvider provideData()
-     */
+    #[DataProvider('provideData')]
     public function test(SmartFileInfo $fixtureFileInfo): void
     {
         $inputFileInfoAndExpected = StaticFixtureSplitter::splitFileInfoToLocalInputAndExpected($fixtureFileInfo);
@@ -46,10 +45,7 @@ final class ConfigFilesystemTest extends AbstractKernelTestCase
         $this->assertSame($inputFileInfoAndExpected->getExpected(), $inputFileInfo->getContents());
     }
 
-    /**
-     * @return Iterator<SmartFileInfo[]>
-     */
-    public function provideData(): Iterator
+    public static function provideData(): Iterator
     {
         yield [new SmartFileInfo(__DIR__ . '/Fixture/some_set.php.inc')];
     }

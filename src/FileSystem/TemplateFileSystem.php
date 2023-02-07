@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\FileSystem;
 
 use Nette\Utils\Strings;
-use Rector\Core\FileSystem\FilePathHelper;
 use Rector\RectorGenerator\Enum\Packages;
 use Rector\RectorGenerator\Finder\TemplateFinder;
 use Rector\RectorGenerator\TemplateFactory;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
+use Symfony\Component\Filesystem\Filesystem;
 
 final class TemplateFileSystem
 {
@@ -39,7 +39,7 @@ final class TemplateFileSystem
 
     public function __construct(
         private readonly TemplateFactory $templateFactory,
-        private readonly FilePathHelper $filePathHelper
+        private readonly Filesystem $filesystem,
     ) {
     }
 
@@ -52,10 +52,7 @@ final class TemplateFileSystem
         RectorRecipe $rectorRecipe,
         string $targetDirectory
     ): string {
-        $destination = $this->filePathHelper->relativeFilePathFromDirectory(
-            $filePath,
-            TemplateFinder::TEMPLATES_DIRECTORY
-        );
+        $destination = $this->resolveRelativeFilepath($filePath);
         $destination = $this->changeRootPathForRootPackage($rectorRecipe, $destination);
 
         // normalize core package
@@ -102,5 +99,12 @@ final class TemplateFileSystem
 
         $destination = str_replace('rules/__Package__', 'src', $destination);
         return str_replace('rules-tests/__Package__', 'tests', $destination);
+    }
+
+    private function resolveRelativeFilepath(string $filePath): string
+    {
+        $destination = $this->filesystem->makePathRelative($filePath, TemplateFinder::TEMPLATES_DIRECTORY);
+
+        return rtrim($destination, '/');
     }
 }

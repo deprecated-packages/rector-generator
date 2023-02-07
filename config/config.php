@@ -8,7 +8,6 @@ use PhpParser\PrettyPrinter\Standard;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
-use Symfony\Component\Filesystem\Filesystem;
 use Symplify\PackageBuilder\Console\Style\SymfonyStyleFactory;
 use Symplify\PackageBuilder\Reflection\PrivatesAccessor;
 use Symplify\PackageBuilder\Reflection\PrivatesCaller;
@@ -29,13 +28,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(SymfonyStyle::class)
         ->factory([service(SymfonyStyleFactory::class), 'create']);
 
-    // filesystem
-    $services->set(Filesystem::class);
-    $services->set(\Rector\Core\FileSystem\FilePathHelper::class);
+    $services->set(\Symfony\Component\Filesystem\Filesystem::class);
 
     // privates
-    $services->set(PrivatesCaller::class);
-    $services->set(PrivatesAccessor::class);
+    //$services->set(PrivatesCaller::class);
+    //$services->set(PrivatesAccessor::class);
 
     // php-parser
     $services->set(Standard::class)
