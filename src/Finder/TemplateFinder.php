@@ -33,7 +33,7 @@ final class TemplateFinder
      * @param string[] $filePaths
      * @return string[]
      *
-     * @note the ".inc" suffix is needed, so PHPUnit doens't load it as a test case
+     * @note the ".inc" suffix is needed, so PHPUnit doesn't load it as a test case
      */
     private function addRuleAndTestCase(RectorRecipe $rectorRecipe, array $filePaths): array
     {
