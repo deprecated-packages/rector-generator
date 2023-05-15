@@ -9,7 +9,7 @@
         "nette/utils": "^3.2",
         "nikic/php-parser": "^4.14",
         "symfony/console": "^6.2",
-        "symfony/dependency-injection": "^6.1",
+        "symfony/dependency-injection": "6.1.*",
         "symfony/finder": "^6.2",
         "symplify/package-builder": "^11.1",
         "webmozart/assert": "^1.11"
@@ -27,7 +27,8 @@
         "symplify/vendor-patches": "^11.0",
         "phpstan/phpstan-webmozart-assert": "^1.0",
         "tracy/tracy": "^2.9",
-        "symplify/easy-ci": "^11.2.0"
+        "symplify/easy-ci": "^11.2.0",
+        "symplify/easy-testing": "^11.1"
     },
     "autoload": {
         "psr-4": {

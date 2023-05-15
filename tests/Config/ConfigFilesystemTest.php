@@ -7,46 +7,47 @@ namespace Rector\RectorGenerator\Tests\Config;
 use Iterator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Rector\RectorGenerator\FileSystem\ConfigFilesystem;
-use Rector\RectorGenerator\Tests\HttpKernel\DummyKernel;
+use Rector\RectorGenerator\TemplateFactory;
 use Rector\RectorGenerator\Tests\RectorGenerator\Source\StaticRectorRecipeFactory;
 use Rector\RectorGenerator\ValueObject\NamePattern;
-use Symplify\EasyTesting\StaticFixtureSplitter;
-use Symplify\PackageBuilder\Testing\AbstractKernelTestCase;
-use Symplify\SmartFileSystem\SmartFileInfo;
+use Rector\Testing\Fixture\FixtureSplitter;
+use Rector\Testing\PHPUnit\AbstractTestCase;
+use Symfony\Component\Filesystem\Filesystem;
 
-final class ConfigFilesystemTest extends AbstractKernelTestCase
+final class ConfigFilesystemTest extends AbstractTestCase
 {
     private ConfigFilesystem $configFilesystem;
 
     protected function setUp(): void
     {
-        $this->bootKernel(DummyKernel::class);
-        $this->configFilesystem = $this->getService(ConfigFilesystem::class);
+        $this->configFilesystem = new ConfigFilesystem(new Filesystem(), new TemplateFactory());
     }
 
     #[DataProvider('provideData')]
-    public function test(SmartFileInfo $fixtureFileInfo): void
+    public function test(string $filePath): void
     {
-        $inputFileInfoAndExpected = StaticFixtureSplitter::splitFileInfoToLocalInputAndExpected($fixtureFileInfo);
-        $inputFileInfo = $inputFileInfoAndExpected->getInputFileInfo();
+        [$inputContents, $expectedContents] = FixtureSplitter::split($filePath);
 
-        $rectorRecipe = StaticRectorRecipeFactory::createRectorRecipe($inputFileInfo->getRealPath(), false);
+        $setTempFilePath = sys_get_temp_dir() . '/temp-set-path.php';
+        \Nette\Utils\FileSystem::write($setTempFilePath, $inputContents);
 
-        $setFilePath = $rectorRecipe->getSetFilePath();
-        $this->assertNotNull($setFilePath);
+        $rectorRecipe = StaticRectorRecipeFactory::createRectorRecipe($setTempFilePath, false);
 
-        /** @var string $setFilePath */
-        $this->configFilesystem->appendRectorServiceToSet($setFilePath, [
+        $setTempFilePath = $rectorRecipe->getSetFilePath();
+        $this->assertNotNull($setTempFilePath);
+
+        /** @var string $setTempFilePath */
+        $this->configFilesystem->appendRectorServiceToSet($setTempFilePath, [
             '__Package__' => 'SomePackage',
             '__Category__' => 'String_',
             '__Name__' => 'SomeRector',
         ], NamePattern::RECTOR_FQN_NAME_PATTERN);
 
-        $this->assertSame($inputFileInfoAndExpected->getExpected(), $inputFileInfo->getContents());
+        $this->assertSame($expectedContents, \Nette\Utils\FileSystem::read($setTempFilePath));
     }
 
     public static function provideData(): Iterator
     {
-        yield [new SmartFileInfo(__DIR__ . '/Fixture/some_set.php.inc')];
+        yield [__DIR__ . '/Fixture/some_set.php.inc'];
     }
 }
