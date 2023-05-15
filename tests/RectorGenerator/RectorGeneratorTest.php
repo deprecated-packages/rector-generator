@@ -52,8 +52,8 @@ final class RectorGeneratorTest extends AbstractKernelTestCase
         $this->assertDirectoryEquals(__DIR__ . '/Fixture/expected_3rd_party', self::DESTINATION_DIRECTORY);
     }
 
-    private function createConfiguration(string $set, bool $isRectorRepository): RectorRecipe
+    private function createConfiguration(string $setFilePath, bool $isRectorRepository): RectorRecipe
     {
-        return StaticRectorRecipeFactory::createRectorRecipe($set, $isRectorRepository);
+        return StaticRectorRecipeFactory::createRectorRecipe($setFilePath, $isRectorRepository);
     }
 }
