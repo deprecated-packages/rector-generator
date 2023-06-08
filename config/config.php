@@ -5,6 +5,9 @@ declare(strict_types=1);
 use PhpParser\Parser;
 use PhpParser\ParserFactory;
 use PhpParser\PrettyPrinter\Standard;
+use Rector\RectorGenerator\Command\GenerateCommand;
+use Rector\RectorGenerator\Command\InitRecipeCommand;
+use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
@@ -28,6 +31,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->factory([service(SymfonyStyleFactory::class), 'create']);
 
     $services->set(Filesystem::class);
+
+    $services->set(Application::class)
+        ->call('add', [service(GenerateCommand::class)])
+        ->call('add', [service(InitRecipeCommand::class)]);
 
     // php-parser
     $services->set(Standard::class)
