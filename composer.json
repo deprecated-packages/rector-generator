@@ -12,7 +12,8 @@
         "symfony/dependency-injection": "6.1.*",
         "symfony/finder": "^6.2",
         "symplify/package-builder": "^11.1",
-        "webmozart/assert": "^1.11"
+        "webmozart/assert": "^1.11",
+        "symfony/filesystem": "^6.3"
     },
     "require-dev": {
         "rector/rector": "^0.15.13",
