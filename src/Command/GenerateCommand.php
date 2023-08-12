@@ -6,6 +6,7 @@ namespace Rector\RectorGenerator\Command;
 
 use Rector\RectorGenerator\Exception\ShouldNotHappenException;
 use Rector\RectorGenerator\FileSystem\ConfigFilesystem;
+use Rector\RectorGenerator\FileSystem\PathHelper;
 use Rector\RectorGenerator\Generator\RectorGenerator;
 use Rector\RectorGenerator\Provider\RectorRecipeProvider;
 use Rector\RectorGenerator\TemplateVariablesFactory;
@@ -76,8 +77,8 @@ final class GenerateCommand extends Command
                 continue;
             }
 
-            $generatedFileInfo = new SmartFileInfo($generatedFilePath);
-            return dirname($generatedFileInfo->getRelativeFilePathFromCwd());
+            $relativeFilePath = PathHelper::getRelativePathFromDirector($generatedFilePath, getcwd());
+            return dirname($relativeFilePath);
         }
 
         throw new ShouldNotHappenException();
