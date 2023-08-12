@@ -15,7 +15,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symplify\SmartFileSystem\SmartFileInfo;
 
 /**
  * @see \Rector\RectorGenerator\Tests\RectorGenerator\GenerateCommandInteractiveModeTest
@@ -95,8 +94,7 @@ final class GenerateCommand extends Command
         sort($generatedFilePaths);
 
         foreach ($generatedFilePaths as $generatedFilePath) {
-            $fileInfo = new SmartFileInfo($generatedFilePath);
-            $relativeFilePath = $fileInfo->getRelativeFilePathFromCwd();
+            $relativeFilePath = PathHelper::getRelativePathFromDirector($generatedFilePath, getcwd());
             $this->symfonyStyle->writeln(' * ' . $relativeFilePath);
         }
 
