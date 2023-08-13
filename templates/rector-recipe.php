@@ -5,12 +5,9 @@ declare(strict_types=1);
 use PhpParser\Node\Expr\MethodCall;
 use Rector\RectorGenerator\Provider\RectorRecipeProvider;
 use Rector\RectorGenerator\ValueObject\Option;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 // run "bin/rector generate" to a new Rector basic schema + tests from this config
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $services = $containerConfigurator->services();
-
+return static function (\Rector\Config\RectorConfig $rectorConfig): void {
     // [REQUIRED]
 
     $rectorRecipeConfiguration = [
@@ -70,6 +67,9 @@ CODE_SAMPLE
         // Option::SET_FILE_PATH => \Rector\Set\ValueObject\SetList::NAMING,
     ];
 
-    $services->set(RectorRecipeProvider::class)
-        ->arg('$rectorRecipeConfiguration', $rectorRecipeConfiguration);
+    $rectorConfig->singleton(RectorRecipeProvider::class, function () use (
+        $rectorRecipeConfiguration
+    ): RectorRecipeProvider {
+        return new RectorRecipeProvider($rectorRecipeConfiguration);
+    });
 };
