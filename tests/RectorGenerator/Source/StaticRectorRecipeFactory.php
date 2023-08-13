@@ -9,6 +9,9 @@ use PHPStan\Node\ClassMethod;
 use Rector\RectorGenerator\Exception\ShouldNotHappenException;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
 
+/**
+ * @api used in tests
+ */
 final class StaticRectorRecipeFactory
 {
     public static function createRectorRecipe(string $setFilePath, bool $isRectorRepository): RectorRecipe

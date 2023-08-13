@@ -17,13 +17,13 @@ final class FileGenerator
      * @var string
      * @see https://regex101.com/r/RVbPEX/1
      */
-    public const RECTOR_UTILS_REGEX = '#Rector\\\\Utils#';
+    private const RECTOR_UTILS_REGEX = '#Rector\\\\Utils#';
 
     /**
      * @var string
      * @see https://regex101.com/r/RVbPEX/1
      */
-    public const RECTOR_UTILS_TESTS_REGEX = '#Rector\\\\Tests\\\\Utils#';
+    private const RECTOR_UTILS_TESTS_REGEX = '#Rector\\\\Tests\\\\Utils#';
 
     public function __construct(
         private readonly Filesystem $filesystem,

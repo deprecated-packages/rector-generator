@@ -27,7 +27,9 @@
         "phpstan/phpstan-webmozart-assert": "^1.2",
         "tracy/tracy": "^2.10",
         "symplify/easy-ci": "^11.3",
-        "symplify/easy-testing": "^11.1"
+        "symplify/easy-testing": "^11.1",
+        "tomasvotruba/class-leak": "0.1.1.72",
+        "tomasvotruba/unused-public": "0.3.2.72"
     },
     "autoload": {
         "psr-4": {
