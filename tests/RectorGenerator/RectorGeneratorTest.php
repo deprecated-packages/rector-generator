@@ -6,15 +6,13 @@ namespace Rector\RectorGenerator\Tests\RectorGenerator;
 
 use Nette\Utils\FileSystem;
 use Rector\RectorGenerator\Generator\RectorGenerator;
-use Rector\RectorGenerator\Tests\HttpKernel\DummyKernel;
 use Rector\RectorGenerator\Tests\RectorGenerator\Source\StaticRectorRecipeFactory;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
-use Symplify\EasyTesting\PHPUnit\Behavior\DirectoryAssertableTrait;
-use Symplify\PackageBuilder\Testing\AbstractKernelTestCase;
+use Rector\Testing\PHPUnit\AbstractLazyTestCase;
 
-final class RectorGeneratorTest extends AbstractKernelTestCase
+final class RectorGeneratorTest extends AbstractLazyTestCase
 {
-    use DirectoryAssertableTrait;
+    use \Rector\RectorGenerator\Tests\PHPUnit\DirectoryAssertableTrait;
 
     /**
      * @var string
@@ -25,9 +23,10 @@ final class RectorGeneratorTest extends AbstractKernelTestCase
 
     protected function setUp(): void
     {
-        $this->bootKernel(DummyKernel::class);
+        $container = self::getContainer();
+        $container->import(__DIR__ . '/../../config/config.php');
 
-        $this->rectorGenerator = $this->getService(RectorGenerator::class);
+        $this->rectorGenerator = $this->make(RectorGenerator::class);
     }
 
     protected function tearDown(): void

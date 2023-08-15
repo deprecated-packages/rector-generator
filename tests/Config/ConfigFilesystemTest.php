@@ -7,20 +7,18 @@ namespace Rector\RectorGenerator\Tests\Config;
 use Iterator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Rector\RectorGenerator\FileSystem\ConfigFilesystem;
-use Rector\RectorGenerator\TemplateFactory;
 use Rector\RectorGenerator\Tests\RectorGenerator\Source\StaticRectorRecipeFactory;
 use Rector\RectorGenerator\ValueObject\NamePattern;
 use Rector\Testing\Fixture\FixtureSplitter;
-use Rector\Testing\PHPUnit\AbstractTestCase;
-use Symfony\Component\Filesystem\Filesystem;
+use Rector\Testing\PHPUnit\AbstractLazyTestCase;
 
-final class ConfigFilesystemTest extends AbstractTestCase
+final class ConfigFilesystemTest extends AbstractLazyTestCase
 {
     private ConfigFilesystem $configFilesystem;
 
     protected function setUp(): void
     {
-        $this->configFilesystem = new ConfigFilesystem(new Filesystem(), new TemplateFactory());
+        $this->configFilesystem = $this->make(ConfigFilesystem::class);
     }
 
     #[DataProvider('provideData')]
