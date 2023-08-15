@@ -15,7 +15,7 @@
         "illuminate/container": "^10.18"
     },
     "require-dev": {
-        "rector/rector-src": "dev-tv-container-run-10",
+        "rector/rector-src": "dev-main",
         "php-parallel-lint/php-parallel-lint": "^1.3",
         "phpunit/phpunit": "^10.3",
         "symplify/easy-coding-standard": "^12.0",
