@@ -2,7 +2,7 @@
     "name": "rector/rector-generator",
     "type": "rector-extension",
     "description": "Generate Rector rules from command line",
-    "homepage": "https://getrector.org",
+    "homepage": "https://getrector.com",
     "license": "MIT",
     "require": {
         "php": ">=8.1",
