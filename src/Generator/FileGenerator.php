@@ -90,17 +90,6 @@ final class FileGenerator
                 '#namespace Rector\\\\Tests\\\\' . $rectorRecipe->getPackage() . '#',
                 'namespace Rector\\' . $rectorRecipe->getPackage() . '\\Tests',
             );
-
-            // add core package main config
-            if (str_ends_with($targetFilePath, 'configured_rule.php')) {
-                $rectorConfigLine = 'return static function (RectorConfig $rectorConfig): void {';
-
-                $content = str_replace(
-                    $rectorConfigLine,
-                    $rectorConfigLine . PHP_EOL . '    $rectorConfig->import(__DIR__ . \'/../../../../../config/config.php\');' . PHP_EOL,
-                    $content
-                );
-            }
         }
 
         $this->filesystem->dumpFile($targetFilePath, $content);
