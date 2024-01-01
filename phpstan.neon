@@ -5,8 +5,6 @@ parameters:
 
     level: 8
 
-    reportUnmatchedIgnoredErrors: false
-
     excludePaths:
         - tests/RectorGenerator/Fixture
 
@@ -15,7 +13,3 @@ parameters:
             message: '#Method Rector\\RectorGenerator\\ValueObject\\RectorRecipe\:\:(.*?)\(\) should return string but returns string\|null#'
             paths:
                 - src/ValueObject/RectorRecipe.php
-
-        -
-            message: '#Offset \d does not exist on array<string, string>#'
-            path: tests/Config/ConfigFilesystemTest.php
