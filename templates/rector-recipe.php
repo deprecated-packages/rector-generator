@@ -51,11 +51,6 @@ CODE_SAMPLE
 
         // [OPTIONAL - UNCOMMENT TO USE]
 
-        // links to useful websites, that explain why the change is needed
-        //        Option::RESOURCES => [
-        //            'https://github.com/symfony/symfony/blob/6.1/UPGRADE-6.0.md'
-        //        ],
-
         // is the rule configurable?
         //        Option::CONFIGURATION => [
         //            'privatePropertyName' => [

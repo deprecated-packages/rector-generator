@@ -47,10 +47,5 @@ final class Option
     /**
      * @var string
      */
-    public const RESOURCES = 'resources';
-
-    /**
-     * @var string
-     */
     public const SET_FILE_PATH = 'set_file_path';
 }

@@ -38,7 +38,6 @@ final class TemplateVariablesFactory
             Placeholder::CODE_BEFORE_EXAMPLE => $this->createCodeForDefinition($rectorRecipe->getCodeBefore()),
             Placeholder::CODE_AFTER => trim($rectorRecipe->getCodeAfter()) . PHP_EOL,
             Placeholder::CODE_AFTER_EXAMPLE => $this->createCodeForDefinition($rectorRecipe->getCodeAfter()),
-            Placeholder::RESOURCES => $this->createSourceDocBlock($rectorRecipe->getResources()),
         ];
 
         if ($rectorRecipe->getConfiguration() !== []) {

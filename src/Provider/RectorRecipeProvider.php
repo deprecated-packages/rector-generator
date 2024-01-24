@@ -38,10 +38,6 @@ final class RectorRecipeProvider
             $rectorRecipe->setConfiguration($rectorRecipeConfiguration[Option::CONFIGURATION]);
         }
 
-        if (isset($rectorRecipeConfiguration[Option::RESOURCES])) {
-            $rectorRecipe->setResources($rectorRecipeConfiguration[Option::RESOURCES]);
-        }
-
         if (isset($rectorRecipeConfiguration[Option::SET_FILE_PATH])) {
             $rectorRecipe->setSetFilePath($rectorRecipeConfiguration[Option::SET_FILE_PATH]);
         }

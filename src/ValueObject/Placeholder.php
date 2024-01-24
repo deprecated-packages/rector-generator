@@ -45,9 +45,4 @@ final class Placeholder
      * @var string
      */
     public const CODE_AFTER_EXAMPLE = '__CodeAfterExample__';
-
-    /**
-     * @var string
-     */
-    public const RESOURCES = '__Resources__';
 }
