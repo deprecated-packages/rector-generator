@@ -9,5 +9,5 @@ final class Packages
     /**
      * @var string[]
      */
-    public const RECTOR_CORE = ['Symfony', 'Nette', 'Doctrine', 'Laravel', 'PHPUnit', 'CakePHP', 'PHPOffice'];
+    public const RECTOR_CORE = ['Symfony', 'Doctrine', 'PHPUnit'];
 }

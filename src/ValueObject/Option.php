@@ -38,14 +38,4 @@ final class Option
      * @var string
      */
     public const CODE_AFTER = 'code_after';
-
-    /**
-     * @var string
-     */
-    public const CONFIGURATION = 'configuration';
-
-    /**
-     * @var string
-     */
-    public const SET_FILE_PATH = 'set_file_path';
 }

@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace Rector\RectorGenerator\Command;
 
 use Rector\RectorGenerator\Exception\ShouldNotHappenException;
-use Rector\RectorGenerator\FileSystem\ConfigFilesystem;
 use Rector\RectorGenerator\FileSystem\PathHelper;
 use Rector\RectorGenerator\Generator\RectorGenerator;
 use Rector\RectorGenerator\Provider\RectorRecipeProvider;
-use Rector\RectorGenerator\TemplateVariablesFactory;
-use Rector\RectorGenerator\ValueObject\NamePattern;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,9 +19,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 final class GenerateCommand extends Command
 {
     public function __construct(
-        private readonly ConfigFilesystem $configFilesystem,
-        private readonly SymfonyStyle $symfonyStyle,
-        private readonly TemplateVariablesFactory $templateVariablesFactory,
         private readonly RectorRecipeProvider $rectorRecipeProvider,
         private readonly RectorGenerator $rectorGenerator,
     ) {
@@ -39,29 +33,14 @@ final class GenerateCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $symfonyStyle = new SymfonyStyle($input, $output);
+
         $rectorRecipe = $this->rectorRecipeProvider->provide();
-        $targetDirectory = getcwd();
 
-        $generatedFilePaths = $this->rectorGenerator->generate($rectorRecipe, $targetDirectory);
-
-        // nothing new
-        if ($generatedFilePaths === []) {
-            return self::SUCCESS;
-        }
-
-        $setFilePath = $rectorRecipe->getSetFilePath();
-        if ($setFilePath !== null) {
-            $templateVariables = $this->templateVariablesFactory->createFromRectorRecipe($rectorRecipe);
-
-            $this->configFilesystem->appendRectorServiceToSet(
-                $setFilePath,
-                $templateVariables,
-                NamePattern::RECTOR_FQN_NAME_PATTERN
-            );
-        }
+        $generatedFilePaths = $this->rectorGenerator->generate($rectorRecipe, getcwd());
 
         $testCaseDirectoryPath = $this->resolveTestCaseDirectoryPath($generatedFilePaths);
-        $this->printSuccess($rectorRecipe->getName(), $generatedFilePaths, $testCaseDirectoryPath);
+        $this->printSuccess($rectorRecipe->getName(), $generatedFilePaths, $testCaseDirectoryPath, $symfonyStyle);
 
         return self::SUCCESS;
     }
@@ -76,7 +55,7 @@ final class GenerateCommand extends Command
                 continue;
             }
 
-            $relativeFilePath = PathHelper::getRelativePathFromDirector($generatedFilePath, getcwd());
+            $relativeFilePath = PathHelper::getRelativePathFromDirectory($generatedFilePath, getcwd());
             return dirname($relativeFilePath);
         }
 
@@ -86,21 +65,25 @@ final class GenerateCommand extends Command
     /**
      * @param string[] $generatedFilePaths
      */
-    private function printSuccess(string $name, array $generatedFilePaths, string $testCaseFilePath): void
-    {
+    private function printSuccess(
+        string $name,
+        array $generatedFilePaths,
+        string $testCaseFilePath,
+        SymfonyStyle $symfonyStyle
+    ): void {
         $message = sprintf('New files generated for "%s":', $name);
-        $this->symfonyStyle->title($message);
+        $symfonyStyle->title($message);
 
         sort($generatedFilePaths);
 
         foreach ($generatedFilePaths as $generatedFilePath) {
-            $relativeFilePath = PathHelper::getRelativePathFromDirector($generatedFilePath, getcwd());
-            $this->symfonyStyle->writeln(' * ' . $relativeFilePath);
+            $relativeFilePath = PathHelper::getRelativePathFromDirectory($generatedFilePath, getcwd());
+            $symfonyStyle->writeln(' * ' . $relativeFilePath);
         }
 
         $message = sprintf('Make tests green again:%svendor/bin/phpunit %s', PHP_EOL . PHP_EOL, $testCaseFilePath);
 
-        $this->symfonyStyle->success($message);
+        $symfonyStyle->success($message);
     }
 
     private function isGeneratedFilePathTestCase(string $generatedFilePath): bool

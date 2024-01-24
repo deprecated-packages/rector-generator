@@ -40,18 +40,10 @@ echo 'code after';
 CODE_SAMPLE
         );
 
-        $rectorRecipe->setConfiguration([
-            'renamedPackages' => [
-                'old_package_name' => 'new_package_name'
-            ]
-        ]);
-
         $rectorRecipe->setIsRectorRepository($isRectorRepository);
         if ($isRectorRepository) {
             $rectorRecipe->setPackage('ModeratePackage');
         }
-
-        $rectorRecipe->setSetFilePath($setFilePath);
 
         return $rectorRecipe;
     }

@@ -24,7 +24,7 @@ final class RectorRecipeProvider
             return;
         }
 
-        $rectorRecipe = new RectorRecipe(
+        $this->rectorRecipe = new RectorRecipe(
             $rectorRecipeConfiguration[Option::PACKAGE],
             $rectorRecipeConfiguration[Option::NAME],
             $rectorRecipeConfiguration[Option::NODE_TYPES],
@@ -32,17 +32,6 @@ final class RectorRecipeProvider
             $rectorRecipeConfiguration[Option::CODE_BEFORE],
             $rectorRecipeConfiguration[Option::CODE_AFTER],
         );
-
-        // optional parameters
-        if (isset($rectorRecipeConfiguration[Option::CONFIGURATION])) {
-            $rectorRecipe->setConfiguration($rectorRecipeConfiguration[Option::CONFIGURATION]);
-        }
-
-        if (isset($rectorRecipeConfiguration[Option::SET_FILE_PATH])) {
-            $rectorRecipe->setSetFilePath($rectorRecipeConfiguration[Option::SET_FILE_PATH]);
-        }
-
-        $this->rectorRecipe = $rectorRecipe;
     }
 
     public function provide(): RectorRecipe

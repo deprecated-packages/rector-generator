@@ -48,18 +48,6 @@ class SomeClass
 }
 CODE_SAMPLE
         ,
-
-        // [OPTIONAL - UNCOMMENT TO USE]
-
-        // is the rule configurable?
-        //        Option::CONFIGURATION => [
-        //            'privatePropertyName' => [
-        //                'old_value' => 'newValue',
-        //            ],
-        //        ],
-
-        // set the rule belongs to; is optional, because e.g. generic rules don't need a specific set to belong to
-        // Option::SET_FILE_PATH => \Rector\Set\ValueObject\SetList::NAMING,
     ];
 
     $rectorConfig->singleton(RectorRecipeProvider::class, function () use (
