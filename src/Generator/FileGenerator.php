@@ -13,18 +13,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 final class FileGenerator
 {
-    /**
-     * @var string
-     * @see https://regex101.com/r/RVbPEX/1
-     */
-    private const RECTOR_UTILS_REGEX = '#Rector\\\\Utils#';
-
-    /**
-     * @var string
-     * @see https://regex101.com/r/RVbPEX/1
-     */
-    private const RECTOR_UTILS_TESTS_REGEX = '#Rector\\\\Tests\\\\Utils#';
-
     public function __construct(
         private readonly Filesystem $filesystem,
         private readonly TemplateFactory $templateFactory,
@@ -76,12 +64,6 @@ final class FileGenerator
         $templateFileContents = \Nette\Utils\FileSystem::read($templateFilePath);
 
         $content = $this->templateFactory->create($templateFileContents, $templateVariables);
-
-        // replace "Rector\Utils\" with "Utils\Rector\" for 3rd party packages
-        if (! $rectorRecipe->isRectorRepository()) {
-            $content = Strings::replace($content, self::RECTOR_UTILS_REGEX, 'Utils\Rector');
-            $content = Strings::replace($content, self::RECTOR_UTILS_TESTS_REGEX, 'Utils\Rector\Tests');
-        }
 
         // correct tests PSR-4 namespace for core rector packages
         if (in_array($rectorRecipe->getPackage(), Packages::RECTOR_CORE, true)) {

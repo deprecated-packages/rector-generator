@@ -7,7 +7,6 @@ namespace Rector\RectorGenerator\Tests\RectorGenerator;
 use Nette\Utils\FileSystem;
 use Rector\RectorGenerator\Generator\RectorGenerator;
 use Rector\RectorGenerator\Tests\RectorGenerator\Source\StaticRectorRecipeFactory;
-use Rector\RectorGenerator\ValueObject\RectorRecipe;
 use Rector\Testing\PHPUnit\AbstractLazyTestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -37,7 +36,7 @@ final class RectorGeneratorTest extends AbstractLazyTestCase
 
     public function test(): void
     {
-        $rectorRecipe = $this->createConfiguration(__DIR__ . '/Source/config/some_set.php', true);
+        $rectorRecipe = StaticRectorRecipeFactory::createRectorRecipe();
         $this->rectorGenerator->generate($rectorRecipe, self::DESTINATION_DIRECTORY);
 
         $fileInfos = $this->findFileInfos(__DIR__ . '/Fixture/expected/');
@@ -50,28 +49,6 @@ final class RectorGeneratorTest extends AbstractLazyTestCase
                 self::DESTINATION_DIRECTORY . '/' . $fileInfo->getRelativePathname()
             );
         }
-    }
-
-    public function test3rdParty(): void
-    {
-        $rectorRecipe = $this->createConfiguration(__DIR__ . '/Source/config/some_set.php', false);
-        $this->rectorGenerator->generate($rectorRecipe, self::DESTINATION_DIRECTORY);
-
-        $fileInfos = $this->findFileInfos(__DIR__ . '/Fixture/expected_3rd_party/');
-
-        foreach ($fileInfos as $fileInfo) {
-            $this->assertFileExists(self::DESTINATION_DIRECTORY . '/' . $fileInfo->getRelativePathname());
-
-            $this->assertFileEquals(
-                $fileInfo->getRealPath(),
-                self::DESTINATION_DIRECTORY . '/' . $fileInfo->getRelativePathname()
-            );
-        }
-    }
-
-    private function createConfiguration(string $setFilePath, bool $isRectorRepository): RectorRecipe
-    {
-        return StaticRectorRecipeFactory::createRectorRecipe($setFilePath, $isRectorRepository);
     }
 
     /**

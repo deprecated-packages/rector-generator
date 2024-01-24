@@ -14,13 +14,8 @@ use Rector\RectorGenerator\ValueObject\RectorRecipe;
  */
 final class StaticRectorRecipeFactory
 {
-    public static function createRectorRecipe(string $setFilePath, bool $isRectorRepository): RectorRecipe
+    public static function createRectorRecipe(): RectorRecipe
     {
-        if (! file_exists($setFilePath)) {
-            $message = sprintf('Set file path "%s" was not found', $setFilePath);
-            throw new ShouldNotHappenException($message);
-        }
-
         $rectorRecipe = new RectorRecipe(
             'Utils',
             'WhateverRector',
@@ -40,10 +35,7 @@ echo 'code after';
 CODE_SAMPLE
         );
 
-        $rectorRecipe->setIsRectorRepository($isRectorRepository);
-        if ($isRectorRepository) {
-            $rectorRecipe->setPackage('ModeratePackage');
-        }
+        $rectorRecipe->setPackage('ModeratePackage');
 
         return $rectorRecipe;
     }
