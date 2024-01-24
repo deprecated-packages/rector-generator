@@ -8,7 +8,6 @@ use Nette\Utils\Json;
 use Nette\Utils\Strings;
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
-use PHPStan\Node\ClassMethod;
 use Rector\RectorGenerator\Exception\ConfigurationException;
 use Rector\RectorGenerator\Exception\ShouldNotHappenException;
 use Webmozart\Assert\Assert;
@@ -26,7 +25,7 @@ final class RectorRecipe
 
     private ?string $codeAfter = null;
 
-    private bool $isRectorRepository = false;
+    private bool $isRectorRepository;
 
     private ?string $category = null;
 
@@ -36,23 +35,9 @@ final class RectorRecipe
     private array $nodeTypes = [];
 
     /**
-     * @var string[]
-     */
-    private array $resources = [];
-
-    /**
-     * The key is a private property name that holds the configuration value (can be multiple properties)
-     *
-     * @var array<string, mixed[]>
-     */
-    private array $configuration = [];
-
-    /**
      * Use default package name, if not overriden manually
      */
     private string $package = self::PACKAGE_UTILS;
-
-    private ?string $setFilePath = null;
 
     /**
      * @param array<class-string<Node>> $nodeTypes
@@ -92,7 +77,7 @@ final class RectorRecipe
     }
 
     /**
-     * @return class-string[]
+     * @return string[]
      */
     public function getNodeTypes(): array
     {
@@ -114,32 +99,6 @@ final class RectorRecipe
         return $this->codeAfter;
     }
 
-    /**
-     * @return string[]
-     */
-    public function getResources(): array
-    {
-        return $this->resources;
-    }
-
-    public function setSetFilePath(string $setFilePath): void
-    {
-        $this->setFilePath = $setFilePath;
-    }
-
-    public function getSetFilePath(): ?string
-    {
-        return $this->setFilePath;
-    }
-
-    /**
-     * @return array<string, mixed[]>
-     */
-    public function getConfiguration(): array
-    {
-        return $this->configuration;
-    }
-
     public function isRectorRepository(): bool
     {
         return $this->isRectorRepository;
@@ -148,24 +107,6 @@ final class RectorRecipe
     public function getCategory(): string
     {
         return $this->category;
-    }
-
-    /**
-     * @api
-     * @param array<string, mixed[]> $configuration
-     */
-    public function setConfiguration(array $configuration): void
-    {
-        $this->configuration = $configuration;
-    }
-
-    /**
-     * @api
-     * @param string[] $resources
-     */
-    public function setResources(array $resources): void
-    {
-        $this->resources = array_filter($resources);
     }
 
     /**
@@ -215,7 +156,7 @@ final class RectorRecipe
     {
         foreach ($nodeTypes as $nodeType) {
             // avoid phpstan class method that is never traversed
-            Assert::isNotA($nodeType, ClassMethod::class);
+            Assert::isNotA($nodeType, 'PHPStan\Node\ClassMethod');
 
             if (is_a($nodeType, Node::class, true)) {
                 continue;

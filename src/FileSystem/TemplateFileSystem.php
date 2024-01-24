@@ -31,12 +31,6 @@ final class TemplateFileSystem
      */
     private const PACKAGE_RULES_TESTS_PATH_REGEX = '#(rules-tests)\/__Package__#i';
 
-    /**
-     * @var string
-     * @see https://regex101.com/r/tOidWU/1
-     */
-    private const CONFIGURED_OR_EXTRA_REGEX = '#(__Configured|__Extra)#';
-
     public function __construct(
         private readonly TemplateFactory $templateFactory,
         private readonly Filesystem $filesystem,
@@ -62,10 +56,7 @@ final class TemplateFileSystem
             $destination = Strings::replace($destination, self::PACKAGE_RULES_TESTS_PATH_REGEX, 'utils/rector/tests');
         }
 
-        // remove _Configured|_Extra prefix
         $destination = $this->templateFactory->create($destination, $templateVariables);
-
-        $destination = Strings::replace($destination, self::CONFIGURED_OR_EXTRA_REGEX, '');
 
         // remove ".inc" protection from PHPUnit if not a test case
         if ($this->isNonFixtureFileWithIncSuffix($destination)) {

@@ -48,23 +48,6 @@ class SomeClass
 }
 CODE_SAMPLE
         ,
-
-        // [OPTIONAL - UNCOMMENT TO USE]
-
-        // links to useful websites, that explain why the change is needed
-        //        Option::RESOURCES => [
-        //            'https://github.com/symfony/symfony/blob/6.1/UPGRADE-6.0.md'
-        //        ],
-
-        // is the rule configurable?
-        //        Option::CONFIGURATION => [
-        //            'privatePropertyName' => [
-        //                'old_value' => 'newValue',
-        //            ],
-        //        ],
-
-        // set the rule belongs to; is optional, because e.g. generic rules don't need a specific set to belong to
-        // Option::SET_FILE_PATH => \Rector\Set\ValueObject\SetList::NAMING,
     ];
 
     $rectorConfig->singleton(RectorRecipeProvider::class, function () use (

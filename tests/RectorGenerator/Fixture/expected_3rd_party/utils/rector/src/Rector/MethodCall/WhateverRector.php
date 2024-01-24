@@ -5,37 +5,30 @@ declare(strict_types=1);
 namespace Utils\Rector\Rector\MethodCall;
 
 use PhpParser\Node;
-use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\Rector\AbstractRector;
-use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
+use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
-
  * @see \Utils\Rector\Tests\Rector\MethodCall\WhateverRector\WhateverRectorTest
  */
-final class WhateverRector extends AbstractRector implements ConfigurableRectorInterface
+final class WhateverRector extends AbstractRector
 {
-    /**
- * @var mixed[]
- */
-private $renamedPackages = [];
-
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition('Change $service->arg(...) to $service->call(...)', [
-            new ConfiguredCodeSample(
+            new CodeSample(
                 <<<'CODE_SAMPLE'
 $result = [];
 echo 'code before';
 CODE_SAMPLE
-,
+
+                ,
                 <<<'CODE_SAMPLE'
 $result = [];
 echo 'code after';
 CODE_SAMPLE
-,
-                [['old_package_name' => 'new_package_name']]
+
             )
         ]);
     }
@@ -57,12 +50,4 @@ CODE_SAMPLE
 
         return $node;
     }
-
-    /**
- * @param mixed[] $configuration
- */
-public function configure(array $configuration) : void
-{
-    $this->renamedPackages = $configuration;
-}
 }

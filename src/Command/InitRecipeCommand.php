@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\Command;
 
-use Rector\RectorGenerator\TemplateInitializer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Filesystem\Filesystem;
 
 final class InitRecipeCommand extends Command
 {
-    public function __construct(
-        private readonly TemplateInitializer $templateInitializer
-    ) {
-        parent::__construct();
-    }
+    /**
+     * @var string
+     */
+    private const RECIPE_FILE_NAME = 'rector-recipe.php';
 
     protected function configure(): void
     {
@@ -25,7 +25,20 @@ final class InitRecipeCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->templateInitializer->initialize(__DIR__ . '/../../templates/rector-recipe.php', 'rector-recipe.php');
+        $symfonyStyle = new SymfonyStyle($input, $output);
+
+        $templateFilePath = __DIR__ . '/../../templates/rector-recipe.php';
+        $targetFilePath = getcwd() . '/' . self::RECIPE_FILE_NAME;
+
+        if (file_exists($targetFilePath)) {
+            $symfonyStyle->warning(sprintf('Config file "%s" already exists', self::RECIPE_FILE_NAME));
+            return self::SUCCESS;
+        }
+
+        $filesystem = new Filesystem();
+        $filesystem->copy($templateFilePath, $targetFilePath);
+
+        $symfonyStyle->success(sprintf('"%s" config file was added', self::RECIPE_FILE_NAME));
 
         return self::SUCCESS;
     }
