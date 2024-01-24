@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Rector\RectorGenerator\Provider;
 
+use PhpParser\Node\Expr\MethodCall;
 use Rector\RectorGenerator\ValueObject\RectorRecipe;
 
 final class RectorRecipeProvider
@@ -15,12 +16,12 @@ final class RectorRecipeProvider
      * @param string[] $nodeTypes
      */
     public function __construct(
-        string $package,
-        string $name,
-        array $nodeTypes,
-        string $description,
-        string $codeBefore,
-        string $codeAfter,
+        string $package = 'Utils',
+        string $name = 'SomeRector',
+        array $nodeTypes = [MethodCall::class],
+        string $description = 'Some description',
+        string $codeBefore = 'Some code before',
+        string $codeAfter = 'Some code after',
     ) {
         $this->rectorRecipe = new RectorRecipe($package, $name, $nodeTypes, $description, $codeBefore, $codeAfter);
     }
