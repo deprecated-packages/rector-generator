@@ -12,8 +12,6 @@ use Rector\Testing\PHPUnit\AbstractLazyTestCase;
 
 final class RectorGeneratorTest extends AbstractLazyTestCase
 {
-    use \Rector\RectorGenerator\Tests\PHPUnit\DirectoryAssertableTrait;
-
     /**
      * @var string
      */
