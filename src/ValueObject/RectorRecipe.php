@@ -30,7 +30,7 @@ final class RectorRecipe
     private ?string $category = null;
 
     /**
-     * @var class-string[]
+     * @var string[]
      */
     private array $nodeTypes = [];
 
@@ -40,7 +40,7 @@ final class RectorRecipe
     private string $package = self::PACKAGE_UTILS;
 
     /**
-     * @param array<class-string<Node>> $nodeTypes
+     * @param string[] $nodeTypes
      */
     public function __construct(
         string $package,
@@ -150,7 +150,7 @@ final class RectorRecipe
     }
 
     /**
-     * @param class-string[] $nodeTypes
+     * @param string[] $nodeTypes
      */
     private function setNodeTypes(array $nodeTypes): void
     {
