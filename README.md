@@ -1,4 +1,10 @@
-# Rector Generator
+# [Deprecated] Rector Generator
+
+Note: We've had this custom package for creating Rector rules from simple file for years.
+
+Yet in recent times, we practically never used it and only copy-paste old rule to new one :) package has no value, time to let go.
+
+---
 
 Every Rector rule requires test, test fixtures, config and the rule.
 
